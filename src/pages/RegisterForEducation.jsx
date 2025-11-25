@@ -1,0 +1,1112 @@
+import React, { useState } from "react";
+import { FiUpload } from "react-icons/fi";
+
+const indiaStates = [
+  "Andhra Pradesh",
+  "Arunachal Pradesh",
+  "Assam",
+  "Bihar",
+  "Chhattisgarh",
+  "Goa",
+  "Gujarat",
+  "Haryana",
+  "Himachal Pradesh",
+  "Jharkhand",
+  "Karnataka",
+  "Kerala",
+  "Madhya Pradesh",
+  "Maharashtra",
+  "Manipur",
+  "Meghalaya",
+  "Mizoram",
+  "Nagaland",
+  "Odisha",
+  "Punjab",
+  "Rajasthan",
+  "Sikkim",
+  "Tamil Nadu",
+  "Telangana",
+  "Tripura",
+  "Uttar Pradesh",
+  "Uttarakhand",
+  "West Bengal",
+  "Andaman and Nicobar Islands",
+  "Chandigarh",
+  "Dadra and Nagar Haveli and Daman and Diu",
+  "Delhi",
+  "Jammu and Kashmir",
+  "Ladakh",
+  "Lakshadweep",
+  "Puducherry",
+];
+
+// Example districts mapping (you can expand this list)
+const districtsByState = {
+  Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik"],
+  Delhi: ["Central Delhi", "North Delhi", "South Delhi"],
+  Karnataka: ["Bengaluru", "Mysuru", "Mangaluru"],
+  "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Noida"],
+  "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+};
+
+const RegisterForEducation = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    countryCode: "+91",
+    phone: "",
+    dob: "",
+    nationality: "",
+    aadhar: "",
+    pan: "",
+    gender: "",
+    education: "",
+    volunteerExperience: "",
+    permanentAddress: "",
+    permanentState: "",
+    permanentCity: "",
+    permanentPincode: "",
+    permanentLandmark: "",
+    sameAsPermanent: false,
+    currentAddress: "",
+    currentState: "",
+    currentCity: "",
+    currentPincode: "",
+    currentLandmark: "",
+    prefLocation1: "",
+    prefCity1: "",
+    prefPincode1: "",
+    prefLocation2: "",
+    prefCity2: "",
+    prefPincode2: "",
+    prefLocation3: "",
+    prefCity3: "",
+    prefPincode3: "",
+    howKnow: "",
+    whyVolunteer: "",
+    motivation: "",
+    declarationConsent: false,
+    msgConsent: false,
+  });
+
+  const [errors, setErrors] = useState({
+    permanentPincode: "",
+    currentPincode: "",
+  });
+
+  // files so first file doesn’t disappear when you add second
+  const [files, setFiles] = useState({
+    educationCertificates: [],
+    experienceCertificates: [],
+    aadharFiles: [],
+    panFiles: [],
+  });
+
+  // OTP demo state
+  const [otpState, setOtpState] = useState({
+    generatedOtp: "",
+    enteredOtp: "",
+    otpSent: false,
+    otpVerified: false,
+  });
+
+  const handleFileChange = (e, field) => {
+    const newFiles = Array.from(e.target.files || []);
+    setFiles((prev) => ({
+      ...prev,
+      [field]: [...prev[field], ...newFiles],
+    }));
+    // allow selecting same file again if needed
+    e.target.value = "";
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    // Word limit for long answers + alert when exceeded
+    if (name === "whyVolunteer" || name === "motivation") {
+      const words = value.trim().split(/\s+/).filter(Boolean);
+      if (words.length > 120) {
+        alert("Maximum allowed word limit is 120 words for this answer.");
+        return; // do not update state beyond 120 words
+      }
+      setFormData((prev) => ({ ...prev, [name]: value }));
+      return;
+    }
+
+    // Name & nationality: only alphabets and spaces
+    if (name === "fullName" || name === "nationality") {
+      if (value === "" || /^[A-Za-z\s]+$/.test(value)) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+      }
+      return;
+    }
+
+    // Phone: digits only, max 10
+    if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 10);
+      setFormData((prev) => ({ ...prev, phone: digitsOnly }));
+      return;
+    }
+
+    // Any PINCODE field: digits only, max 6
+    if (
+      name === "permanentPincode" ||
+      name === "currentPincode" ||
+      name === "prefPincode1" ||
+      name === "prefPincode2" ||
+      name === "prefPincode3"
+    ) {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 6);
+      setFormData((prev) => ({ ...prev, [name]: digitsOnly }));
+      return;
+    }
+
+    // Aadhar: digits only, max 12
+    if (name === "aadhar") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 12);
+      setFormData((prev) => ({ ...prev, aadhar: digitsOnly }));
+      return;
+    }
+
+    // PAN: uppercase, letters & numbers only, max 10
+    if (name === "pan") {
+      const cleaned = value
+        .toUpperCase()
+        .replace(/[^A-Z0-9]/g, "")
+        .slice(0, 10);
+      setFormData((prev) => ({ ...prev, pan: cleaned }));
+      return;
+    }
+
+    // OTP text
+    if (name === "enteredOtp") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 6);
+      setOtpState((prev) => ({ ...prev, enteredOtp: digitsOnly }));
+      return;
+    }
+
+    if (type === "checkbox") {
+      if (name === "sameAsPermanent") {
+        const checkedValue = checked;
+        setFormData((prev) => ({
+          ...prev,
+          sameAsPermanent: checkedValue,
+          currentAddress: checkedValue ? prev.permanentAddress : "",
+          currentState: checkedValue ? prev.permanentState : "",
+          currentCity: checkedValue ? prev.permanentCity : "",
+          currentPincode: checkedValue ? prev.permanentPincode : "",
+          currentLandmark: checkedValue ? prev.permanentLandmark : "",
+        }));
+      } else {
+        setFormData((prev) => ({ ...prev, [name]: checked }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const validatePincode = (name, value) => {
+    if (!/^\d{6}$/.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "Wrong PIN code. Please enter a valid 6-digit PIN.",
+      }));
+      // clear invalid value from box
+      setFormData((prev) => ({ ...prev, [name]: "" }));
+      alert("Wrong PIN code. Please enter a valid 6-digit PIN.");
+    } else {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const handleSendOtp = () => {
+    if (!formData.phone || formData.phone.length !== 10) {
+      alert("Please enter a valid 10-digit mobile number before sending OTP.");
+      return;
+    }
+    if (!formData.aadhar || formData.aadhar.length !== 12) {
+      alert("Please enter a valid 12-digit Aadhar number before sending OTP.");
+      return;
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    setOtpState({
+      generatedOtp: otp,
+      enteredOtp: "",
+      otpSent: true,
+      otpVerified: false,
+    });
+
+    // Demo only – in real life you would NOT show this, it would be sent via SMS
+    alert(`Demo OTP for testing: ${otp}`);
+  };
+
+  const handleVerifyOtp = () => {
+    if (!otpState.otpSent) {
+      alert("Please send OTP first.");
+      return;
+    }
+    if (otpState.enteredOtp === otpState.generatedOtp && otpState.enteredOtp) {
+      setOtpState((prev) => ({ ...prev, otpVerified: true }));
+      alert("OTP verified successfully.");
+    } else {
+      alert("Incorrect OTP. Please try again.");
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Preference location PIN check (must be different)
+    const { prefPincode1, prefPincode2, prefPincode3 } = formData;
+    const pins = [prefPincode1, prefPincode2, prefPincode3].filter(Boolean);
+
+    const duplicatePin =
+      pins.length === 3 && new Set(pins).size !== pins.length;
+
+    if (duplicatePin) {
+      alert(
+        "Each preferred location must have a different PIN code. Please enter unique PIN codes for all three preferences."
+      );
+      return;
+    }
+
+    if (!otpState.otpVerified) {
+      alert("Please verify OTP before submitting the form.");
+      return;
+    }
+
+    if (!formData.msgConsent) {
+      alert(
+        "Please agree to receive messages/communication to submit the form."
+      );
+      return;
+    }
+
+    if (!formData.declarationConsent) {
+      alert("Please confirm the declaration before submitting the form.");
+      return;
+    }
+
+    // Here you can send `formData` & `files` to your backend / API
+    console.log("Form submitted:", formData, files);
+    alert("Form submitted successfully (demo).");
+  };
+
+  // Helper: does selected state have districts list?
+  const hasDistricts = (stateName) =>
+    Boolean(districtsByState[stateName] && districtsByState[stateName].length);
+
+  const canSubmit =
+    formData.declarationConsent && otpState.otpVerified && formData.msgConsent;
+
+  return (
+    <div
+      className="flex items-center justify-center"
+      style={{
+        backgroundImage: "url('/images/volunteer-registration-bg.png')",
+      }}
+    >
+      {/* light overlay to make text easier to read */}
+      <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div>
+
+      <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 md:p-10">
+        {/* Heading separated */}
+        <h1 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-1">
+          Volunteer Registration
+        </h1>
+        <p className="text-center text-base font-semibold text-slate-800 mb-6">
+          for Education
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Personal Details */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Personal Information
+            </h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* Full Name */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  required
+                  placeholder="e.g. Rahul Sharma"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="e.g. rahul.sharma@email.com"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              {/* Phone with country code */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Phone No. *
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    name="countryCode"
+                    className="w-24 border rounded-lg px-2 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                    value={formData.countryCode}
+                    onChange={handleChange}
+                  >
+                    <option value="+91">+91</option>
+                  </select>
+                  <input
+                    type="tel"
+                    name="phone"
+                    required
+                    pattern="\d{10}"
+                    maxLength={10}
+                    placeholder="e.g. 9876543210"
+                    className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <p className="text-xs text-slate-500 mt-1">
+                  10-digit mobile number without country code.
+                </p>
+              </div>
+
+              {/* DOB */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Date of Birth *
+                </label>
+                <input
+                  type="date"
+                  name="dob"
+                  required
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.dob}
+                  onChange={handleChange}
+                  min="1950-01-01"
+                  max="2010-12-31"
+                />
+                <p className="text-xs text-slate-500 mt-1">
+                  Example: 15/08/1998
+                </p>
+              </div>
+
+              {/* Nationality */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Nationality *
+                </label>
+                <input
+                  type="text"
+                  name="nationality"
+                  required
+                  placeholder="e.g. Indian"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.nationality}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Gender *
+                </label>
+                <select
+                  name="gender"
+                  required
+                  className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.gender}
+                  onChange={handleChange}
+                >
+                  <option value="">Select gender</option>
+                  <option value="Female">Female</option>
+                  <option value="Male">Male</option>
+                  <option value="Non-binary">Non-binary</option>
+                  <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+              </div>
+
+              {/* Aadhar + file */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Aadhar No. *
+                </label>
+                <input
+                  type="text"
+                  name="aadhar"
+                  required
+                  maxLength={12}
+                  pattern="\d{12}"
+                  placeholder="e.g. 123412341234"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.aadhar}
+                  onChange={handleChange}
+                />
+                <div className="mt-2 border rounded-lg px-3 py-2 text-xs flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#138808]">
+                      <FiUpload size={18} />
+                    </span>
+                    <span className="text-slate-700">
+                      Attach Aadhar (PDF/JPG/PNG — multiple allowed)
+                    </span>
+                  </div>
+                  <label className="text-xs font-semibold px-3 py-1 border rounded-full cursor-pointer hover:bg-slate-100">
+                    Browse
+                    <input
+                      type="file"
+                      multiple
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) => handleFileChange(e, "aadharFiles")}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                {files.aadharFiles.length > 0 && (
+                  <ul className="mt-1 text-xs text-slate-600 list-disc list-inside">
+                    {files.aadharFiles.map((file, idx) => (
+                      <li key={idx}>{file.name}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* PAN + file */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Pan No. *
+                </label>
+                <input
+                  type="text"
+                  name="pan"
+                  required
+                  maxLength={10}
+                  pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"
+                  placeholder="e.g. ABCDE1234F"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.pan}
+                  onChange={handleChange}
+                />
+                <div className="mt-2 border rounded-lg px-3 py-2 text-xs flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#138808]">
+                      <FiUpload size={18} />
+                    </span>
+                    <span className="text-slate-700">
+                      Attach PAN (PDF/JPG/PNG — multiple allowed)
+                    </span>
+                  </div>
+                  <label className="text-xs font-semibold px-3 py-1 border rounded-full cursor-pointer hover:bg-slate-100">
+                    Browse
+                    <input
+                      type="file"
+                      multiple
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) => handleFileChange(e, "panFiles")}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                {files.panFiles.length > 0 && (
+                  <ul className="mt-1 text-xs text-slate-600 list-disc list-inside">
+                    {files.panFiles.map((file, idx) => (
+                      <li key={idx}>{file.name}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Education & Experience */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Education &amp; Volunteer Experience
+            </h2>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* 9 – Educational Qualification text box */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Educational Qualification *
+                </label>
+                <input
+                  type="text"
+                  name="education"
+                  required
+                  placeholder="Select your qualification"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.education}
+                  onChange={handleChange}
+                />
+
+                {/* 11 – Upload certificates bar (styled like reference image) */}
+                <div className="mt-2 border border-dashed border-slate-300 bg-slate-50 rounded-lg px-4 py-3 text-xs flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#138808]">
+                      <FiUpload size={18} />
+                    </span>
+                    <span className="text-slate-700 leading-snug">
+                      Upload your certificates in PDF/JPG/PNG format (multiple
+                      files allowed)
+                    </span>
+                  </div>
+
+                  <label className="text-xs font-semibold px-3 py-1 rounded-md border border-indigo-600 text-indigo-600 cursor-pointer hover:bg-indigo-50 whitespace-nowrap">
+                    Browse
+                    <input
+                      type="file"
+                      multiple
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) =>
+                        handleFileChange(e, "educationCertificates")
+                      }
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {files.educationCertificates.length > 0 && (
+                  <ul className="mt-1 text-xs text-slate-600 list-disc list-inside">
+                    {files.educationCertificates.map((file, idx) => (
+                      <li key={idx}>{file.name}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* 10 – Volunteer Experience text box */}
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Volunteer Experience *
+                </label>
+                <input
+                  type="text"
+                  name="volunteerExperience"
+                  required
+                  placeholder="Select your experience"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.volunteerExperience}
+                  onChange={handleChange}
+                />
+
+                {/* 12 – Upload experience letters bar (same design) */}
+                <div className="mt-2 border border-dashed border-slate-300 bg-slate-50 rounded-lg px-4 py-3 text-xs flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#138808]">
+                      <FiUpload size={18} />
+                    </span>
+                    <span className="text-slate-700 leading-snug">
+                      Upload experience letters/certificates in PDF/JPG/PNG
+                      format (multiple files allowed)
+                    </span>
+                  </div>
+
+                  <label className="text-xs font-semibold px-3 py-1 rounded-md border border-indigo-600 text-indigo-600 cursor-pointer hover:bg-indigo-50 whitespace-nowrap">
+                    Browse
+                    <input
+                      type="file"
+                      multiple
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) =>
+                        handleFileChange(e, "experienceCertificates")
+                      }
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {files.experienceCertificates.length > 0 && (
+                  <ul className="mt-1 text-xs text-slate-600 list-disc list-inside">
+                    {files.experienceCertificates.map((file, idx) => (
+                      <li key={idx}>{file.name}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Permanent Address */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Permanent Address
+            </h2>
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Address *
+                </label>
+                <textarea
+                  name="permanentAddress"
+                  required
+                  rows={2}
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.permanentAddress}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    State *
+                  </label>
+                  <select
+                    name="permanentState"
+                    required
+                    className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                    value={formData.permanentState}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select State</option>
+                    {indiaStates.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    City / District *
+                  </label>
+                  {hasDistricts(formData.permanentState) ? (
+                    <select
+                      name="permanentCity"
+                      required
+                      className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.permanentCity}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select District</option>
+                      {districtsByState[formData.permanentState].map((dist) => (
+                        <option key={dist} value={dist}>
+                          {dist}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      name="permanentCity"
+                      required
+                      placeholder="City/District"
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.permanentCity}
+                      onChange={handleChange}
+                    />
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Pincode *
+                  </label>
+                  <input
+                    type="text"
+                    name="permanentPincode"
+                    required
+                    placeholder="e.g. 400001"
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                    value={formData.permanentPincode}
+                    onChange={handleChange}
+                    onBlur={(e) =>
+                      validatePincode("permanentPincode", e.target.value)
+                    }
+                  />
+                  {errors.permanentPincode && (
+                    <p className="text-xs text-red-600 mt-1">
+                      {errors.permanentPincode}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Landmark / Area (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="permanentLandmark"
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.permanentLandmark}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Current Address */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Current Address
+            </h2>
+
+            <label className="flex items-center gap-2 text-sm mb-3 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                name="sameAsPermanent"
+                checked={formData.sameAsPermanent}
+                onChange={handleChange}
+                className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
+              />
+              <span>Same as Permanent Address</span>
+            </label>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Address *
+                </label>
+                <textarea
+                  name="currentAddress"
+                  required
+                  rows={2}
+                  disabled={formData.sameAsPermanent}
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                  value={formData.currentAddress}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    State *
+                  </label>
+                  <select
+                    name="currentState"
+                    required
+                    disabled={formData.sameAsPermanent}
+                    className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                    value={formData.currentState}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select State</option>
+                    {indiaStates.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    City / District *
+                  </label>
+                  {hasDistricts(formData.currentState) ? (
+                    <select
+                      name="currentCity"
+                      required
+                      disabled={formData.sameAsPermanent}
+                      className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                      value={formData.currentCity}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select District</option>
+                      {districtsByState[formData.currentState].map((dist) => (
+                        <option key={dist} value={dist}>
+                          {dist}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      type="text"
+                      name="currentCity"
+                      required
+                      disabled={formData.sameAsPermanent}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                      value={formData.currentCity}
+                      onChange={handleChange}
+                    />
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">
+                    Pincode *
+                  </label>
+                  <input
+                    type="text"
+                    name="currentPincode"
+                    required
+                    disabled={formData.sameAsPermanent}
+                    placeholder="e.g. 110001"
+                    className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                    value={formData.currentPincode}
+                    onChange={handleChange}
+                    onBlur={(e) =>
+                      validatePincode("currentPincode", e.target.value)
+                    }
+                  />
+                  {errors.currentPincode && (
+                    <p className="text-xs text-red-600 mt-1">
+                      {errors.currentPincode}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Landmark / Area (Optional)
+                </label>
+                <input
+                  type="text"
+                  name="currentLandmark"
+                  disabled={formData.sameAsPermanent}
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808] disabled:bg-slate-100"
+                  value={formData.currentLandmark}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Preferred Location To Work – new layout with Location / City / Pincode */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              Preferred Location To Work
+            </h2>
+
+            {[1, 2, 3].map((num) => (
+              <div key={num} className="mb-4">
+                <p className="text-sm font-medium mb-2">Preference {num}</p>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-medium mb-1">
+                      Location / Area *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      name={`prefLocation${num}`}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData[`prefLocation${num}`]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium mb-1">
+                      City *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      name={`prefCity${num}`}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData[`prefCity${num}`]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium mb-1">
+                      Pincode *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      name={`prefPincode${num}`}
+                      placeholder="e.g. 560001"
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData[`prefPincode${num}`]}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Questions */}
+          <div>
+            <h2 className="text-lg font-semibold text-slate-800 mb-4">
+              About Your Motivation
+            </h2>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  How did you get to know about Jaago Manav? *
+                </label>
+                <input
+                  type="text"
+                  name="howKnow"
+                  required
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.howKnow}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  Why do you want to volunteer with Jaago Manav&apos;s Education
+                  Program? *
+                </label>
+                <textarea
+                  name="whyVolunteer"
+                  required
+                  rows={3}
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.whyVolunteer}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">
+                  What feelings or experiences motivate you to support children
+                  through education? *
+                </label>
+                <textarea
+                  name="motivation"
+                  required
+                  rows={3}
+                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  value={formData.motivation}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Declaration + OTP + Consent & Submit */}
+          <div className="border-t border-slate-200 pt-4 space-y-4">
+            {/* Declaration box */}
+            <label className="flex items-start gap-2 text-sm">
+              <input
+                type="checkbox"
+                name="declarationConsent"
+                checked={formData.declarationConsent}
+                onChange={handleChange}
+                className="mt-1 rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
+              />
+              <span>
+                I confirm that I have no criminal record or pending legal cases,
+                and that I am not involved in smoking or alcohol consumption,
+                whether regularly or occasionally.
+              </span>
+            </label>
+
+            {/* OTP verification block */}
+            <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
+              <p className="text-sm font-semibold">
+                Verify Your Mobile Number &amp; Aadhar
+              </p>
+
+              {/* Mobile number + Send OTP */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">
+                  Mobile Number
+                </label>
+                <div className="flex w-full">
+                  {/* +91 box */}
+                  <div className="flex items-center justify-center px-4 text-sm text-slate-700 bg-slate-100 border border-slate-300 border-r-0 rounded-l-lg">
+                    +91
+                  </div>
+
+                  {/* number input */}
+                  <input
+                    type="text"
+                    name="phone"
+                    maxLength={10}
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="flex-1 border border-slate-300 border-l-0 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                  />
+
+                  {/* Send OTP button (same height, attached) */}
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    className="px-5 text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                  >
+                    Send OTP
+                  </button>
+                </div>
+              </div>
+
+              {/* Enter OTP */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium">Enter OTP</label>
+                <input
+                  type="text"
+                  name="enteredOtp"
+                  maxLength={6}
+                  value={otpState.enteredOtp}
+                  onChange={handleChange}
+                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                />
+              </div>
+
+              {/* Verify button – full width dark blue */}
+              <button
+                type="button"
+                onClick={handleVerifyOtp}
+                className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
+              >
+                Verify OTP
+              </button>
+
+              {otpState.otpVerified && (
+                <p className="text-xs text-emerald-700 font-medium mt-2">
+                  OTP verified. You can now give consent and submit the form.
+                </p>
+              )}
+            </div>
+
+            {/* Message consent + Submit button – only meaningful after OTP verified */}
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  name="msgConsent"
+                  checked={formData.msgConsent}
+                  onChange={handleChange}
+                  className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
+                  disabled={!otpState.otpVerified}
+                />
+                <span className={otpState.otpVerified ? "" : "text-slate-400"}>
+                  I agree to receive messages/communication regarding this
+                  volunteering program.
+                </span>
+              </label>
+
+              <button
+                type="submit"
+                disabled={!canSubmit}
+                className="inline-flex justify-center rounded-full bg-[#FF9933] px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#138808] disabled:bg-[#138808] disabled:cursor-not-allowed transition-colors"
+              >
+                Submit Registration
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterForEducation;
