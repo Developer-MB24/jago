@@ -102,12 +102,20 @@ const RegisterForEducation = () => {
     panFiles: [],
   });
 
-  // OTP demo state
+  // ✅ NEW: Separate OTP state for Mobile + Aadhaar
   const [otpState, setOtpState] = useState({
-    generatedOtp: "",
-    enteredOtp: "",
-    otpSent: false,
-    otpVerified: false,
+    mobile: {
+      generatedOtp: "",
+      enteredOtp: "",
+      otpSent: false,
+      otpVerified: false,
+    },
+    aadhaar: {
+      generatedOtp: "",
+      enteredOtp: "",
+      otpSent: false,
+      otpVerified: false,
+    },
   });
 
   const handleFileChange = (e, field) => {
@@ -179,12 +187,8 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // OTP text
-    if (name === "enteredOtp") {
-      const digitsOnly = value.replace(/\D/g, "").slice(0, 6);
-      setOtpState((prev) => ({ ...prev, enteredOtp: digitsOnly }));
-      return;
-    }
+    // NOTE: ❌ we removed old `enteredOtp` branch
+    // OTP input now handled by dedicated handlers below
 
     if (type === "checkbox") {
       if (name === "sameAsPermanent") {
@@ -206,6 +210,23 @@ const RegisterForEducation = () => {
     }
   };
 
+  // ✅ NEW: OTP input handlers (so we don’t pollute formData)
+  const handleMobileOtpChange = (e) => {
+    const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
+    setOtpState((prev) => ({
+      ...prev,
+      mobile: { ...prev.mobile, enteredOtp: digitsOnly },
+    }));
+  };
+
+  const handleAadhaarOtpChange = (e) => {
+    const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
+    setOtpState((prev) => ({
+      ...prev,
+      aadhaar: { ...prev.aadhaar, enteredOtp: digitsOnly },
+    }));
+  };
+
   const validatePincode = (name, value) => {
     if (!/^\d{6}$/.test(value)) {
       setErrors((prev) => ({
@@ -220,38 +241,79 @@ const RegisterForEducation = () => {
     }
   };
 
-  const handleSendOtp = () => {
+  // ✅ NEW: Send OTP for Mobile only
+  const handleSendMobileOtp = () => {
     if (!formData.phone || formData.phone.length !== 10) {
       alert("Please enter a valid 10-digit mobile number before sending OTP.");
       return;
     }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    setOtpState((prev) => ({
+      ...prev,
+      mobile: {
+        generatedOtp: otp,
+        enteredOtp: "",
+        otpSent: true,
+        otpVerified: false,
+      },
+    }));
+
+    alert(`Demo Mobile OTP for testing: ${otp}`);
+  };
+
+  const handleVerifyMobileOtp = () => {
+    const { mobile } = otpState;
+    if (!mobile.otpSent) {
+      alert("Please send Mobile OTP first.");
+      return;
+    }
+    if (mobile.enteredOtp && mobile.enteredOtp === mobile.generatedOtp) {
+      setOtpState((prev) => ({
+        ...prev,
+        mobile: { ...prev.mobile, otpVerified: true },
+      }));
+      alert("Mobile number verified successfully.");
+    } else {
+      alert("Incorrect Mobile OTP. Please try again.");
+    }
+  };
+
+  // ✅ NEW: Send OTP for Aadhaar only
+  const handleSendAadhaarOtp = () => {
     if (!formData.aadhar || formData.aadhar.length !== 12) {
-      alert("Please enter a valid 12-digit Aadhar number before sending OTP.");
+      alert("Please enter a valid 12-digit Aadhaar number before sending OTP.");
       return;
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    setOtpState({
-      generatedOtp: otp,
-      enteredOtp: "",
-      otpSent: true,
-      otpVerified: false,
-    });
+    setOtpState((prev) => ({
+      ...prev,
+      aadhaar: {
+        generatedOtp: otp,
+        enteredOtp: "",
+        otpSent: true,
+        otpVerified: false,
+      },
+    }));
 
-    // Demo only – in real life you would NOT show this, it would be sent via SMS
-    alert(`Demo OTP for testing: ${otp}`);
+    alert(`Demo Aadhaar OTP for testing: ${otp}`);
   };
 
-  const handleVerifyOtp = () => {
-    if (!otpState.otpSent) {
-      alert("Please send OTP first.");
+  const handleVerifyAadhaarOtp = () => {
+    const { aadhaar } = otpState;
+    if (!aadhaar.otpSent) {
+      alert("Please send Aadhaar OTP first.");
       return;
     }
-    if (otpState.enteredOtp === otpState.generatedOtp && otpState.enteredOtp) {
-      setOtpState((prev) => ({ ...prev, otpVerified: true }));
-      alert("OTP verified successfully.");
+    if (aadhaar.enteredOtp && aadhaar.enteredOtp === aadhaar.generatedOtp) {
+      setOtpState((prev) => ({
+        ...prev,
+        aadhaar: { ...prev.aadhaar, otpVerified: true },
+      }));
+      alert("Aadhaar verified successfully.");
     } else {
-      alert("Incorrect OTP. Please try again.");
+      alert("Incorrect Aadhaar OTP. Please try again.");
     }
   };
 
@@ -272,8 +334,14 @@ const RegisterForEducation = () => {
       return;
     }
 
-    if (!otpState.otpVerified) {
-      alert("Please verify OTP before submitting the form.");
+    // ✅ require BOTH verifications
+    const bothVerified =
+      otpState.mobile.otpVerified && otpState.aadhaar.otpVerified;
+
+    if (!bothVerified) {
+      alert(
+        "Please verify both Mobile Number and Aadhaar OTP before submitting the form."
+      );
       return;
     }
 
@@ -298,8 +366,12 @@ const RegisterForEducation = () => {
   const hasDistricts = (stateName) =>
     Boolean(districtsByState[stateName] && districtsByState[stateName].length);
 
+  // ✅ use bothVerified in your UI (submit disabled, messages, etc.)
+  const bothVerified =
+    otpState.mobile.otpVerified && otpState.aadhaar.otpVerified;
+
   const canSubmit =
-    formData.declarationConsent && otpState.otpVerified && formData.msgConsent;
+    formData.declarationConsent && bothVerified && formData.msgConsent;
 
   return (
     <div
@@ -1011,68 +1083,163 @@ const RegisterForEducation = () => {
             </label>
 
             {/* OTP verification block */}
-            <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
-              <p className="text-sm font-semibold">
-                Verify Your Mobile Number &amp; Aadhar
-              </p>
+            <div className="mt-6">
+              {/* Responsive layout: stacked on mobile, side by side on md+ */}
+              <div className="grid gap-4 md:grid-cols-2">
+                {/* ====== Mobile Verification ====== */}
+                <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
+                  <p className="text-sm font-semibold">
+                    Verify Your Mobile Number
+                  </p>
 
-              {/* Mobile number + Send OTP */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium">
-                  Mobile Number
-                </label>
-                <div className="flex w-full">
-                  {/* +91 box */}
-                  <div className="flex items-center justify-center px-4 text-sm text-slate-700 bg-slate-100 border border-slate-300 border-r-0 rounded-l-lg">
-                    +91
+                  {/* Mobile number + Send OTP */}
+                  <div className="space-y-2">
+                    <label className="block text-xs sm:text-sm font-medium">
+                      Mobile Number
+                    </label>
+                    <div className="flex w-full">
+                      {/* +91 box */}
+                      <div className="hidden sm:flex items-center justify-center px-4 text-sm text-slate-700 bg-slate-100 border border-slate-300 border-r-0 rounded-l-lg">
+                        +91
+                      </div>
+
+                      {/* number input */}
+                      <input
+                        type="text"
+                        name="phone"
+                        maxLength={10}
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="flex-1 border border-slate-300 rounded-l-lg sm:rounded-none sm:border-l-0 px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                        placeholder="Enter 10-digit mobile"
+                      />
+
+                      {/* Send OTP button */}
+                      <button
+                        type="button"
+                        onClick={handleSendMobileOtp}
+                        className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                      >
+                        Send OTP
+                      </button>
+                    </div>
+                    {otpState.mobile.sent && !otpState.mobile.verified && (
+                      <p className="text-[11px] text-slate-500">
+                        OTP sent. Please check your SMS (mock).
+                      </p>
+                    )}
                   </div>
 
-                  {/* number input */}
-                  <input
-                    type="text"
-                    name="phone"
-                    maxLength={10}
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="flex-1 border border-slate-300 border-l-0 rounded-none px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                  />
+                  {/* Enter OTP */}
+                  <div className="space-y-2">
+                    <label className="block text-xs sm:text-sm font-medium">
+                      Enter Mobile OTP
+                    </label>
+                    <input
+                      type="text"
+                      name="mobileOtp"
+                      maxLength={6}
+                      value={formData.mobileOtp}
+                      onChange={handleChange}
+                      className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                      placeholder="Enter 6-digit OTP"
+                    />
+                  </div>
 
-                  {/* Send OTP button (same height, attached) */}
+                  {/* Verify button */}
                   <button
                     type="button"
-                    onClick={handleSendOtp}
-                    className="px-5 text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                    onClick={handleVerifyMobileOtp}
+                    className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
                   >
-                    Send OTP
+                    Verify Mobile OTP
                   </button>
+
+                  {otpState.mobile.verified && (
+                    <p className="text-xs text-emerald-700 font-medium mt-2">
+                      Mobile number verified.
+                    </p>
+                  )}
+                </div>
+
+                {/* ====== Aadhaar Verification ====== */}
+                <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
+                  <p className="text-sm font-semibold">Verify Your Aadhaar</p>
+
+                  {/* Aadhaar number + Send OTP */}
+                  <div className="space-y-2">
+                    <label className="block text-xs sm:text-sm font-medium">
+                      Aadhaar Number
+                    </label>
+                    <div className="flex w-full">
+                      <input
+                        type="text"
+                        name="aadhaar"
+                        maxLength={12}
+                        value={formData.aadhaar}
+                        onChange={handleChange}
+                        className="flex-1 border border-slate-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                        placeholder="Enter 12-digit Aadhaar"
+                      />
+
+                      <button
+                        type="button"
+                        onClick={handleSendAadhaarOtp}
+                        className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                      >
+                        Send OTP
+                      </button>
+                    </div>
+                    {otpState.aadhaar.sent && !otpState.aadhaar.verified && (
+                      <p className="text-[11px] text-slate-500">
+                        OTP sent for Aadhaar (mock).
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Enter Aadhaar OTP */}
+                  <div className="space-y-2">
+                    <label className="block text-xs sm:text-sm font-medium">
+                      Enter Aadhaar OTP
+                    </label>
+                    <input
+                      type="text"
+                      name="aadhaarOtp"
+                      maxLength={6}
+                      value={formData.aadhaarOtp}
+                      onChange={handleChange}
+                      className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                      placeholder="Enter 6-digit OTP"
+                    />
+                  </div>
+
+                  {/* Verify button */}
+                  <button
+                    type="button"
+                    onClick={handleVerifyAadhaarOtp}
+                    className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
+                  >
+                    Verify Aadhaar OTP
+                  </button>
+
+                  {otpState.aadhaar.verified && (
+                    <p className="text-xs text-emerald-700 font-medium mt-2">
+                      Aadhaar verified.
+                    </p>
+                  )}
                 </div>
               </div>
 
-              {/* Enter OTP */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium">Enter OTP</label>
-                <input
-                  type="text"
-                  name="enteredOtp"
-                  maxLength={6}
-                  value={otpState.enteredOtp}
-                  onChange={handleChange}
-                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                />
-              </div>
-
-              {/* Verify button – full width dark blue */}
-              <button
-                type="button"
-                onClick={handleVerifyOtp}
-                className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
-              >
-                Verify OTP
-              </button>
-
-              {otpState.otpVerified && (
-                <p className="text-xs text-emerald-700 font-medium mt-2">
-                  OTP verified. You can now give consent and submit the form.
+              {/* Combined status */}
+              {bothVerified ? (
+                <p className="mt-3 text-xs sm:text-sm text-emerald-700 font-semibold">
+                  ✅ Both Mobile & Aadhaar verified. You can now give consent
+                  and submit the form.
+                </p>
+              ) : (
+                <p className="mt-3 text-[11px] sm:text-xs text-slate-500">
+                  Please verify both your Mobile Number and Aadhaar before
+                  submitting the form.
                 </p>
               )}
             </div>
