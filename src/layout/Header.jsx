@@ -383,7 +383,7 @@ export default function Header() {
           {/* Desktop: Search + Donate */}
           <div className="ml-6 hidden lg:flex items-center gap-5 shrink-0">
             {/* Register dropdown (replaces Shop) */}
-            <div className="relative">
+            <div className="relative text-lg font-semibold">
               <button
                 ref={registerButtonRef}
                 className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"

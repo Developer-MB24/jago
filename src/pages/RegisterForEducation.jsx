@@ -49,6 +49,37 @@ const districtsByState = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
 };
 
+// Dropdown options
+const educationOptions = [
+  "Bachelor of Arts (B.A.)",
+  "Bachelor of Science (B.Sc.)",
+  "Bachelor of Commerce (B.Com.)",
+  "Bachelor of Education (B.Ed.)",
+  "Bachelor of Computer Applications (BCA)",
+  "Bachelor of Social Work (BSW)",
+  "Bachelor of Business Administration (BBA)",
+  "Bachelor of Engineering (B.E.)",
+  "Bachelor of Technology (B.Tech)",
+  "Bachelor of Pharmacy (B.Pharm)",
+  "Bachelor of Nursing (B.Sc Nursing)",
+  "Master of Arts (M.A.)",
+  "Master of Science (M.Sc)",
+  "Master of Commerce (M.Com.)",
+  "Master of Education (M.Ed.)",
+  "Master of Computer Applications (MCA)",
+  "Master of Social Work (MSW)",
+  "Master of Business Administration (MBA)",
+  "Other",
+];
+
+const volunteerExperienceOptions = [
+  "New to Social Work",
+  "0–1 Year",
+  "1–3 Years",
+  "3–7 Years",
+  "7+ Years",
+];
+
 const RegisterForEducation = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -94,7 +125,6 @@ const RegisterForEducation = () => {
     currentPincode: "",
   });
 
-  // files so first file doesn’t disappear when you add second
   const [files, setFiles] = useState({
     educationCertificates: [],
     experienceCertificates: [],
@@ -102,7 +132,7 @@ const RegisterForEducation = () => {
     panFiles: [],
   });
 
-  // ✅ NEW: Separate OTP state for Mobile + Aadhaar
+  // Separate OTP state
   const [otpState, setOtpState] = useState({
     mobile: {
       generatedOtp: "",
@@ -124,26 +154,38 @@ const RegisterForEducation = () => {
       ...prev,
       [field]: [...prev[field], ...newFiles],
     }));
-    // allow selecting same file again if needed
     e.target.value = "";
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Word limit for long answers + alert when exceeded
+    // Word-limited textareas
     if (name === "whyVolunteer" || name === "motivation") {
       const words = value.trim().split(/\s+/).filter(Boolean);
       if (words.length > 120) {
         alert("Maximum allowed word limit is 120 words for this answer.");
-        return; // do not update state beyond 120 words
+        return;
       }
       setFormData((prev) => ({ ...prev, [name]: value }));
       return;
     }
 
-    // Name & nationality: only alphabets and spaces
-    if (name === "fullName" || name === "nationality") {
+    // Only alphabets + spaces for these fields
+    if (
+      [
+        "fullName",
+        "nationality",
+        "permanentCity",
+        "currentCity",
+        "prefLocation1",
+        "prefLocation2",
+        "prefLocation3",
+        "prefCity1",
+        "prefCity2",
+        "prefCity3",
+      ].includes(name)
+    ) {
       if (value === "" || /^[A-Za-z\s]+$/.test(value)) {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
@@ -157,7 +199,7 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // Any PINCODE field: digits only, max 6
+    // Pincodes: digits only, max 6
     if (
       name === "permanentPincode" ||
       name === "currentPincode" ||
@@ -170,14 +212,14 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // Aadhar: digits only, max 12
+    // Aadhaar: digits only, max 12
     if (name === "aadhar") {
       const digitsOnly = value.replace(/\D/g, "").slice(0, 12);
       setFormData((prev) => ({ ...prev, aadhar: digitsOnly }));
       return;
     }
 
-    // PAN: uppercase, letters & numbers only, max 10
+    // PAN: uppercase alphanumeric, max 10
     if (name === "pan") {
       const cleaned = value
         .toUpperCase()
@@ -187,9 +229,7 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // NOTE: ❌ we removed old `enteredOtp` branch
-    // OTP input now handled by dedicated handlers below
-
+    // Checkboxes
     if (type === "checkbox") {
       if (name === "sameAsPermanent") {
         const checkedValue = checked;
@@ -210,7 +250,7 @@ const RegisterForEducation = () => {
     }
   };
 
-  // ✅ NEW: OTP input handlers (so we don’t pollute formData)
+  // OTP handlers
   const handleMobileOtpChange = (e) => {
     const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
     setOtpState((prev) => ({
@@ -233,7 +273,6 @@ const RegisterForEducation = () => {
         ...prev,
         [name]: "Wrong PIN code. Please enter a valid 6-digit PIN.",
       }));
-      // clear invalid value from box
       setFormData((prev) => ({ ...prev, [name]: "" }));
       alert("Wrong PIN code. Please enter a valid 6-digit PIN.");
     } else {
@@ -241,13 +280,14 @@ const RegisterForEducation = () => {
     }
   };
 
-  // ✅ NEW: Send OTP for Mobile only
+  const isBothVerified = () =>
+    otpState.mobile.otpVerified && otpState.aadhaar.otpVerified;
+
   const handleSendMobileOtp = () => {
     if (!formData.phone || formData.phone.length !== 10) {
       alert("Please enter a valid 10-digit mobile number before sending OTP.");
       return;
     }
-
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     setOtpState((prev) => ({
       ...prev,
@@ -258,7 +298,6 @@ const RegisterForEducation = () => {
         otpVerified: false,
       },
     }));
-
     alert(`Demo Mobile OTP for testing: ${otp}`);
   };
 
@@ -279,13 +318,11 @@ const RegisterForEducation = () => {
     }
   };
 
-  // ✅ NEW: Send OTP for Aadhaar only
   const handleSendAadhaarOtp = () => {
     if (!formData.aadhar || formData.aadhar.length !== 12) {
       alert("Please enter a valid 12-digit Aadhaar number before sending OTP.");
       return;
     }
-
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     setOtpState((prev) => ({
       ...prev,
@@ -296,7 +333,6 @@ const RegisterForEducation = () => {
         otpVerified: false,
       },
     }));
-
     alert(`Demo Aadhaar OTP for testing: ${otp}`);
   };
 
@@ -320,10 +356,8 @@ const RegisterForEducation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Preference location PIN check (must be different)
     const { prefPincode1, prefPincode2, prefPincode3 } = formData;
     const pins = [prefPincode1, prefPincode2, prefPincode3].filter(Boolean);
-
     const duplicatePin =
       pins.length === 3 && new Set(pins).size !== pins.length;
 
@@ -334,11 +368,7 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // ✅ require BOTH verifications
-    const bothVerified =
-      otpState.mobile.otpVerified && otpState.aadhaar.otpVerified;
-
-    if (!bothVerified) {
+    if (!isBothVerified()) {
       alert(
         "Please verify both Mobile Number and Aadhaar OTP before submitting the form."
       );
@@ -357,19 +387,14 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // Here you can send `formData` & `files` to your backend / API
     console.log("Form submitted:", formData, files);
     alert("Form submitted successfully (demo).");
   };
 
-  // Helper: does selected state have districts list?
   const hasDistricts = (stateName) =>
     Boolean(districtsByState[stateName] && districtsByState[stateName].length);
 
-  // ✅ use bothVerified in your UI (submit disabled, messages, etc.)
-  const bothVerified =
-    otpState.mobile.otpVerified && otpState.aadhaar.otpVerified;
-
+  const bothVerified = isBothVerified();
   const canSubmit =
     formData.declarationConsent && bothVerified && formData.msgConsent;
 
@@ -380,11 +405,9 @@ const RegisterForEducation = () => {
         backgroundImage: "url('/images/volunteer-registration-bg.png')",
       }}
     >
-      {/* light overlay to make text easier to read */}
       <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div>
 
       <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 md:p-10">
-        {/* Heading separated */}
         <h1 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-1">
           Volunteer Registration
         </h1>
@@ -393,7 +416,7 @@ const RegisterForEducation = () => {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Personal Details */}
+          {/* Personal Information */}
           <div>
             <h2 className="text-lg font-semibold text-slate-800 mb-4">
               Personal Information
@@ -402,7 +425,10 @@ const RegisterForEducation = () => {
               {/* Full Name */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Full Name *
+                  Full Name{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -415,9 +441,13 @@ const RegisterForEducation = () => {
                 />
               </div>
 
+              {/* Email */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Email Address *
+                  Email Address{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="email"
@@ -430,10 +460,13 @@ const RegisterForEducation = () => {
                 />
               </div>
 
-              {/* Phone with country code */}
+              {/* Phone */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Phone No. *
+                  Phone No.{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <div className="flex gap-2">
                   <select
@@ -464,7 +497,10 @@ const RegisterForEducation = () => {
               {/* DOB */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Date of Birth *
+                  Date of Birth{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="date"
@@ -484,7 +520,10 @@ const RegisterForEducation = () => {
               {/* Nationality */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Nationality *
+                  Nationality{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -496,9 +535,14 @@ const RegisterForEducation = () => {
                   onChange={handleChange}
                 />
               </div>
+
+              {/* Gender */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Gender *
+                  Gender{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <select
                   name="gender"
@@ -507,7 +551,9 @@ const RegisterForEducation = () => {
                   value={formData.gender}
                   onChange={handleChange}
                 >
-                  <option value="">Select gender</option>
+                  <option value="" disabled>
+                    Select Gender
+                  </option>
                   <option value="Female">Female</option>
                   <option value="Male">Male</option>
                   <option value="Non-binary">Non-binary</option>
@@ -515,10 +561,13 @@ const RegisterForEducation = () => {
                 </select>
               </div>
 
-              {/* Aadhar + file */}
+              {/* Aadhar */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Aadhar No. *
+                  Aadhar No.{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -560,10 +609,13 @@ const RegisterForEducation = () => {
                 )}
               </div>
 
-              {/* PAN + file */}
+              {/* PAN */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Pan No. *
+                  Pan No.{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -607,29 +659,38 @@ const RegisterForEducation = () => {
             </div>
           </div>
 
-          {/* Education & Experience */}
+          {/* Education & Volunteer Experience */}
           <div>
             <h2 className="text-lg font-semibold text-slate-800 mb-4">
               Education &amp; Volunteer Experience
             </h2>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {/* 9 – Educational Qualification text box */}
+              {/* Educational Qualification */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Educational Qualification *
+                  Educational Qualification{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
-                <input
-                  type="text"
+                <select
                   name="education"
                   required
-                  placeholder="Select your qualification"
-                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
                   value={formData.education}
                   onChange={handleChange}
-                />
+                >
+                  <option value="" disabled>
+                    Select Your Qualification
+                  </option>
+                  {educationOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
 
-                {/* 11 – Upload certificates bar (styled like reference image) */}
                 <div className="mt-2 border border-dashed border-slate-300 bg-slate-50 rounded-lg px-4 py-3 text-xs flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
                     <span className="text-[#138808]">
@@ -664,22 +725,31 @@ const RegisterForEducation = () => {
                 )}
               </div>
 
-              {/* 10 – Volunteer Experience text box */}
+              {/* Volunteer Experience */}
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Volunteer Experience *
+                  Volunteer Experience{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
-                <input
-                  type="text"
+                <select
                   name="volunteerExperience"
                   required
-                  placeholder="Select your experience"
-                  className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                  className="w-full border rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#138808]"
                   value={formData.volunteerExperience}
                   onChange={handleChange}
-                />
+                >
+                  <option value="" disabled>
+                    Select Your Experience
+                  </option>
+                  {volunteerExperienceOptions.map((opt) => (
+                    <option key={opt} value={opt}>
+                      {opt}
+                    </option>
+                  ))}
+                </select>
 
-                {/* 12 – Upload experience letters bar (same design) */}
                 <div className="mt-2 border border-dashed border-slate-300 bg-slate-50 rounded-lg px-4 py-3 text-xs flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2">
                     <span className="text-[#138808]">
@@ -724,7 +794,10 @@ const RegisterForEducation = () => {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Address *
+                  Address{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <textarea
                   name="permanentAddress"
@@ -738,7 +811,10 @@ const RegisterForEducation = () => {
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    State *
+                    State{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <select
                     name="permanentState"
@@ -747,7 +823,9 @@ const RegisterForEducation = () => {
                     value={formData.permanentState}
                     onChange={handleChange}
                   >
-                    <option value="">Select State</option>
+                    <option value="" disabled>
+                      Select State
+                    </option>
                     {indiaStates.map((st) => (
                       <option key={st} value={st}>
                         {st}
@@ -758,7 +836,10 @@ const RegisterForEducation = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    City / District *
+                    City / District{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   {hasDistricts(formData.permanentState) ? (
                     <select
@@ -768,7 +849,9 @@ const RegisterForEducation = () => {
                       value={formData.permanentCity}
                       onChange={handleChange}
                     >
-                      <option value="">Select District</option>
+                      <option value="" disabled>
+                        Select District
+                      </option>
                       {districtsByState[formData.permanentState].map((dist) => (
                         <option key={dist} value={dist}>
                           {dist}
@@ -790,7 +873,10 @@ const RegisterForEducation = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    Pincode *
+                    Pincode{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -847,7 +933,10 @@ const RegisterForEducation = () => {
             <div className="space-y-3">
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Address *
+                  Address{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <textarea
                   name="currentAddress"
@@ -863,7 +952,10 @@ const RegisterForEducation = () => {
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    State *
+                    State{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <select
                     name="currentState"
@@ -873,7 +965,9 @@ const RegisterForEducation = () => {
                     value={formData.currentState}
                     onChange={handleChange}
                   >
-                    <option value="">Select State</option>
+                    <option value="" disabled>
+                      Select State
+                    </option>
                     {indiaStates.map((st) => (
                       <option key={st} value={st}>
                         {st}
@@ -884,7 +978,10 @@ const RegisterForEducation = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    City / District *
+                    City / District{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   {hasDistricts(formData.currentState) ? (
                     <select
@@ -895,7 +992,9 @@ const RegisterForEducation = () => {
                       value={formData.currentCity}
                       onChange={handleChange}
                     >
-                      <option value="">Select District</option>
+                      <option value="" disabled>
+                        Select District
+                      </option>
                       {districtsByState[formData.currentState].map((dist) => (
                         <option key={dist} value={dist}>
                           {dist}
@@ -917,7 +1016,10 @@ const RegisterForEducation = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">
-                    Pincode *
+                    Pincode{" "}
+                    <span className="text-red-500" aria-hidden="true">
+                      *
+                    </span>
                   </label>
                   <input
                     type="text"
@@ -956,7 +1058,7 @@ const RegisterForEducation = () => {
             </div>
           </div>
 
-          {/* Preferred Location To Work – new layout with Location / City / Pincode */}
+          {/* Preferred Location To Work */}
           <div>
             <h2 className="text-lg font-semibold text-slate-800 mb-4">
               Preferred Location To Work
@@ -968,7 +1070,10 @@ const RegisterForEducation = () => {
                 <div className="grid md:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-xs font-medium mb-1">
-                      Location / Area *
+                      Location / Area{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -981,7 +1086,10 @@ const RegisterForEducation = () => {
                   </div>
                   <div>
                     <label className="block text-xs font-medium mb-1">
-                      City *
+                      City{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -994,7 +1102,10 @@ const RegisterForEducation = () => {
                   </div>
                   <div>
                     <label className="block text-xs font-medium mb-1">
-                      Pincode *
+                      Pincode{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -1011,7 +1122,7 @@ const RegisterForEducation = () => {
             ))}
           </div>
 
-          {/* Questions */}
+          {/* Motivation */}
           <div>
             <h2 className="text-lg font-semibold text-slate-800 mb-4">
               About Your Motivation
@@ -1020,7 +1131,10 @@ const RegisterForEducation = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  How did you get to know about Jaago Manav? *
+                  How did you get to know about Jaago Manav?{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -1035,7 +1149,10 @@ const RegisterForEducation = () => {
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Why do you want to volunteer with Jaago Manav&apos;s Education
-                  Program? *
+                  Program?{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <textarea
                   name="whyVolunteer"
@@ -1050,7 +1167,10 @@ const RegisterForEducation = () => {
               <div>
                 <label className="block text-sm font-medium mb-1">
                   What feelings or experiences motivate you to support children
-                  through education? *
+                  through education?{" "}
+                  <span className="text-red-500" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <textarea
                   name="motivation"
@@ -1064,9 +1184,158 @@ const RegisterForEducation = () => {
             </div>
           </div>
 
-          {/* Declaration + OTP + Consent & Submit */}
+          {/* OTP verification block */}
+          <div className="mt-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Mobile Verification */}
+              <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
+                <p className="text-sm font-semibold">
+                  Verify Your Mobile Number
+                </p>
+
+                <div className="space-y-2">
+                  <label className="block text-xs sm:text-sm font-medium">
+                    Mobile Number
+                  </label>
+                  <div className="flex w-full">
+                    <div className="hidden sm:flex items-center justify-center px-4 text-sm text-slate-700 bg-slate-100 border border-slate-300 border-r-0 rounded-l-lg">
+                      +91
+                    </div>
+
+                    <input
+                      type="text"
+                      name="phone"
+                      maxLength={10}
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="flex-1 border border-slate-300 rounded-l-lg sm:rounded-none sm:border-l-0 px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                      placeholder="Enter 10-digit mobile"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={handleSendMobileOtp}
+                      className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                    >
+                      Send OTP
+                    </button>
+                  </div>
+                  {otpState.mobile.otpSent && !otpState.mobile.otpVerified && (
+                    <p className="text-[11px] text-slate-500">
+                      OTP sent. Please check your SMS (mock).
+                    </p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-xs sm:text-sm font-medium">
+                    Enter Mobile OTP
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={otpState.mobile.enteredOtp}
+                    onChange={handleMobileOtpChange}
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                    placeholder="Enter 6-digit OTP"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleVerifyMobileOtp}
+                  className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
+                >
+                  Verify Mobile OTP
+                </button>
+
+                {otpState.mobile.otpVerified && (
+                  <p className="text-xs text-emerald-700 font-medium mt-2">
+                    Mobile number verified.
+                  </p>
+                )}
+              </div>
+
+              {/* Aadhaar Verification */}
+              <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
+                <p className="text-sm font-semibold">Verify Your Aadhaar</p>
+
+                <div className="space-y-2">
+                  <label className="block text-xs sm:text-sm font-medium">
+                    Aadhaar Number
+                  </label>
+                  <div className="flex w-full">
+                    <input
+                      type="text"
+                      name="aadhar"
+                      maxLength={12}
+                      value={formData.aadhar}
+                      onChange={handleChange}
+                      className="flex-1 border border-slate-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                      placeholder="Enter 12-digit Aadhaar"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={handleSendAadhaarOtp}
+                      className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
+                    >
+                      Send OTP
+                    </button>
+                  </div>
+                  {otpState.aadhaar.otpSent &&
+                    !otpState.aadhaar.otpVerified && (
+                      <p className="text-[11px] text-slate-500">
+                        OTP sent for Aadhaar (mock).
+                      </p>
+                    )}
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-xs sm:text-sm font-medium">
+                    Enter Aadhaar OTP
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={otpState.aadhaar.enteredOtp}
+                    onChange={handleAadhaarOtpChange}
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
+                    placeholder="Enter 6-digit OTP"
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleVerifyAadhaarOtp}
+                  className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
+                >
+                  Verify Aadhaar OTP
+                </button>
+
+                {otpState.aadhaar.otpVerified && (
+                  <p className="text-xs text-emerald-700 font-medium mt-2">
+                    Aadhaar verified.
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {bothVerified ? (
+              <p className="mt-3 text-xs sm:text-sm text-emerald-700 font-semibold">
+                ✅ Both Mobile & Aadhaar verified. You can now submit the form
+                after giving consent.
+              </p>
+            ) : (
+              <p className="mt-3 text-[11px] sm:text-xs text-slate-500">
+                Please verify both your Mobile Number and Aadhaar before
+                submitting the form.
+              </p>
+            )}
+          </div>
+          {/* Declaration, Consent, OTP & Submit */}
           <div className="border-t border-slate-200 pt-4 space-y-4">
-            {/* Declaration box */}
+            {/* Declaration first */}
             <label className="flex items-start gap-2 text-sm">
               <input
                 type="checkbox"
@@ -1082,185 +1351,24 @@ const RegisterForEducation = () => {
               </span>
             </label>
 
-            {/* OTP verification block */}
-            <div className="mt-6">
-              {/* Responsive layout: stacked on mobile, side by side on md+ */}
-              <div className="grid gap-4 md:grid-cols-2">
-                {/* ====== Mobile Verification ====== */}
-                <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
-                  <p className="text-sm font-semibold">
-                    Verify Your Mobile Number
-                  </p>
+            {/* Message Consent just below it */}
+            <label className="flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                name="msgConsent"
+                checked={formData.msgConsent}
+                onChange={handleChange}
+                className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
+                disabled={!bothVerified}
+              />
+              <span className={bothVerified ? "" : "text-slate-400"}>
+                I agree to receive messages/communication regarding this
+                volunteering program.
+              </span>
+            </label>
 
-                  {/* Mobile number + Send OTP */}
-                  <div className="space-y-2">
-                    <label className="block text-xs sm:text-sm font-medium">
-                      Mobile Number
-                    </label>
-                    <div className="flex w-full">
-                      {/* +91 box */}
-                      <div className="hidden sm:flex items-center justify-center px-4 text-sm text-slate-700 bg-slate-100 border border-slate-300 border-r-0 rounded-l-lg">
-                        +91
-                      </div>
-
-                      {/* number input */}
-                      <input
-                        type="text"
-                        name="phone"
-                        maxLength={10}
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="flex-1 border border-slate-300 rounded-l-lg sm:rounded-none sm:border-l-0 px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                        placeholder="Enter 10-digit mobile"
-                      />
-
-                      {/* Send OTP button */}
-                      <button
-                        type="button"
-                        onClick={handleSendMobileOtp}
-                        className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
-                      >
-                        Send OTP
-                      </button>
-                    </div>
-                    {otpState.mobile.sent && !otpState.mobile.verified && (
-                      <p className="text-[11px] text-slate-500">
-                        OTP sent. Please check your SMS (mock).
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Enter OTP */}
-                  <div className="space-y-2">
-                    <label className="block text-xs sm:text-sm font-medium">
-                      Enter Mobile OTP
-                    </label>
-                    <input
-                      type="text"
-                      name="mobileOtp"
-                      maxLength={6}
-                      value={formData.mobileOtp}
-                      onChange={handleChange}
-                      className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                      placeholder="Enter 6-digit OTP"
-                    />
-                  </div>
-
-                  {/* Verify button */}
-                  <button
-                    type="button"
-                    onClick={handleVerifyMobileOtp}
-                    className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
-                  >
-                    Verify Mobile OTP
-                  </button>
-
-                  {otpState.mobile.verified && (
-                    <p className="text-xs text-emerald-700 font-medium mt-2">
-                      Mobile number verified.
-                    </p>
-                  )}
-                </div>
-
-                {/* ====== Aadhaar Verification ====== */}
-                <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
-                  <p className="text-sm font-semibold">Verify Your Aadhaar</p>
-
-                  {/* Aadhaar number + Send OTP */}
-                  <div className="space-y-2">
-                    <label className="block text-xs sm:text-sm font-medium">
-                      Aadhaar Number
-                    </label>
-                    <div className="flex w-full">
-                      <input
-                        type="text"
-                        name="aadhaar"
-                        maxLength={12}
-                        value={formData.aadhaar}
-                        onChange={handleChange}
-                        className="flex-1 border border-slate-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                        placeholder="Enter 12-digit Aadhaar"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={handleSendAadhaarOtp}
-                        className="px-3 sm:px-5 text-xs sm:text-sm font-semibold text-white bg-[#FF9933] hover:bg-[#138808] border border-[#F97316] rounded-r-lg focus:outline-none"
-                      >
-                        Send OTP
-                      </button>
-                    </div>
-                    {otpState.aadhaar.sent && !otpState.aadhaar.verified && (
-                      <p className="text-[11px] text-slate-500">
-                        OTP sent for Aadhaar (mock).
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Enter Aadhaar OTP */}
-                  <div className="space-y-2">
-                    <label className="block text-xs sm:text-sm font-medium">
-                      Enter Aadhaar OTP
-                    </label>
-                    <input
-                      type="text"
-                      name="aadhaarOtp"
-                      maxLength={6}
-                      value={formData.aadhaarOtp}
-                      onChange={handleChange}
-                      className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                      placeholder="Enter 6-digit OTP"
-                    />
-                  </div>
-
-                  {/* Verify button */}
-                  <button
-                    type="button"
-                    onClick={handleVerifyAadhaarOtp}
-                    className="w-full mt-1 inline-flex justify-center rounded-lg bg-[#FF9933] px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#138808] focus:outline-none"
-                  >
-                    Verify Aadhaar OTP
-                  </button>
-
-                  {otpState.aadhaar.verified && (
-                    <p className="text-xs text-emerald-700 font-medium mt-2">
-                      Aadhaar verified.
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Combined status */}
-              {bothVerified ? (
-                <p className="mt-3 text-xs sm:text-sm text-emerald-700 font-semibold">
-                  ✅ Both Mobile & Aadhaar verified. You can now give consent
-                  and submit the form.
-                </p>
-              ) : (
-                <p className="mt-3 text-[11px] sm:text-xs text-slate-500">
-                  Please verify both your Mobile Number and Aadhaar before
-                  submitting the form.
-                </p>
-              )}
-            </div>
-
-            {/* Message consent + Submit button – only meaningful after OTP verified */}
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  name="msgConsent"
-                  checked={formData.msgConsent}
-                  onChange={handleChange}
-                  className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                  disabled={!otpState.otpVerified}
-                />
-                <span className={otpState.otpVerified ? "" : "text-slate-400"}>
-                  I agree to receive messages/communication regarding this
-                  volunteering program.
-                </span>
-              </label>
-
+            {/* Submit button */}
+            <div className="flex justify-end pt-2">
               <button
                 type="submit"
                 disabled={!canSubmit}
