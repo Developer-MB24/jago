@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 
-/* ========= Icons ========= */
+/* Icons  */
 const ChevronDown = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" {...props}>
     <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.06l3.71-2.83a.75.75 0 11.92 1.18l-4.2 3.2a.75.75 0 01-.92 0l-4.2-3.2a.75.75 0 01-.02-1.2z" />
@@ -58,7 +58,7 @@ const ArrowRight = (p) => (
   </svg>
 );
 
-/* ========= Utils ========= */
+/*  Utils  */
 function useOnClickOutside(refs, handler) {
   useEffect(() => {
     function onClick(e) {
@@ -71,7 +71,7 @@ function useOnClickOutside(refs, handler) {
   }, [refs, handler]);
 }
 
-/* ========= Shared Portal Dropdown ========= */
+/*  Shared Portal Dropdown */
 function SimplePortalDropdown({ anchorRef, onClose, items }) {
   const menuRef = useRef(null);
   const [pos, setPos] = useState({ top: 0, left: 0, width: 240 });
@@ -145,7 +145,7 @@ function SimplePortalDropdown({ anchorRef, onClose, items }) {
   return createPortal(menu, document.body);
 }
 
-/* ========= Search Overlay ========= */
+/* Search Overlay  */
 function SearchOverlay({ open, onClose, value, onChange, onSubmit }) {
   if (!open) return null;
 
@@ -204,23 +204,15 @@ export default function Header() {
   const [blogOpen, setBlogOpen] = useState(false);
   const blogButtonRef = useRef(null);
 
-  // Register dropdown state + ref
-  const [registerOpen, setRegisterOpen] = useState(false);
-  const registerButtonRef = useRef(null);
-
   // Search state
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // include registerButtonRef in outside click handler
-  useOnClickOutside(
-    [servicesButtonRef, blogButtonRef, registerButtonRef],
-    () => {
-      setServicesOpen(false);
-      setBlogOpen(false);
-      setRegisterOpen(false);
-    }
-  );
+  // outside click (only services + blog now)
+  useOnClickOutside([servicesButtonRef, blogButtonRef], () => {
+    setServicesOpen(false);
+    setBlogOpen(false);
+  });
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 1024px)");
@@ -236,10 +228,7 @@ export default function Header() {
       alert("Please enter a keyword to search.");
       return;
     }
-
-    // TODO: hook to your real search route or logic
     console.log("Searching for:", q);
-
     setSearchOpen(false);
   };
 
@@ -304,7 +293,6 @@ export default function Header() {
                   e.stopPropagation();
                   setServicesOpen((v) => !v);
                   setBlogOpen(false);
-                  setRegisterOpen(false);
                 }}
               >
                 <span>Services</span>
@@ -349,7 +337,6 @@ export default function Header() {
                   e.stopPropagation();
                   setBlogOpen((v) => !v);
                   setServicesOpen(false);
-                  setRegisterOpen(false);
                 }}
               >
                 <span>Blog</span>
@@ -380,62 +367,15 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Desktop: Search + Donate */}
+          {/* Desktop: Volunteer Registration + Search + Donate */}
           <div className="ml-6 hidden lg:flex items-center gap-5 shrink-0">
-            {/* Register dropdown (replaces Shop) */}
-            <div className="relative text-lg font-semibold">
-              <button
-                ref={registerButtonRef}
-                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
-                aria-haspopup="true"
-                aria-expanded={registerOpen}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setRegisterOpen((v) => !v);
-                  setServicesOpen(false);
-                  setBlogOpen(false);
-                }}
-              >
-                <span> Volunteer Registration</span>
-                <ChevronDown
-                  className={`h-5 w-5 transition-transform ${
-                    registerOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </button>
-              {registerOpen && (
-                <SimplePortalDropdown
-                  anchorRef={registerButtonRef}
-                  onClose={() => setRegisterOpen(false)}
-                  items={[
-                    {
-                      label: "Volunteer Register - Education",
-                      to: "/register/education",
-                    },
-                    {
-                      label: "Volunteer Register - Health",
-                      to: "/register/health",
-                    },
-                    {
-                      label: "Volunteer Register - Agriculture",
-                      to: "/register/agriculture",
-                    },
-                    {
-                      label: "Volunteer Register - Employment",
-                      to: "/register/employment",
-                    },
-                    {
-                      label: "Volunteer Register - Geographical",
-                      to: "/register/geographical",
-                    },
-                    {
-                      label: "Volunteer Register - Social & Political",
-                      to: "/register/social-political",
-                    },
-                  ]}
-                />
-              )}
-            </div>
+            {/* NEW: single button that goes to selection screen */}
+            <Link
+              to="/register"
+              className="inline-flex items-center rounded-full border-2 border-[#FF9933]  px-4 py-1.5 text-sm font-semibold tracking-wide text-[#fff] shadow-sm hover:bg-[#138808] hover:text-white transition-colors"
+            >
+              Volunteer Registration
+            </Link>
 
             {/* Search */}
             <button
@@ -452,7 +392,7 @@ export default function Header() {
               className="group relative inline-flex items-center gap-2 rounded-full border-[3px] border-[#FF5A1F] px-2 py-1 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
             >
               <span>Donate Now</span>
-              <span className="grid h-8 w-6 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
                 <ArrowRight className="h-6 w-4" />
               </span>
             </Link>
@@ -505,7 +445,7 @@ export default function Header() {
                   <li key={item.label}>
                     <Link
                       to={item.to}
-                      className="block rounded-md px-3 py-2 text-base hover:bg:white/10 hover:bg-white/10"
+                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
@@ -539,51 +479,14 @@ export default function Header() {
               </ul>
             </details>
 
-            {/* Register group in mobile */}
-            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
-              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
-                <span>Register</span>
-                <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
-              </summary>
-              <ul className="mt-2 space-y-1">
-                {[
-                  {
-                    label: "Volunteer Register - Education",
-                    to: "/register/education",
-                  },
-                  {
-                    label: "Volunteer Register - Health",
-                    to: "/register/health",
-                  },
-                  {
-                    label: "Volunteer Register - Agriculture",
-                    to: "/register/agriculture",
-                  },
-                  {
-                    label: "Volunteer Register - Employment",
-                    to: "/register/employment",
-                  },
-                  {
-                    label: "Volunteer Register - Geographical",
-                    to: "/register/geographical",
-                  },
-                  {
-                    label: "Volunteer Register - Social & Political",
-                    to: "/register/social-political",
-                  },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      to={item.to}
-                      className="block rounded-md px-3 py-2 text-base hover:bg:white/10 hover:bg-white/10"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
+            {/* NEW: simple Volunteer Registration link (no dropdown) */}
+            <Link
+              to="/register"
+              className="block py-2 text-lg font-semibold hover:text-[#FF9933]"
+              onClick={() => setMobileOpen(false)}
+            >
+              Volunteer Registration
+            </Link>
 
             <Link
               to="/donations"

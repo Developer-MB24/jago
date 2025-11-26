@@ -40,7 +40,6 @@ const indiaStates = [
   "Puducherry",
 ];
 
-// Example districts mapping (you can expand this list)
 const districtsByState = {
   Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik"],
   Delhi: ["Central Delhi", "North Delhi", "South Delhi"],
@@ -49,7 +48,7 @@ const districtsByState = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
 };
 
-// Dropdown options
+// Dropdown
 const educationOptions = [
   "Bachelor of Arts (B.A.)",
   "Bachelor of Science (B.Sc.)",
@@ -134,7 +133,7 @@ const RegisterForEducation = () => {
     panFiles: [],
   });
 
-  // Separate OTP state
+  //  OTP state
   const [otpState, setOtpState] = useState({
     mobile: {
       generatedOtp: "",
@@ -173,7 +172,6 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // Only alphabets + spaces for these fields
     if (
       [
         "fullName",
@@ -362,10 +360,12 @@ const RegisterForEducation = () => {
   const hasDistricts = (stateName) =>
     Boolean(districtsByState[stateName] && districtsByState[stateName].length);
 
-  // ---------- STEP VALIDATIONS ----------
+  //  STEP VALIDATIONS
 
+  // Step 1: only personal + education/experience
   const validateStep1 = () => {
     const missing = [];
+    const extraErrors = [];
 
     const check = (field, label) => {
       if (!formData[field] || `${formData[field]}`.trim() === "") {
@@ -382,26 +382,12 @@ const RegisterForEducation = () => {
     check("gender", "Gender");
     check("aadhar", "Aadhaar Number");
     check("pan", "PAN Number");
+
+    // Education & experience
     check("education", "Educational Qualification");
     check("volunteerExperience", "Volunteer Experience");
 
-    // Permanent address
-    check("permanentAddress", "Permanent Address");
-    check("permanentState", "Permanent State");
-    check("permanentCity", "Permanent City/District");
-    check("permanentPincode", "Permanent Pincode");
-
-    // Current address (if not same as permanent)
-    if (!formData.sameAsPermanent) {
-      check("currentAddress", "Current Address");
-      check("currentState", "Current State");
-      check("currentCity", "Current City/District");
-      check("currentPincode", "Current Pincode");
-    }
-
-    // Specific format checks
-    const extraErrors = [];
-
+    // Format checks
     if (formData.phone.length !== 10) {
       extraErrors.push("Phone number must be 10 digits.");
     }
@@ -410,19 +396,6 @@ const RegisterForEducation = () => {
     }
     if (formData.pan.length !== 10) {
       extraErrors.push("PAN must be 10 characters.");
-    }
-    if (
-      formData.permanentPincode &&
-      !/^\d{6}$/.test(formData.permanentPincode)
-    ) {
-      extraErrors.push("Permanent Pincode must be a valid 6-digit number.");
-    }
-    if (
-      !formData.sameAsPermanent &&
-      formData.currentPincode &&
-      !/^\d{6}$/.test(formData.currentPincode)
-    ) {
-      extraErrors.push("Current Pincode must be a valid 6-digit number.");
     }
 
     if (missing.length || extraErrors.length) {
@@ -440,9 +413,43 @@ const RegisterForEducation = () => {
     return true;
   };
 
+  // Step 2: addresses + preferred locations
   const validateStep2 = () => {
     const missing = [];
+    const extraErrors = [];
 
+    const check = (field, label) => {
+      if (!formData[field] || `${formData[field]}`.trim() === "") {
+        missing.push(label);
+      }
+    };
+
+    // Permanent address
+    check("permanentAddress", "Permanent Address");
+    check("permanentState", "Permanent State");
+    check("permanentCity", "Permanent City/District");
+    check("permanentPincode", "Permanent Pincode");
+
+    if (
+      formData.permanentPincode &&
+      !/^\d{6}$/.test(formData.permanentPincode)
+    ) {
+      extraErrors.push("Permanent Pincode must be a valid 6-digit number.");
+    }
+
+    // Current address (if not same as permanent)
+    if (!formData.sameAsPermanent) {
+      check("currentAddress", "Current Address");
+      check("currentState", "Current State");
+      check("currentCity", "Current City/District");
+      check("currentPincode", "Current Pincode");
+
+      if (formData.currentPincode && !/^\d{6}$/.test(formData.currentPincode)) {
+        extraErrors.push("Current Pincode must be a valid 6-digit number.");
+      }
+    }
+
+    // Preferred locations
     const checkPref = (num) => {
       if (!formData[`prefLocation${num}`]) {
         missing.push(`Preference ${num} - Location/Area`);
@@ -453,32 +460,32 @@ const RegisterForEducation = () => {
       if (!formData[`prefPincode${num}`]) {
         missing.push(`Preference ${num} - Pincode`);
       } else if (!/^\d{6}$/.test(formData[`prefPincode${num}`])) {
-        missing.push(
-          `Preference ${num} - Pincode must be a valid 6-digit number`
+        extraErrors.push(
+          `Preference ${num} - Pincode must be a valid 6-digit number.`
         );
       }
     };
 
     [1, 2, 3].forEach(checkPref);
 
+    // All three preference pincodes must be unique
     const { prefPincode1, prefPincode2, prefPincode3 } = formData;
     const pins = [prefPincode1, prefPincode2, prefPincode3];
-    let duplicatePin = false;
     if (pins.every(Boolean) && new Set(pins).size !== pins.length) {
-      duplicatePin = true;
-    }
-
-    if (duplicatePin) {
-      missing.push(
+      extraErrors.push(
         "Each preferred location must have a different Pincode (all three must be unique)."
       );
     }
 
-    if (missing.length) {
-      alert(
-        "Please complete all required fields in Step 2.\n\n- " +
-          missing.join("\n- ")
-      );
+    if (missing.length || extraErrors.length) {
+      let message = "Please complete all required fields in Step 2.\n";
+      if (missing.length) {
+        message += "\nMissing:\n- " + missing.join("\n- ");
+      }
+      if (extraErrors.length) {
+        message += "\n\nFix:\n- " + extraErrors.join("\n- ");
+      }
+      alert(message);
       return false;
     }
 
@@ -500,7 +507,6 @@ const RegisterForEducation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Only allow real submit from Step 3
     if (currentStep !== 3) {
       return;
     }
@@ -540,18 +546,15 @@ const RegisterForEducation = () => {
     alert("Form submitted successfully (demo).");
   };
 
-  // ---- stepper meta for indicator & progress ----
   const steps = [
     { id: 1, title: "Personal & Education" },
-    { id: 2, title: "Preferred Location" },
+    { id: 2, title: "Address & Preferred Location" },
     { id: 3, title: "Motivation & Submit" },
   ];
 
   const totalSteps = steps.length;
   const progressPercent =
     totalSteps > 1 ? ((currentStep - 1) / (totalSteps - 1)) * 100 : 0;
-
-  // ---------- RENDER ----------
 
   return (
     <div
@@ -563,14 +566,26 @@ const RegisterForEducation = () => {
       <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div>
 
       <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 md:p-10">
-        <h1 className="text-2xl md:text-3xl font-bold text-center text-slate-900 mb-1">
+        {/* Heading */}
+        <h1
+          className="text-3xl md:text-4xl font-extrabold text-center text-slate-900 mb-1 tracking-wide"
+          style={{
+            fontFamily:
+              "'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          }}
+        >
           Volunteer Registration
         </h1>
-        <p className="text-center text-base font-semibold text-slate-800 mb-6">
+        <p
+          className="text-center text-lg text-slate-800 mb-6 italic"
+          style={{
+            fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
+          }}
+        >
           for Education
         </p>
 
-        {/* Step Indicator + completion bar */}
+        {/* Step indicator */}
         <div className="mb-6">
           <div className="flex items-center justify-center gap-4 md:gap-6">
             {steps.map((step, index) => {
@@ -623,8 +638,9 @@ const RegisterForEducation = () => {
           </div>
         </div>
 
+        {/* FORM */}
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* ================= STEP 1 ================= */}
+          {/* STEP 1 */}
           {currentStep === 1 && (
             <>
               {/* Personal Information */}
@@ -999,6 +1015,22 @@ const RegisterForEducation = () => {
                 </div>
               </div>
 
+              {/* Next Button */}
+              <div className="flex justify-end pt-4">
+                <button
+                  type="button"
+                  onClick={() => handleNextFromStep(1)}
+                  className="inline-flex justify-center rounded-full bg-[#FF9933] px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#138808] transition-colors"
+                >
+                  {/* Next: Address & Preferred Location  */} Step 2
+                </button>
+              </div>
+            </>
+          )}
+
+          {/*  STEP 2  */}
+          {currentStep === 2 && (
+            <>
               {/* Permanent Address */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
@@ -1275,22 +1307,6 @@ const RegisterForEducation = () => {
                 </div>
               </div>
 
-              {/* Next Button */}
-              <div className="flex justify-end pt-4">
-                <button
-                  type="button"
-                  onClick={() => handleNextFromStep(1)}
-                  className="inline-flex justify-center rounded-full bg-[#FF9933] px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#138808] transition-colors"
-                >
-                  Next: Preferred Location
-                </button>
-              </div>
-            </>
-          )}
-
-          {/* ================= STEP 2 ================= */}
-          {currentStep === 2 && (
-            <>
               {/* Preferred Location To Work */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
@@ -1368,13 +1384,13 @@ const RegisterForEducation = () => {
                   onClick={() => handleNextFromStep(2)}
                   className="inline-flex justify-center rounded-full bg-[#FF9933] px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#138808] transition-colors"
                 >
-                  Next: Motivation & Verification
+                  {/* Next: Motivation & Verification */} Step 3
                 </button>
               </div>
             </>
           )}
 
-          {/* ================= STEP 3 ================= */}
+          {/*  STEP 3  */}
           {currentStep === 3 && (
             <>
               {/* Motivation */}
@@ -1442,7 +1458,6 @@ const RegisterForEducation = () => {
               {/* OTP verification block */}
               <div className="mt-4">
                 <div className="grid gap-4 md:grid-cols-2">
-                  {/* Mobile Verification */}
                   <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
                     <p className="text-sm font-semibold">
                       Verify Your Mobile Number
@@ -1608,7 +1623,7 @@ const RegisterForEducation = () => {
                   </span>
                 </label>
 
-                {/* Message Consent just below it */}
+                {/* Message Consent  */}
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="checkbox"
