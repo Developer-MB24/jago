@@ -1022,7 +1022,7 @@ const RegisterForEducation = () => {
                   onClick={() => handleNextFromStep(1)}
                   className="inline-flex justify-center rounded-full bg-[#FF9933] px-6 py-2 text-sm font-semibold text-white shadow-md hover:bg-[#138808] transition-colors"
                 >
-                  {/* Next: Address & Preferred Location  */} Step 2
+                  {/* Next: Address & Preferred Location  */} Next
                 </button>
               </div>
             </>
