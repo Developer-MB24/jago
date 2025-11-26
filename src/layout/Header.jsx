@@ -396,7 +396,7 @@ export default function Header() {
                   setBlogOpen(false);
                 }}
               >
-                <span> Registration</span>
+                <span> Volunteer Registration</span>
                 <ChevronDown
                   className={`h-5 w-5 transition-transform ${
                     registerOpen ? "rotate-180" : ""
@@ -449,11 +449,11 @@ export default function Header() {
             {/* Donate */}
             <Link
               to="/donate"
-              className="group relative inline-flex items-center gap-5 rounded-full border-[3px] border-[#FF5A1F] px-6 py-3 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
+              className="group relative inline-flex items-center gap-2 rounded-full border-[3px] border-[#FF5A1F] px-2 py-1 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
             >
               <span>Donate Now</span>
-              <span className="grid h-11 w-11 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
-                <ArrowRight className="h-6 w-6" />
+              <span className="grid h-8 w-6 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
+                <ArrowRight className="h-6 w-4" />
               </span>
             </Link>
           </div>

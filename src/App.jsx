@@ -6,6 +6,7 @@ import Service from "./pages/Service.jsx";
 import About from "./pages/About.jsx";
 import RegisterForEducation from "./pages/RegisterForEducation.jsx";
 import BlogDetails from "./pages/BlogDetails.jsx";
+import SelectVolunteerService from "./pages/SelectVolunteerService.jsx";
 // import Contact from "./pages/Contact.jsx";
 // import RegisterForHealth from "./pages/RegisterForHealth.jsx";
 
@@ -64,6 +65,7 @@ export default function App() {
           {/* <Route path="/register/health" element={<RegisterForHealth />} /> */}
 
           <Route path="/blogdetails" element={<BlogDetails />} />
+          <Route path="/register" element={<SelectVolunteerService />} />
           {/* <Route path="/contact" element={<Contact />} /> */}
 
           <Route path="*" element={<NotFound />} />
