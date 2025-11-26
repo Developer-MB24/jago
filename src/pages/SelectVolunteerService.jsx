@@ -75,12 +75,6 @@ const SelectVolunteerService = () => {
             </button>
           ))}
         </div>
-
-        {/* Optional small note */}
-        <p className="mt-8 text-center text-xs md:text-sm text-slate-600">
-          After selecting a service, you&apos;ll be taken to the registration
-          form for that specific volunteering area.
-        </p>
       </div>
     </div>
   );
