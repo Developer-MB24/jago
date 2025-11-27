@@ -48,25 +48,22 @@ const districtsByState = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
 };
 
-// Dropdown for highest qualification (health focused)
+// Agriculture education dropdown
 const educationOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS / BHMS / BUMS",
-  "MBBS",
-  "MD / MS",
-  "B.Pharma / D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "Physiotherapy (BPT/MPT)",
-  "Emergency Medical Technician (EMT)",
-  "Public Health Certification",
-  "First Aid & CPR Certification",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Community Health Worker Training",
+  "Diploma in Agriculture",
+  "B.Sc Agriculture",
+  "M.Sc Agriculture",
+  "Agricultural Engineering",
+  "Horticulture (Diploma / Degree)",
+  "Forestry",
+  "Fisheries Science",
+  "Veterinary Science (B.V.Sc)",
+  "Dairy Technology",
+  "Poultry Management",
+  "Organic Farming Certification",
+  "Agri-Business Management",
+  "Soil & Water Conservation Training",
+  "Irrigation Technology Course",
   "Other (Specify)",
 ];
 
@@ -78,44 +75,7 @@ const volunteerExperienceOptions = [
   "7+ Years",
 ];
 
-// Checkbox list – where have you contributed
-const contributionAreaOptions = [
-  "Hospitals",
-  "Clinics",
-  "Primary Health Centers",
-  "Health Camps",
-  "Vaccination Drives",
-  "Community Health Awareness Programs",
-  "Patient Support / Caregiving",
-  "Home-care or Elderly Care",
-  "NGO / Field Work",
-  "Other",
-];
-
-// Checkbox list – qualifications / trainings
-const qualificationTrainingOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS",
-  "BHMS",
-  "BUMS",
-  "B.Pharma",
-  "D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "EMT (Emergency Medical Technician)",
-  "Physiotherapy (BPT/MPT)",
-  "Public Health Certification",
-  "First Aid & CPR Training",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Health Awareness Training",
-  "Other",
-];
-
-const RegisterForHealth = () => {
+const RegisterForAgriculture = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -153,17 +113,14 @@ const RegisterForHealth = () => {
     prefPincode3: "",
     howKnow: "",
     whyVolunteer: "",
-    motivation: "", // now: “What motivates you to volunteer in the health field…”
-    medicalCampsHelp: "",
-    healthSectorExperience: "",
-    comfortWorkingWithPatients: "",
-    availabilityForFieldVisits: "",
-    hasHealthExperience: "", // "Yes" / "No"
-    healthPastRoles: "",
-    contributionAreas: [],
-    otherContributionArea: "",
-    qualificationTrainings: [],
-    otherQualificationTraining: "",
+    supportFarmer: "",
+    agriExperience: "",
+    technicalSkills: "",
+    comfortableOutdoors: "",
+    sustainablePractices: "",
+    toolsFamiliarity: "",
+    handleChallenges: "",
+    agriMotivation: "",
     declarationConsent: false,
     msgConsent: false,
   });
@@ -205,30 +162,6 @@ const RegisterForHealth = () => {
     e.target.value = "";
   };
 
-  const handleContributionAreaChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.contributionAreas.includes(value);
-      return {
-        ...prev,
-        contributionAreas: exists
-          ? prev.contributionAreas.filter((v) => v !== value)
-          : [...prev.contributionAreas, value],
-      };
-    });
-  };
-
-  const handleQualificationTrainingChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.qualificationTrainings.includes(value);
-      return {
-        ...prev,
-        qualificationTrainings: exists
-          ? prev.qualificationTrainings.filter((v) => v !== value)
-          : [...prev.qualificationTrainings, value],
-      };
-    });
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -236,12 +169,14 @@ const RegisterForHealth = () => {
     if (
       [
         "whyVolunteer",
-        "motivation",
-        "medicalCampsHelp",
-        "healthSectorExperience",
-        "comfortWorkingWithPatients",
-        "availabilityForFieldVisits",
-        "healthPastRoles",
+        "supportFarmer",
+        "agriExperience",
+        "technicalSkills",
+        "comfortableOutdoors",
+        "sustainablePractices",
+        "toolsFamiliarity",
+        "handleChallenges",
+        "agriMotivation",
       ].includes(name)
     ) {
       const words = value.trim().split(/\s+/).filter(Boolean);
@@ -253,6 +188,7 @@ const RegisterForHealth = () => {
       return;
     }
 
+    // Only letters & spaces fields
     if (
       [
         "fullName",
@@ -443,7 +379,7 @@ const RegisterForHealth = () => {
 
   //  STEP VALIDATIONS
 
-  // Step 1: only personal + education/experience
+  // Step 1: personal + education/experience
   const validateStep1 = () => {
     const missing = [];
     const extraErrors = [];
@@ -623,14 +559,14 @@ const RegisterForHealth = () => {
       return;
     }
 
-    console.log("Form submitted:", formData, files);
+    console.log("Agriculture form submitted:", formData, files);
     alert("Form submitted successfully (demo).");
   };
 
   const steps = [
     { id: 1, title: "Personal & Education" },
     { id: 2, title: "Address & Preferred Location" },
-    { id: 3, title: "Health Experience & Submit" },
+    { id: 3, title: "Agriculture Motivation & Submit" },
   ];
 
   const totalSteps = steps.length;
@@ -663,7 +599,7 @@ const RegisterForHealth = () => {
             fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
           }}
         >
-          for Health Program
+          for Agriculture Program
         </p>
 
         {/* Step indicator */}
@@ -1019,8 +955,8 @@ const RegisterForHealth = () => {
                           <FiUpload size={18} />
                         </span>
                         <span className="text-slate-700 leading-snug">
-                          Upload your qualification certificates in PDF/JPG/PNG
-                          format (multiple files allowed)
+                          Upload your certificates in PDF/JPG/PNG format
+                          (multiple files allowed)
                         </span>
                       </div>
 
@@ -1486,10 +1422,10 @@ const RegisterForHealth = () => {
           {/*  STEP 3  */}
           {currentStep === 3 && (
             <>
-              {/* Motivation & Health Questions */}
+              {/* Agriculture Motivation & Questions */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
-                  Health Program Motivation & Experience
+                  Agriculture Program Motivation & Experience
                 </h2>
 
                 <div className="space-y-4">
@@ -1513,7 +1449,7 @@ const RegisterForHealth = () => {
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       Why do you want to volunteer with Jaago Manav&apos;s
-                      Health Program?{" "}
+                      agriculture Program?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
@@ -1533,19 +1469,18 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Have you ever assisted in medical camps, hospitals,
-                      clinics, or community health programs? If yes, please
-                      share details.{" "}
+                      What feelings or experiences motivate you to support
+                      farmers through agriculture?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="medicalCampsHelp"
+                      name="supportFarmer"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.medicalCampsHelp}
+                      value={formData.supportFarmer}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1555,19 +1490,18 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Do you have any previous experience working in the health
-                      sector? If yes, please describe your role and
-                      responsibilities.{" "}
+                      Do you have any previous experience in agriculture or
+                      farming activities? If yes, please describe your role.{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="healthSectorExperience"
+                      name="agriExperience"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthSectorExperience}
+                      value={formData.agriExperience}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1577,18 +1511,19 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      What motivates you to volunteer in the health field, and
-                      how do you wish to contribute to community health?{" "}
+                      Do you have any technical skills in agriculture such as
+                      soil testing, irrigation setup, seed treatment, or
+                      equipment handling?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="motivation"
+                      name="technicalSkills"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.motivation}
+                      value={formData.technicalSkills}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1598,18 +1533,18 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you comfortable working around patients, elderly
-                      individuals, children, or people with disabilities?{" "}
+                      Are you comfortable working outdoors in fields for
+                      extended periods and in different weather conditions?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="comfortWorkingWithPatients"
+                      name="comfortableOutdoors"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.comfortWorkingWithPatients}
+                      value={formData.comfortableOutdoors}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1619,18 +1554,18 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you available for field visits, medical awareness
-                      drives, or health camps?{" "}
+                      Have you worked with or learned about sustainable,
+                      organic, or eco-friendly farming practices?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="availabilityForFieldVisits"
+                      name="sustainablePractices"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.availabilityForFieldVisits}
+                      value={formData.sustainablePractices}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1638,50 +1573,63 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
-                  {/* Worked/volunteered in health field before */}
                   <div>
-                    <p className="text-sm font-medium mb-1">
-                      Have you worked or volunteered in the health field before?{" "}
+                    <label className="block text-sm font-medium mb-1">
+                      Are you familiar with common agricultural tools or
+                      machinery (e.g., sprayers, tillers, drip irrigation
+                      systems)? Please specify.{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
-                    </p>
-                    <div className="flex flex-wrap gap-4 text-sm">
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="Yes"
-                          checked={formData.hasHealthExperience === "Yes"}
-                          onChange={handleChange}
-                          required
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>Yes</span>
-                      </label>
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="No"
-                          checked={formData.hasHealthExperience === "No"}
-                          onChange={handleChange}
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>No</span>
-                      </label>
-                    </div>
-
-                    <label className="block text-xs font-medium mt-3 mb-1">
-                      If yes, please describe your past roles and
-                      responsibilities.
                     </label>
                     <textarea
-                      name="healthPastRoles"
+                      name="toolsFamiliarity"
+                      required
                       rows={3}
-                      required={formData.hasHealthExperience === "Yes"}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthPastRoles}
+                      value={formData.toolsFamiliarity}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      How would you handle common agricultural challenges such
+                      as pest outbreaks, plant diseases, or water shortages?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="handleChallenges"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.handleChallenges}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      What motivates you to volunteer in the agriculture sector,
+                      and how do you hope to contribute?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="agriMotivation"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.agriMotivation}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1689,70 +1637,6 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Where have you contributed */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Where have you previously contributed?
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {contributionAreaOptions.map((area) => (
-                    <label
-                      key={area}
-                      className="inline-flex items-center gap-2"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.contributionAreas.includes(area)}
-                        onChange={() => handleContributionAreaChange(area)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{area === "Other" ? "Other:" : area}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.contributionAreas.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherContributionArea"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other contribution area"
-                    value={formData.otherContributionArea}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-
-              {/* Qualifications / Training checklist */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Tick all relevant qualifications or training you have
-                  received:
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {qualificationTrainingOptions.map((q) => (
-                    <label key={q} className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.qualificationTrainings.includes(q)}
-                        onChange={() => handleQualificationTrainingChange(q)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{q === "Other" ? "Other (Specify):" : q}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.qualificationTrainings.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherQualificationTraining"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other qualification / training"
-                    value={formData.otherQualificationTraining}
-                    onChange={handleChange}
-                  />
-                )}
               </div>
 
               {/* OTP verification block */}
@@ -1965,4 +1849,4 @@ const RegisterForHealth = () => {
   );
 };
 
-export default RegisterForHealth;
+export default RegisterForAgriculture;

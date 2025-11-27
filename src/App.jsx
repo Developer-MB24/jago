@@ -8,10 +8,15 @@ import RegisterForEducation from "./pages/RegisterForEducation.jsx";
 import BlogDetails from "./pages/BlogDetails.jsx";
 import SelectVolunteerService from "./pages/SelectVolunteerService.jsx";
 // import Contact from "./pages/Contact.jsx";
-// import RegisterForHealth from "./pages/RegisterForHealth.jsx";
+import RegisterForHealth from "./pages/RegisterForHealth.jsx";
+import RegisterForAgriculture from "./pages/RegisterForAgriculture.jsx";
 
 import CustomCursor from "./CustomCursor.jsx";
 import Whoarewe from "./pages/Whoarewe.jsx";
+import RegisterForEmployment from "./pages/RegisterForEmployment.jsx";
+import RegisterForGeographicalIssues from "./pages/RegisterForGeographicalIssues.jsx";
+import RegisterForSocialPoliticalAwareness from "./pages/RegisterForSocialPoliticalAwareness.jsx";
+import RegisterForMiscellaneous from "./pages/RegisterForMiscellaneous.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Blog = lazy(() => import("./pages/Blog.jsx"));
@@ -62,10 +67,31 @@ export default function App() {
             path="/register/education"
             element={<RegisterForEducation />}
           />
-          {/* <Route path="/register/health" element={<RegisterForHealth />} /> */}
+          <Route path="/register/health" element={<RegisterForHealth />} />
+          <Route
+            path="/register/agriculture"
+            element={<RegisterForAgriculture />}
+          />
 
           <Route path="/blogdetails" element={<BlogDetails />} />
           <Route path="/register" element={<SelectVolunteerService />} />
+          <Route
+            path="/register/employment"
+            element={<RegisterForEmployment />}
+          />
+          <Route
+            path="/register/geographical"
+            element={<RegisterForGeographicalIssues />}
+          />
+          <Route
+            path="/register/social-political"
+            element={<RegisterForSocialPoliticalAwareness />}
+          />
+          <Route
+            path="/register/miscellaneous"
+            element={<RegisterForMiscellaneous />}
+          />
+
           {/* <Route path="/contact" element={<Contact />} /> */}
 
           <Route path="*" element={<NotFound />} />

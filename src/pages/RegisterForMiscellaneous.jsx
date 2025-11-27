@@ -48,25 +48,19 @@ const districtsByState = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
 };
 
-// Dropdown for highest qualification (health focused)
+/* === Miscellaneous – Educational Qualification options === */
 const educationOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS / BHMS / BUMS",
-  "MBBS",
-  "MD / MS",
-  "B.Pharma / D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "Physiotherapy (BPT/MPT)",
-  "Emergency Medical Technician (EMT)",
-  "Public Health Certification",
-  "First Aid & CPR Certification",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Community Health Worker Training",
+  "Any Diploma",
+  "Any Certificate Course",
+  "Arts / Craft Skills",
+  "Media & Communication",
+  "Graphic Designing",
+  "Photography / Videography",
+  "Event Management",
+  "Languages / Translation Skills",
+  "Cultural / Music / Art Skills",
+  "Computer Skills (General)",
+  "Hospitality / Tourism",
   "Other (Specify)",
 ];
 
@@ -78,44 +72,7 @@ const volunteerExperienceOptions = [
   "7+ Years",
 ];
 
-// Checkbox list – where have you contributed
-const contributionAreaOptions = [
-  "Hospitals",
-  "Clinics",
-  "Primary Health Centers",
-  "Health Camps",
-  "Vaccination Drives",
-  "Community Health Awareness Programs",
-  "Patient Support / Caregiving",
-  "Home-care or Elderly Care",
-  "NGO / Field Work",
-  "Other",
-];
-
-// Checkbox list – qualifications / trainings
-const qualificationTrainingOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS",
-  "BHMS",
-  "BUMS",
-  "B.Pharma",
-  "D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "EMT (Emergency Medical Technician)",
-  "Physiotherapy (BPT/MPT)",
-  "Public Health Certification",
-  "First Aid & CPR Training",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Health Awareness Training",
-  "Other",
-];
-
-const RegisterForHealth = () => {
+const RegisterForMiscellaneous = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -152,18 +109,17 @@ const RegisterForHealth = () => {
     prefCity3: "",
     prefPincode3: "",
     howKnow: "",
-    whyVolunteer: "",
-    motivation: "", // now: “What motivates you to volunteer in the health field…”
-    medicalCampsHelp: "",
-    healthSectorExperience: "",
-    comfortWorkingWithPatients: "",
-    availabilityForFieldVisits: "",
-    hasHealthExperience: "", // "Yes" / "No"
-    healthPastRoles: "",
-    contributionAreas: [],
-    otherContributionArea: "",
-    qualificationTrainings: [],
-    otherQualificationTraining: "",
+    whyVolunteerMisc: "",
+    additionalSkills: "",
+    ngoExperience: "",
+    generalTasksComfort: "",
+    creativeSkills: "",
+    technicalSkills: "",
+    fieldActivitiesWilling: "",
+    interactionComfort: "",
+    initiativeExample: "",
+    scheduleFlexibility: "",
+    miscMotivation: "",
     declarationConsent: false,
     msgConsent: false,
   });
@@ -180,7 +136,7 @@ const RegisterForHealth = () => {
     panFiles: [],
   });
 
-  //  OTP state
+  // OTP state
   const [otpState, setOtpState] = useState({
     mobile: {
       generatedOtp: "",
@@ -196,6 +152,7 @@ const RegisterForHealth = () => {
     },
   });
 
+  /* ========= File handler ========= */
   const handleFileChange = (e, field) => {
     const newFiles = Array.from(e.target.files || []);
     setFiles((prev) => ({
@@ -205,43 +162,24 @@ const RegisterForHealth = () => {
     e.target.value = "";
   };
 
-  const handleContributionAreaChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.contributionAreas.includes(value);
-      return {
-        ...prev,
-        contributionAreas: exists
-          ? prev.contributionAreas.filter((v) => v !== value)
-          : [...prev.contributionAreas, value],
-      };
-    });
-  };
-
-  const handleQualificationTrainingChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.qualificationTrainings.includes(value);
-      return {
-        ...prev,
-        qualificationTrainings: exists
-          ? prev.qualificationTrainings.filter((v) => v !== value)
-          : [...prev.qualificationTrainings, value],
-      };
-    });
-  };
-
+  /* ========= Change handler ========= */
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Word-limited textareas (120 words)
+    // 120-word limited textareas
     if (
       [
-        "whyVolunteer",
-        "motivation",
-        "medicalCampsHelp",
-        "healthSectorExperience",
-        "comfortWorkingWithPatients",
-        "availabilityForFieldVisits",
-        "healthPastRoles",
+        "whyVolunteerMisc",
+        "additionalSkills",
+        "ngoExperience",
+        "generalTasksComfort",
+        "creativeSkills",
+        "technicalSkills",
+        "fieldActivitiesWilling",
+        "interactionComfort",
+        "initiativeExample",
+        "scheduleFlexibility",
+        "miscMotivation",
       ].includes(name)
     ) {
       const words = value.trim().split(/\s+/).filter(Boolean);
@@ -253,6 +191,7 @@ const RegisterForHealth = () => {
       return;
     }
 
+    // Only letters & spaces
     if (
       [
         "fullName",
@@ -273,14 +212,14 @@ const RegisterForHealth = () => {
       return;
     }
 
-    // Phone: digits only, max 10
+    // Phone
     if (name === "phone") {
       const digitsOnly = value.replace(/\D/g, "").slice(0, 10);
       setFormData((prev) => ({ ...prev, phone: digitsOnly }));
       return;
     }
 
-    // Pincodes: digits only, max 6
+    // Pincodes
     if (
       name === "permanentPincode" ||
       name === "currentPincode" ||
@@ -293,14 +232,14 @@ const RegisterForHealth = () => {
       return;
     }
 
-    // Aadhaar: digits only, max 12
+    // Aadhaar
     if (name === "aadhar") {
       const digitsOnly = value.replace(/\D/g, "").slice(0, 12);
       setFormData((prev) => ({ ...prev, aadhar: digitsOnly }));
       return;
     }
 
-    // PAN: uppercase alphanumeric, max 10
+    // PAN
     if (name === "pan") {
       const cleaned = value
         .toUpperCase()
@@ -331,7 +270,7 @@ const RegisterForHealth = () => {
     }
   };
 
-  // OTP handlers
+  /* ========= OTP handlers ========= */
   const handleMobileOtpChange = (e) => {
     const digitsOnly = e.target.value.replace(/\D/g, "").slice(0, 6);
     setOtpState((prev) => ({
@@ -441,9 +380,8 @@ const RegisterForHealth = () => {
   const hasDistricts = (stateName) =>
     Boolean(districtsByState[stateName] && districtsByState[stateName].length);
 
-  //  STEP VALIDATIONS
+  /* ========= STEP VALIDATIONS ========= */
 
-  // Step 1: only personal + education/experience
   const validateStep1 = () => {
     const missing = [];
     const extraErrors = [];
@@ -454,7 +392,7 @@ const RegisterForHealth = () => {
       }
     };
 
-    // Personal info
+    // Personal
     check("fullName", "Full Name");
     check("email", "Email");
     check("phone", "Phone Number");
@@ -468,7 +406,7 @@ const RegisterForHealth = () => {
     check("education", "Educational Qualification");
     check("volunteerExperience", "Volunteer Experience");
 
-    // Format checks
+    // Formats
     if (formData.phone.length !== 10) {
       extraErrors.push("Phone number must be 10 digits.");
     }
@@ -481,20 +419,15 @@ const RegisterForHealth = () => {
 
     if (missing.length || extraErrors.length) {
       let message = "Please complete all required fields in Step 1.\n";
-      if (missing.length) {
-        message += "\nMissing:\n- " + missing.join("\n- ");
-      }
-      if (extraErrors.length) {
+      if (missing.length) message += "\nMissing:\n- " + missing.join("\n- ");
+      if (extraErrors.length)
         message += "\n\nFix:\n- " + extraErrors.join("\n- ");
-      }
       alert(message);
       return false;
     }
-
     return true;
   };
 
-  // Step 2: addresses + preferred locations
   const validateStep2 = () => {
     const missing = [];
     const extraErrors = [];
@@ -505,7 +438,7 @@ const RegisterForHealth = () => {
       }
     };
 
-    // Permanent address
+    // Permanent
     check("permanentAddress", "Permanent Address");
     check("permanentState", "Permanent State");
     check("permanentCity", "Permanent City/District");
@@ -518,7 +451,7 @@ const RegisterForHealth = () => {
       extraErrors.push("Permanent Pincode must be a valid 6-digit number.");
     }
 
-    // Current address (if not same as permanent)
+    // Current (if different)
     if (!formData.sameAsPermanent) {
       check("currentAddress", "Current Address");
       check("currentState", "Current State");
@@ -549,7 +482,7 @@ const RegisterForHealth = () => {
 
     [1, 2, 3].forEach(checkPref);
 
-    // All three preference pincodes must be unique
+    // Pincodes unique
     const { prefPincode1, prefPincode2, prefPincode3 } = formData;
     const pins = [prefPincode1, prefPincode2, prefPincode3];
     if (pins.every(Boolean) && new Set(pins).size !== pins.length) {
@@ -560,44 +493,31 @@ const RegisterForHealth = () => {
 
     if (missing.length || extraErrors.length) {
       let message = "Please complete all required fields in Step 2.\n";
-      if (missing.length) {
-        message += "\nMissing:\n- " + missing.join("\n- ");
-      }
-      if (extraErrors.length) {
+      if (missing.length) message += "\nMissing:\n- " + missing.join("\n- ");
+      if (extraErrors.length)
         message += "\n\nFix:\n- " + extraErrors.join("\n- ");
-      }
       alert(message);
       return false;
     }
-
     return true;
   };
 
   const handleNextFromStep = (step) => {
     if (step === 1) {
-      if (validateStep1()) {
-        setCurrentStep(2);
-      }
+      if (validateStep1()) setCurrentStep(2);
     } else if (step === 2) {
-      if (validateStep2()) {
-        setCurrentStep(3);
-      }
+      if (validateStep2()) setCurrentStep(3);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (currentStep !== 3) return;
 
-    if (currentStep !== 3) {
-      return;
-    }
-
+    // Check unique preference pincodes again
     const { prefPincode1, prefPincode2, prefPincode3 } = formData;
     const pins = [prefPincode1, prefPincode2, prefPincode3].filter(Boolean);
-    const duplicatePin =
-      pins.length === 3 && new Set(pins).size !== pins.length;
-
-    if (duplicatePin) {
+    if (pins.length === 3 && new Set(pins).size !== pins.length) {
       alert(
         "Each preferred location must have a different PIN code. Please enter unique PIN codes for all three preferences."
       );
@@ -623,14 +543,16 @@ const RegisterForHealth = () => {
       return;
     }
 
-    console.log("Form submitted:", formData, files);
+    console.log("Miscellaneous form submitted:", formData, files);
     alert("Form submitted successfully (demo).");
   };
+
+  /* ========= UI meta ========= */
 
   const steps = [
     { id: 1, title: "Personal & Education" },
     { id: 2, title: "Address & Preferred Location" },
-    { id: 3, title: "Health Experience & Submit" },
+    { id: 3, title: "Miscellaneous Skills & Motivation" },
   ];
 
   const totalSteps = steps.length;
@@ -663,7 +585,7 @@ const RegisterForHealth = () => {
             fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
           }}
         >
-          for Health Program
+          for Miscellaneous Services
         </p>
 
         {/* Step indicator */}
@@ -733,10 +655,7 @@ const RegisterForHealth = () => {
                   {/* Full Name */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Full Name{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -752,10 +671,7 @@ const RegisterForHealth = () => {
                   {/* Email */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Email Address{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="email"
@@ -771,10 +687,7 @@ const RegisterForHealth = () => {
                   {/* Phone */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Phone No.{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Phone No. <span className="text-red-500">*</span>
                     </label>
                     <div className="flex gap-2">
                       <select
@@ -805,10 +718,7 @@ const RegisterForHealth = () => {
                   {/* DOB */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Date of Birth{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Date of Birth <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="date"
@@ -828,10 +738,7 @@ const RegisterForHealth = () => {
                   {/* Nationality */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Nationality{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Nationality <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -847,10 +754,7 @@ const RegisterForHealth = () => {
                   {/* Gender */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Gender{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Gender <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="gender"
@@ -874,10 +778,7 @@ const RegisterForHealth = () => {
                   {/* Aadhar */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Aadhar No.{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Aadhar No. <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -922,10 +823,7 @@ const RegisterForHealth = () => {
                   {/* PAN */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Pan No.{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Pan No. <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -972,7 +870,7 @@ const RegisterForHealth = () => {
               {/* Education & Volunteer Experience */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
-                  Educational Qualification &amp; Volunteer Experience
+                  Education &amp; Volunteer Experience
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-4">
@@ -980,9 +878,7 @@ const RegisterForHealth = () => {
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       Educational Qualification{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="education"
@@ -1019,8 +915,8 @@ const RegisterForHealth = () => {
                           <FiUpload size={18} />
                         </span>
                         <span className="text-slate-700 leading-snug">
-                          Upload your qualification certificates in PDF/JPG/PNG
-                          format (multiple files allowed)
+                          Upload your certificates in PDF/JPG/PNG format
+                          (multiple files allowed)
                         </span>
                       </div>
 
@@ -1051,9 +947,7 @@ const RegisterForHealth = () => {
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       Volunteer Experience{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="volunteerExperience"
@@ -1121,7 +1015,7 @@ const RegisterForHealth = () => {
             </>
           )}
 
-          {/*  STEP 2  */}
+          {/* STEP 2 */}
           {currentStep === 2 && (
             <>
               {/* Permanent Address */}
@@ -1132,10 +1026,7 @@ const RegisterForHealth = () => {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Address{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Address <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="permanentAddress"
@@ -1149,10 +1040,7 @@ const RegisterForHealth = () => {
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        State{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        State <span className="text-red-500">*</span>
                       </label>
                       <select
                         name="permanentState"
@@ -1174,10 +1062,7 @@ const RegisterForHealth = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        City / District{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        City / District <span className="text-red-500">*</span>
                       </label>
                       {hasDistricts(formData.permanentState) ? (
                         <select
@@ -1213,10 +1098,7 @@ const RegisterForHealth = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        Pincode{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        Pincode <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -1273,10 +1155,7 @@ const RegisterForHealth = () => {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Address{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Address <span className="text-red-500">*</span>
                     </label>
                     <textarea
                       name="currentAddress"
@@ -1292,10 +1171,7 @@ const RegisterForHealth = () => {
                   <div className="grid md:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        State{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        State <span className="text-red-500">*</span>
                       </label>
                       <select
                         name="currentState"
@@ -1318,10 +1194,7 @@ const RegisterForHealth = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        City / District{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        City / District <span className="text-red-500">*</span>
                       </label>
                       {hasDistricts(formData.currentState) ? (
                         <select
@@ -1358,10 +1231,7 @@ const RegisterForHealth = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-1">
-                        Pincode{" "}
-                        <span className="text-red-500" aria-hidden="true">
-                          *
-                        </span>
+                        Pincode <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -1413,9 +1283,7 @@ const RegisterForHealth = () => {
                       <div>
                         <label className="block text-xs font-medium mb-1">
                           Location / Area{" "}
-                          <span className="text-red-500" aria-hidden="true">
-                            *
-                          </span>
+                          <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -1428,10 +1296,7 @@ const RegisterForHealth = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-medium mb-1">
-                          City{" "}
-                          <span className="text-red-500" aria-hidden="true">
-                            *
-                          </span>
+                          City <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -1444,10 +1309,7 @@ const RegisterForHealth = () => {
                       </div>
                       <div>
                         <label className="block text-xs font-medium mb-1">
-                          Pincode{" "}
-                          <span className="text-red-500" aria-hidden="true">
-                            *
-                          </span>
+                          Pincode <span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -1483,22 +1345,21 @@ const RegisterForHealth = () => {
             </>
           )}
 
-          {/*  STEP 3  */}
+          {/* STEP 3 */}
           {currentStep === 3 && (
             <>
-              {/* Motivation & Health Questions */}
+              {/* Miscellaneous questions */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
-                  Health Program Motivation & Experience
+                  Miscellaneous Skills, Experience & Motivation
                 </h2>
 
                 <div className="space-y-4">
+                  {/* 24 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       How did you get to know about Jaago Manav?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -1510,20 +1371,19 @@ const RegisterForHealth = () => {
                     />
                   </div>
 
+                  {/* 25 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       Why do you want to volunteer with Jaago Manav&apos;s
-                      Health Program?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Miscellaneous Program?{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="whyVolunteer"
+                      name="whyVolunteerMisc"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.whyVolunteer}
+                      value={formData.whyVolunteerMisc}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1531,21 +1391,20 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
+                  {/* 26 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Have you ever assisted in medical camps, hospitals,
-                      clinics, or community health programs? If yes, please
-                      share details.{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Do you have any additional skills or experience that you
+                      would like to contribute to Jaago Manav (e.g., art, music,
+                      documentation, photography, event support, social media)?{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="medicalCampsHelp"
+                      name="additionalSkills"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.medicalCampsHelp}
+                      value={formData.additionalSkills}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1553,21 +1412,19 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
+                  {/* 27 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Do you have any previous experience working in the health
-                      sector? If yes, please describe your role and
-                      responsibilities.{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Have you previously volunteered in any NGO or community
+                      activity? If yes, please describe your role and
+                      contributions. <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="healthSectorExperience"
+                      name="ngoExperience"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthSectorExperience}
+                      value={formData.ngoExperience}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1575,20 +1432,20 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
+                  {/* 28 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      What motivates you to volunteer in the health field, and
-                      how do you wish to contribute to community health?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Are you comfortable assisting in general tasks such as
+                      documentation, registration, data entry, event
+                      coordination, or logistics?{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="motivation"
+                      name="generalTasksComfort"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.motivation}
+                      value={formData.generalTasksComfort}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1596,20 +1453,20 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
+                  {/* 29 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you comfortable working around patients, elderly
-                      individuals, children, or people with disabilities?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Do you have any creative skills such as designing posters,
+                      writing content, organizing activities, or conducting
+                      awareness programs?{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="comfortWorkingWithPatients"
+                      name="creativeSkills"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.comfortWorkingWithPatients}
+                      value={formData.creativeSkills}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1617,20 +1474,20 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
+                  {/* 30 */}
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you available for field visits, medical awareness
-                      drives, or health camps?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
+                      Do you have any technical skills (e.g., computer skills,
+                      website handling, video editing, photography, graphic
+                      design) that can support NGO operations?{" "}
+                      <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="availabilityForFieldVisits"
+                      name="technicalSkills"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.availabilityForFieldVisits}
+                      value={formData.technicalSkills}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1638,50 +1495,99 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
-                  {/* Worked/volunteered in health field before */}
+                  {/* 31 */}
                   <div>
-                    <p className="text-sm font-medium mb-1">
-                      Have you worked or volunteered in the health field before?{" "}
-                      <span className="text-red-500" aria-hidden="true">
-                        *
-                      </span>
-                    </p>
-                    <div className="flex flex-wrap gap-4 text-sm">
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="Yes"
-                          checked={formData.hasHealthExperience === "Yes"}
-                          onChange={handleChange}
-                          required
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>Yes</span>
-                      </label>
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="No"
-                          checked={formData.hasHealthExperience === "No"}
-                          onChange={handleChange}
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>No</span>
-                      </label>
-                    </div>
-
-                    <label className="block text-xs font-medium mt-3 mb-1">
-                      If yes, please describe your past roles and
-                      responsibilities.
+                    <label className="block text-sm font-medium mb-1">
+                      Are you willing to support field activities, distribution
+                      drives, surveys, or community outreach programs when
+                      needed? <span className="text-red-500">*</span>
                     </label>
                     <textarea
-                      name="healthPastRoles"
+                      name="fieldActivitiesWilling"
+                      required
                       rows={3}
-                      required={formData.hasHealthExperience === "Yes"}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthPastRoles}
+                      value={formData.fieldActivitiesWilling}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  {/* 32 */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Are you comfortable interacting with community members,
+                      parents, or participants during NGO programs and events?{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="interactionComfort"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.interactionComfort}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  {/* 33 */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Have you ever taken initiative in organizing any activity,
+                      event, or project? Please share an example.{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="initiativeExample"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.initiativeExample}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  {/* 34 */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      How flexible is your schedule for supporting additional
+                      tasks across different NGO programs?{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="scheduleFlexibility"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.scheduleFlexibility}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  {/* 35 */}
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      What motivates you to contribute under the Miscellaneous
+                      Services category, and how would you like to help Jaago
+                      Manav in general? <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                      name="miscMotivation"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.miscMotivation}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1691,73 +1597,10 @@ const RegisterForHealth = () => {
                 </div>
               </div>
 
-              {/* Where have you contributed */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Where have you previously contributed?
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {contributionAreaOptions.map((area) => (
-                    <label
-                      key={area}
-                      className="inline-flex items-center gap-2"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.contributionAreas.includes(area)}
-                        onChange={() => handleContributionAreaChange(area)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{area === "Other" ? "Other:" : area}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.contributionAreas.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherContributionArea"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other contribution area"
-                    value={formData.otherContributionArea}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-
-              {/* Qualifications / Training checklist */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Tick all relevant qualifications or training you have
-                  received:
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {qualificationTrainingOptions.map((q) => (
-                    <label key={q} className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.qualificationTrainings.includes(q)}
-                        onChange={() => handleQualificationTrainingChange(q)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{q === "Other" ? "Other (Specify):" : q}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.qualificationTrainings.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherQualificationTraining"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other qualification / training"
-                    value={formData.otherQualificationTraining}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-
-              {/* OTP verification block */}
+              {/* OTP verification */}
               <div className="mt-6">
                 <div className="grid gap-4 md:grid-cols-2">
+                  {/* Mobile */}
                   <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
                     <p className="text-sm font-semibold">
                       Verify Your Mobile Number
@@ -1827,7 +1670,7 @@ const RegisterForHealth = () => {
                     )}
                   </div>
 
-                  {/* Aadhaar Verification */}
+                  {/* Aadhaar */}
                   <div className="border rounded-xl p-4 space-y-4 bg-slate-50">
                     <p className="text-sm font-semibold">Verify Your Aadhaar</p>
 
@@ -1905,9 +1748,8 @@ const RegisterForHealth = () => {
                 )}
               </div>
 
-              {/* Declaration, Consent & Submit */}
+              {/* Declaration & Consent */}
               <div className="border-t border-slate-200 pt-4 mt-4 space-y-4">
-                {/* Declaration first */}
                 <label className="flex items-start gap-2 text-sm">
                   <input
                     type="checkbox"
@@ -1923,7 +1765,6 @@ const RegisterForHealth = () => {
                   </span>
                 </label>
 
-                {/* Message Consent  */}
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="checkbox"
@@ -1965,4 +1806,4 @@ const RegisterForHealth = () => {
   );
 };
 
-export default RegisterForHealth;
+export default RegisterForMiscellaneous;

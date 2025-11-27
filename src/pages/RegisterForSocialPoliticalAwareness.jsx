@@ -48,25 +48,19 @@ const districtsByState = {
   "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
 };
 
-// Dropdown for highest qualification (health focused)
+// Social & Political Awareness – Educational qualification dropdown
 const educationOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS / BHMS / BUMS",
-  "MBBS",
-  "MD / MS",
-  "B.Pharma / D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "Physiotherapy (BPT/MPT)",
-  "Emergency Medical Technician (EMT)",
-  "Public Health Certification",
-  "First Aid & CPR Certification",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Community Health Worker Training",
+  "BA / MA Social Work (BSW / MSW)",
+  "BA / MA Sociology",
+  "BA / MA Political Science",
+  "Public Administration",
+  "Human Rights Certification",
+  "Gender Studies Training",
+  "Community Development Training",
+  "NGO Management",
+  "Youth Leadership Courses",
+  "Legal Awareness Certification",
+  "Conflict Resolution Training",
   "Other (Specify)",
 ];
 
@@ -78,44 +72,7 @@ const volunteerExperienceOptions = [
   "7+ Years",
 ];
 
-// Checkbox list – where have you contributed
-const contributionAreaOptions = [
-  "Hospitals",
-  "Clinics",
-  "Primary Health Centers",
-  "Health Camps",
-  "Vaccination Drives",
-  "Community Health Awareness Programs",
-  "Patient Support / Caregiving",
-  "Home-care or Elderly Care",
-  "NGO / Field Work",
-  "Other",
-];
-
-// Checkbox list – qualifications / trainings
-const qualificationTrainingOptions = [
-  "ANM",
-  "GNM",
-  "B.Sc Nursing",
-  "M.Sc Nursing",
-  "BAMS",
-  "BHMS",
-  "BUMS",
-  "B.Pharma",
-  "D.Pharma",
-  "MLT (Medical Lab Technician)",
-  "Radiology / X-Ray Technician",
-  "EMT (Emergency Medical Technician)",
-  "Physiotherapy (BPT/MPT)",
-  "Public Health Certification",
-  "First Aid & CPR Training",
-  "Nutrition & Dietetics",
-  "Mental Health Counseling",
-  "Health Awareness Training",
-  "Other",
-];
-
-const RegisterForHealth = () => {
+const RegisterForSocialPoliticalAwareness = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -152,18 +109,17 @@ const RegisterForHealth = () => {
     prefCity3: "",
     prefPincode3: "",
     howKnow: "",
-    whyVolunteer: "",
-    motivation: "", // now: “What motivates you to volunteer in the health field…”
-    medicalCampsHelp: "",
-    healthSectorExperience: "",
-    comfortWorkingWithPatients: "",
-    availabilityForFieldVisits: "",
-    hasHealthExperience: "", // "Yes" / "No"
-    healthPastRoles: "",
-    contributionAreas: [],
-    otherContributionArea: "",
-    qualificationTrainings: [],
-    otherQualificationTraining: "",
+    whyVolunteerSocial: "",
+    socialIssues: "",
+    awarenessExperience: "",
+    governanceAwareness: "",
+    comfortableSpeaking: "",
+    respondSocialChallenges: "",
+    manageDisagreement: "",
+    welfareSchemesKnowledge: "",
+    ensureNeutrality: "",
+    supportedSomeone: "",
+    socialMotivation: "",
     declarationConsent: false,
     msgConsent: false,
   });
@@ -180,7 +136,7 @@ const RegisterForHealth = () => {
     panFiles: [],
   });
 
-  //  OTP state
+  // OTP state
   const [otpState, setOtpState] = useState({
     mobile: {
       generatedOtp: "",
@@ -205,43 +161,23 @@ const RegisterForHealth = () => {
     e.target.value = "";
   };
 
-  const handleContributionAreaChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.contributionAreas.includes(value);
-      return {
-        ...prev,
-        contributionAreas: exists
-          ? prev.contributionAreas.filter((v) => v !== value)
-          : [...prev.contributionAreas, value],
-      };
-    });
-  };
-
-  const handleQualificationTrainingChange = (value) => {
-    setFormData((prev) => {
-      const exists = prev.qualificationTrainings.includes(value);
-      return {
-        ...prev,
-        qualificationTrainings: exists
-          ? prev.qualificationTrainings.filter((v) => v !== value)
-          : [...prev.qualificationTrainings, value],
-      };
-    });
-  };
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     // Word-limited textareas (120 words)
     if (
       [
-        "whyVolunteer",
-        "motivation",
-        "medicalCampsHelp",
-        "healthSectorExperience",
-        "comfortWorkingWithPatients",
-        "availabilityForFieldVisits",
-        "healthPastRoles",
+        "whyVolunteerSocial",
+        "socialIssues",
+        "awarenessExperience",
+        "governanceAwareness",
+        "comfortableSpeaking",
+        "respondSocialChallenges",
+        "manageDisagreement",
+        "welfareSchemesKnowledge",
+        "ensureNeutrality",
+        "supportedSomeone",
+        "socialMotivation",
       ].includes(name)
     ) {
       const words = value.trim().split(/\s+/).filter(Boolean);
@@ -253,6 +189,7 @@ const RegisterForHealth = () => {
       return;
     }
 
+    // Only letters & spaces fields
     if (
       [
         "fullName",
@@ -441,9 +378,7 @@ const RegisterForHealth = () => {
   const hasDistricts = (stateName) =>
     Boolean(districtsByState[stateName] && districtsByState[stateName].length);
 
-  //  STEP VALIDATIONS
-
-  // Step 1: only personal + education/experience
+  // STEP VALIDATIONS
   const validateStep1 = () => {
     const missing = [];
     const extraErrors = [];
@@ -494,7 +429,6 @@ const RegisterForHealth = () => {
     return true;
   };
 
-  // Step 2: addresses + preferred locations
   const validateStep2 = () => {
     const missing = [];
     const extraErrors = [];
@@ -588,9 +522,7 @@ const RegisterForHealth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (currentStep !== 3) {
-      return;
-    }
+    if (currentStep !== 3) return;
 
     const { prefPincode1, prefPincode2, prefPincode3 } = formData;
     const pins = [prefPincode1, prefPincode2, prefPincode3].filter(Boolean);
@@ -623,14 +555,18 @@ const RegisterForHealth = () => {
       return;
     }
 
-    console.log("Form submitted:", formData, files);
+    console.log(
+      "Social & Political Awareness form submitted:",
+      formData,
+      files
+    );
     alert("Form submitted successfully (demo).");
   };
 
   const steps = [
     { id: 1, title: "Personal & Education" },
     { id: 2, title: "Address & Preferred Location" },
-    { id: 3, title: "Health Experience & Submit" },
+    { id: 3, title: "Social & Political Awareness" },
   ];
 
   const totalSteps = steps.length;
@@ -663,7 +599,7 @@ const RegisterForHealth = () => {
             fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
           }}
         >
-          for Health Program
+          for Social &amp; Political Awareness Program
         </p>
 
         {/* Step indicator */}
@@ -1019,8 +955,8 @@ const RegisterForHealth = () => {
                           <FiUpload size={18} />
                         </span>
                         <span className="text-slate-700 leading-snug">
-                          Upload your qualification certificates in PDF/JPG/PNG
-                          format (multiple files allowed)
+                          Upload your certificates in PDF/JPG/PNG format
+                          (multiple files allowed)
                         </span>
                       </div>
 
@@ -1121,7 +1057,7 @@ const RegisterForHealth = () => {
             </>
           )}
 
-          {/*  STEP 2  */}
+          {/* STEP 2 */}
           {currentStep === 2 && (
             <>
               {/* Permanent Address */}
@@ -1483,13 +1419,13 @@ const RegisterForHealth = () => {
             </>
           )}
 
-          {/*  STEP 3  */}
+          {/* STEP 3 */}
           {currentStep === 3 && (
             <>
-              {/* Motivation & Health Questions */}
+              {/* Social & Political Awareness Questions */}
               <div>
                 <h2 className="text-lg font-semibold text-slate-800 mb-4">
-                  Health Program Motivation & Experience
+                  Social &amp; Political Awareness – Experience & Motivation
                 </h2>
 
                 <div className="space-y-4">
@@ -1513,17 +1449,17 @@ const RegisterForHealth = () => {
                   <div>
                     <label className="block text-sm font-medium mb-1">
                       Why do you want to volunteer with Jaago Manav&apos;s
-                      Health Program?{" "}
+                      Social &amp; Political Awareness Program?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="whyVolunteer"
+                      name="whyVolunteerSocial"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.whyVolunteer}
+                      value={formData.whyVolunteerSocial}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1533,19 +1469,20 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Have you ever assisted in medical camps, hospitals,
-                      clinics, or community health programs? If yes, please
-                      share details.{" "}
+                      What social issues (e.g., inequality, education gaps,
+                      women&apos;s safety, corruption, unemployment,
+                      discrimination) do you believe need the most attention in
+                      your community? Why?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="medicalCampsHelp"
+                      name="socialIssues"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.medicalCampsHelp}
+                      value={formData.socialIssues}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1555,19 +1492,19 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Do you have any previous experience working in the health
-                      sector? If yes, please describe your role and
-                      responsibilities.{" "}
+                      Have you ever participated in any awareness programs,
+                      rallies, community meetings, or social campaigns? If yes,
+                      please share your experience.{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="healthSectorExperience"
+                      name="awarenessExperience"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthSectorExperience}
+                      value={formData.awarenessExperience}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1577,18 +1514,18 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      What motivates you to volunteer in the health field, and
-                      how do you wish to contribute to community health?{" "}
+                      How aware are you of local governance systems, public
+                      welfare schemes, or civic rights and responsibilities?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="motivation"
+                      name="governanceAwareness"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.motivation}
+                      value={formData.governanceAwareness}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1598,18 +1535,19 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you comfortable working around patients, elderly
-                      individuals, children, or people with disabilities?{" "}
+                      Are you comfortable speaking with groups, communities, or
+                      individuals to raise awareness about social or civic
+                      issues?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="comfortWorkingWithPatients"
+                      name="comfortableSpeaking"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.comfortWorkingWithPatients}
+                      value={formData.comfortableSpeaking}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1619,18 +1557,19 @@ const RegisterForHealth = () => {
 
                   <div>
                     <label className="block text-sm font-medium mb-1">
-                      Are you available for field visits, medical awareness
-                      drives, or health camps?{" "}
+                      How do you respond when you see people facing social
+                      challenges such as discrimination, inequality, or lack of
+                      access to basic services?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
                     </label>
                     <textarea
-                      name="availabilityForFieldVisits"
+                      name="respondSocialChallenges"
                       required
                       rows={3}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.availabilityForFieldVisits}
+                      value={formData.respondSocialChallenges}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1638,50 +1577,106 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
 
-                  {/* Worked/volunteered in health field before */}
                   <div>
-                    <p className="text-sm font-medium mb-1">
-                      Have you worked or volunteered in the health field before?{" "}
+                    <label className="block text-sm font-medium mb-1">
+                      How would you manage a situation where people disagree or
+                      resist during a social awareness activity?{" "}
                       <span className="text-red-500" aria-hidden="true">
                         *
                       </span>
-                    </p>
-                    <div className="flex flex-wrap gap-4 text-sm">
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="Yes"
-                          checked={formData.hasHealthExperience === "Yes"}
-                          onChange={handleChange}
-                          required
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>Yes</span>
-                      </label>
-                      <label className="inline-flex items-center gap-2">
-                        <input
-                          type="radio"
-                          name="hasHealthExperience"
-                          value="No"
-                          checked={formData.hasHealthExperience === "No"}
-                          onChange={handleChange}
-                          className="text-emerald-600 border-slate-300 focus:ring-[#138808]"
-                        />
-                        <span>No</span>
-                      </label>
-                    </div>
-
-                    <label className="block text-xs font-medium mt-3 mb-1">
-                      If yes, please describe your past roles and
-                      responsibilities.
                     </label>
                     <textarea
-                      name="healthPastRoles"
+                      name="manageDisagreement"
+                      required
                       rows={3}
-                      required={formData.hasHealthExperience === "Yes"}
                       className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                      value={formData.healthPastRoles}
+                      value={formData.manageDisagreement}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Do you have knowledge of any government social welfare
+                      schemes (education, health, employment, women &amp; child
+                      development)? If yes, which ones?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="welfareSchemesKnowledge"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.welfareSchemesKnowledge}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      How do you ensure neutrality and fairness when discussing
+                      social or civic topics with communities?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="ensureNeutrality"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.ensureNeutrality}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Have you ever guided or supported someone facing a social
+                      issue? If yes, how did you help them?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="supportedSomeone"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.supportedSomeone}
+                      onChange={handleChange}
+                    />
+                    <p className="text-xs text-slate-500 mt-1">
+                      Maximum 120 words.
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      What motivates you to volunteer in social and civic
+                      awareness activities, and how do you wish to contribute
+                      through Jaago Manav?{" "}
+                      <span className="text-red-500" aria-hidden="true">
+                        *
+                      </span>
+                    </label>
+                    <textarea
+                      name="socialMotivation"
+                      required
+                      rows={3}
+                      className="w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
+                      value={formData.socialMotivation}
                       onChange={handleChange}
                     />
                     <p className="text-xs text-slate-500 mt-1">
@@ -1689,70 +1684,6 @@ const RegisterForHealth = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Where have you contributed */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Where have you previously contributed?
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {contributionAreaOptions.map((area) => (
-                    <label
-                      key={area}
-                      className="inline-flex items-center gap-2"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.contributionAreas.includes(area)}
-                        onChange={() => handleContributionAreaChange(area)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{area === "Other" ? "Other:" : area}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.contributionAreas.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherContributionArea"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other contribution area"
-                    value={formData.otherContributionArea}
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-
-              {/* Qualifications / Training checklist */}
-              <div className="mt-6">
-                <h3 className="text-md font-semibold text-slate-800 mb-2">
-                  Tick all relevant qualifications or training you have
-                  received:
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-                  {qualificationTrainingOptions.map((q) => (
-                    <label key={q} className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={formData.qualificationTrainings.includes(q)}
-                        onChange={() => handleQualificationTrainingChange(q)}
-                        className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                      />
-                      <span>{q === "Other" ? "Other (Specify):" : q}</span>
-                    </label>
-                  ))}
-                </div>
-                {formData.qualificationTrainings.includes("Other") && (
-                  <input
-                    type="text"
-                    name="otherQualificationTraining"
-                    className="mt-2 w-full border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#138808]"
-                    placeholder="Please specify other qualification / training"
-                    value={formData.otherQualificationTraining}
-                    onChange={handleChange}
-                  />
-                )}
               </div>
 
               {/* OTP verification block */}
@@ -1907,7 +1838,7 @@ const RegisterForHealth = () => {
 
               {/* Declaration, Consent & Submit */}
               <div className="border-t border-slate-200 pt-4 mt-4 space-y-4">
-                {/* Declaration first */}
+                {/* Declaration */}
                 <label className="flex items-start gap-2 text-sm">
                   <input
                     type="checkbox"
@@ -1923,7 +1854,7 @@ const RegisterForHealth = () => {
                   </span>
                 </label>
 
-                {/* Message Consent  */}
+                {/* Message Consent */}
                 <label className="flex items-center gap-2 text-sm">
                   <input
                     type="checkbox"
@@ -1965,4 +1896,4 @@ const RegisterForHealth = () => {
   );
 };
 
-export default RegisterForHealth;
+export default RegisterForSocialPoliticalAwareness;

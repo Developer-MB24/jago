@@ -2,74 +2,45 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const services = [
-  {
-    key: "education",
-    label: "Education",
-    route: "/register/education",
-  },
-  {
-    key: "health",
-    label: "Health",
-    route: "/register/health",
-  },
-  {
-    key: "agriculture",
-    label: "Agriculture",
-    route: "/register/agriculture",
-  },
+  { key: "education", label: "Education", route: "/register/education" },
+  { key: "health", label: "Health", route: "/register/health" },
+  { key: "agriculture", label: "Agriculture", route: "/register/agriculture" },
   {
     key: "geographical",
     label: "Geographical Issues",
     route: "/register/geographical",
   },
-  {
-    key: "employment",
-    label: "Employment",
-    route: "/register/employment",
-  },
+  { key: "employment", label: "Employment", route: "/register/employment" },
   {
     key: "social-political",
     label: "Social & Political Awareness",
     route: "/register/social-political",
   },
-  {
-    key: "misc",
-    label: "Miscellaneous",
-    route: "/register/miscellaneous", // only if/when you create this form
-  },
+  { key: "misc", label: "Miscellaneous", route: "/register/miscellaneous" },
 ];
 
 const SelectVolunteerService = () => {
   const navigate = useNavigate();
-
-  const handleSelect = (route) => {
-    navigate(route);
-  };
+  const handleSelect = (route) => navigate(route);
 
   return (
     <div className="min-h-screen bg-[#FFF7EA] flex flex-col items-center">
-      <div className="w-full max-w-4xl px-4 pt-8 pb-16">
-        {/* Top button like your reference */}
-        <div className="flex justify-end mb-6">
-          <button
-            type="button"
-            className="rounded-full border border-[#0F172A] bg-white px-4 py-1.5 text-sm font-semibold text-[#0F172A] shadow-sm"
-          >
-            Volunteer Registration
-          </button>
-        </div>
-
-        <h1 className="text-2xl md:text-3xl font-bold text-[#0F172A] text-center mb-8">
+      <div className="w-full max-w-3xl px-4 pt-12 pb-20">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#0F172A] text-center mb-10">
           Select Your Volunteer Service
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 justify-items-center">
+        {/* VERTICAL LIST OF BUTTONS */}
+        <div className="flex flex-col gap-6">
           {services.map((service) => (
             <button
               key={service.key}
               type="button"
               onClick={() => handleSelect(service.route)}
-              className="w-full max-w-xs rounded-2xl bg-white px-6 py-4 text-center text-base md:text-lg font-semibold text-[#0F172A] shadow-sm border border-[#E5E7EB] hover:shadow-md hover:-translate-y-0.5 transition-all"
+              className="w-full rounded-2xl bg-white px-6 py-5 text-center
+                         text-lg font-semibold text-[#0F172A]
+                         shadow-sm border border-[#E5E7EB]
+                         hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               {service.label}
             </button>
