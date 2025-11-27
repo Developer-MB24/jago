@@ -577,7 +577,7 @@ const RegisterForGeographicalIssues = () => {
         backgroundImage: "url('/images/Geographical-Issues.png')",
       }}
     >
-      <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div>
+      {/* <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div> */}
 
       <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 md:p-10">
         {/* Heading */}
@@ -593,7 +593,7 @@ const RegisterForGeographicalIssues = () => {
         <p
           className="text-center text-lg text-slate-800 mb-6 italic"
           style={{
-            fontFamily: "'Brush Script MT', 'Lucida Handwriting', cursive",
+            fontFamily: "cursive",
           }}
         >
           for Geographical Issues Program
