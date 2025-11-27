@@ -27,7 +27,6 @@ const TrustedCompaniesCarousel = () => (
       </span>
     </div>
 
-    {/*  fade mask */}
     <div
       className="pointer-events-none absolute inset-x-0 top-[72px] md:top-[76px] h-[72px] md:h-[80px] z-10"
       style={{

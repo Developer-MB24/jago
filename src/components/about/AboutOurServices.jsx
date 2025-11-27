@@ -28,7 +28,6 @@ const SERVICE_ITEMS = [
 const AboutOurServices = () => {
   return (
     <section className="relative overflow-hidden h-[120vh] bg-[#faf9fa]">
-      {/* subtle paper texture */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.25] z-0 hidden lg:block">
         <svg className="w-full h-full" viewBox="0 0 800 400" aria-hidden="true">
           <filter id="paperNoise">
@@ -72,7 +71,6 @@ const AboutOurServices = () => {
               generosity.
             </p>
 
-            {/* Hand image – centered on mobile, fixed bottom-left on desktop */}
             <div className="">
               {/* desktop / large */}
               <div className="hidden lg:block ">
@@ -136,7 +134,7 @@ const AboutOurServices = () => {
                   <ArrowUpRight className="w-5 h-5" />
                 </a>
 
-                {/* subtle border ring */}
+                {/*  border ring */}
                 <span className="pointer-events-none absolute inset-0 rounded-[22px] ring-1 ring-black/5" />
               </div>
             ))}

@@ -4,7 +4,6 @@ import React from "react";
 export default function ContactHero() {
   return (
     <section className="relative h-[400px] flex items-center justify-center overflow-hidden z-10">
-      {/* Animated Gradient Overlays */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <motion.div
           className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#FF9933] to-transparent opacity-20"
@@ -20,7 +19,6 @@ export default function ContactHero() {
         />
       </div>
 
-      {/* Animated floating shapes */}
       <motion.div
         className="absolute top-16 left-24 w-32 h-32 rounded-full bg-white opacity-10"
         animate={{
@@ -33,7 +31,6 @@ export default function ContactHero() {
           ease: "easeInOut",
         }}
       />
-      {/* Add more shapes as needed for artistic effect */}
 
       {/* Image Background */}
       <img
@@ -44,7 +41,6 @@ export default function ContactHero() {
         aria-hidden="true"
       />
 
-      {/* Hero Text */}
       <motion.div
         className="relative z-10 text-center"
         initial={{ opacity: 0, y: 40 }}

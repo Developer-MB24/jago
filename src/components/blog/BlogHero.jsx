@@ -1,4 +1,3 @@
-// src/components/blogdetails/HeroBlogDetails.jsx
 import React from "react";
 
 export default function HeroBlogDetails() {
@@ -6,7 +5,6 @@ export default function HeroBlogDetails() {
     <section
       className="relative z-[1] overflow-hidden bg-[#0e2c27] pt-[210px] pb-[140px] md:pt-[260px] md:pb-[180px] lg:pt-[332px] lg:pb-[210px]"
       style={{
-        // Optional mask curve – point this to your mask image if you have one
         WebkitMaskImage: "url('images/page-header-mask.png')",
         maskImage: "url('images/page-header-mask.png')",
         WebkitMaskRepeat: "no-repeat",
@@ -17,7 +15,7 @@ export default function HeroBlogDetails() {
         maskSize: "cover",
       }}
     >
-      {/* Background image with luminosity blend */}
+      {/* Background image  */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 -z-[1]"
         style={{
@@ -26,7 +24,6 @@ export default function HeroBlogDetails() {
         }}
       />
 
-      {/* Shape background overlay */}
       <div
         className="absolute inset-0 bg-top bg-cover bg-no-repeat opacity-10 mix-blend-multiply -z-[1]"
         style={{

@@ -93,7 +93,6 @@ const DonationCausesSection = () => (
               {c.percent}%
             </div>
 
-            {/* decorative faded edge on right */}
             <div
               aria-hidden
               className="absolute right-0 top-0 h-full w-[22px] pointer-events-none"
@@ -128,7 +127,6 @@ const DonationCausesSection = () => (
                 />
               </div>
 
-              {/* amounts and button row */}
               <div className="flex items-center gap-6 mt-4">
                 <div>
                   <div className="text-xs text-gray-500">Raised</div>

@@ -8,7 +8,7 @@ const AboutVolunteerSection = () => (
     </div>
 
     <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between md:flex-row t">
-      {/* Left Section (Images + Stats Box) */}
+      {/* Left Section */}
       <div className="relative flex w-full max-w-[520px] flex-col md:flex-row md:items-start">
         {/* Big Bottom Image */}
         <div className="relative h-80 w-64 rounded-[3rem] overflow-hidden shadow-xl xs:h-96 xs:w-72 sm:h-[420px] sm:w-80 md:h-[430px] md:w-80">
@@ -28,7 +28,7 @@ const AboutVolunteerSection = () => (
           />
         </div>
 
-        {/* Green Stats Box */}
+        {/*  Stats Box */}
         <div className="absolute bottom-[-30px] border-8 border-white flex flex-col right-4 justify-center items-center sm:right-8 md:right-[-40px] md:bottom-[40px] w-[240px] sm:w-[270px] bg-[#138808] rounded-[3rem] h-52 px-6 py-4 shadow-xl">
           <div className="text-3xl font-bold text-white leading-tight">
             266300+
@@ -44,7 +44,6 @@ const AboutVolunteerSection = () => (
           </a>
         </div>
 
-        {/* Decorative Shape */}
         <div className="absolute -left-6 -top-6 -z-10 hidden sm:block">
           <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
             <path

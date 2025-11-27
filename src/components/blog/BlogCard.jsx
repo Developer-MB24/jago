@@ -58,7 +58,6 @@ export default function BlogCard({
       </div>
 
       <div className="bg-white pt-5 pb-5 px-6 border-t-0 rounded-b-[var(--helpest-bdr-radius)]">
-        {/* Meta (blog-one__meta) */}
         <ul className="flex items-center gap-8 mb-3 text-[16px]">
           <li>
             <p className="flex items-center gap-3 font-[var(--helpest-font-three)] text-[18px]">

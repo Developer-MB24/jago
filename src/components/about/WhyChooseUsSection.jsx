@@ -33,7 +33,7 @@ const WhyChooseUsSection = () => {
 
   return (
     <section className="relative overflow-hidden w-full flex flex-col md:flex-row items-stretch py-8 md:py-14 px-4 md:px-8">
-      {/* Background gradients */}
+      {/* Background  */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-0 w-full h-48 sm:h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
         <div className="absolute bottom-0 left-0 w-full h-48 sm:h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
@@ -84,7 +84,7 @@ const WhyChooseUsSection = () => {
           continue our mission.
         </p>
 
-        {/* Animated Progress Bars */}
+        {/* Animated */}
         <div className="space-y-2 mb-4">
           {stats.map((stat, idx) => (
             <div

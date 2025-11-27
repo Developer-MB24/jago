@@ -43,7 +43,7 @@ const AboutServicesSection = () => (
       </svg>
     </div>
 
-    {/* optional left green strip */}
+    {/*  left green strip */}
     {/* <div className="absolute top-24 left-0 h-56 w-8 bg-[#138808] rounded-r-2xl z-10 pointer-events-none" /> */}
 
     {/* CARDS */}

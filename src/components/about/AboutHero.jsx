@@ -1,4 +1,3 @@
-// Home.jsx
 import React from "react";
 
 const AboutHero = () => {
@@ -6,7 +5,6 @@ const AboutHero = () => {
     <section className="relative w-full min-h-screen flex items-center bg-black overflow-hidden py-12">
       {/* RIGHT SIDE IMAGE – HIDDEN IN MOBILE */}
       <div className="hidden sm:block absolute inset-y-0 right-0 w-1/2 overflow-hidden z-10 pointer-events-none">
-        {/* Optional white sliding panel (desktop accent) */}
         <div className="hidden lg:block absolute left-[-140px] top-0 w-[900px] h-full bg-white animate-slideInRight z-10" />
 
         <img
@@ -16,7 +14,6 @@ const AboutHero = () => {
           style={{ animationDelay: "1.2s" }}
         />
 
-        {/* Decorative blob – desktop only */}
         <div className="hidden lg:block absolute left-[-80px] top-20 z-30 animate-bounce">
           <svg
             width="80"
@@ -77,20 +74,17 @@ const AboutHero = () => {
 
           {/* BUTTONS */}
           <div className="flex items-center gap-6 flex-wrap">
-            {/* DISCOVER NOW - WIPE / LAYER REMOVAL HOVER EFFECT */}
             <a
               href="#"
               className="relative inline-flex items-center justify-center w-auto rounded-full font-semibold text-base sm:text-lg overflow-hidden group focus:outline-none"
               aria-label="Discover Now"
             >
-              {/* Bottom/revealed color (#FF9933) */}
               <span
                 className="absolute inset-0 block pointer-events-none"
                 aria-hidden="true"
                 style={{ backgroundColor: "#FF9933" }}
               />
 
-              {/* Top sliding layer (original green) */}
               <span
                 className="absolute inset-0 block transform transition-transform duration-500 ease-[cubic-bezier(.33,1,.68,1)] group-hover:-translate-y-full"
                 aria-hidden="true"
@@ -112,7 +106,6 @@ const AboutHero = () => {
               aria-label="Play"
               className="relative w-20 h-20 sm:w-24 sm:h-24 flex justify-center items-center rounded-full group"
             >
-              {/* Outer pulsing glow */}
               <span className="absolute w-full h-full rounded-full bg-[#FFE8B3] animate-pulseGlow"></span>
 
               {/* Inner circle */}

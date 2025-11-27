@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp, Heart } from "lucide-react";
 
-// FAQ content
 const faqs = [
   {
     question: "What motivates you to donate to our charity?",
@@ -25,7 +24,7 @@ const FAQSection = () => {
 
   return (
     <section className="relative overflow-hidden w-full flex flex-col md:flex-row items-stretch bg-[#fafbfa] py-14 md:py-20 px-2 md:px-8 gap-0 md:gap-12">
-      {/* Background gradient animation */}
+      {/* Background  */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-15 animate-slideDown" />
         <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-15 animate-slideUp" />
@@ -63,7 +62,7 @@ const FAQSection = () => {
                   <ChevronDown className="text-[#138808]" size={30} />
                 )}
               </button>
-              {/* Accordion answer section, with divider and styled content */}
+
               <div
                 className={`overflow-hidden transition-all duration-500 
                   ${openIdx === idx ? "max-h-[350px] py-0" : "max-h-0 py-0"}
@@ -94,7 +93,7 @@ const FAQSection = () => {
         />
       </div>
 
-      {/* Animations for gradient */}
+      {/* Animations  */}
       <style>{`
         @keyframes slideDown {
           0% { transform: translateY(-25%); }

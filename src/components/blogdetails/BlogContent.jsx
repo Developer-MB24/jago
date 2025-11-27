@@ -1,7 +1,7 @@
 export default function BlogContent() {
   return (
     <article>
-      {/* Image wrapper (blog-details__img) */}
+      {/* Image  */}
       <div className="relative mb-5">
         <img
           src="/images/blog-details-img-1.jpg"
@@ -10,7 +10,7 @@ export default function BlogContent() {
         />
       </div>
 
-      {/* Content (blog-details__content) */}
+      {/* Content  */}
       <div className="pt-5 pb-7">
         {/* Meta (blog-details__meta) */}
         <ul className="flex items-center gap-5 text-[14px] sm:text-[16px] font-medium uppercase text-slate-500">
@@ -59,12 +59,12 @@ export default function BlogContent() {
           </li>
         </ul>
 
-        {/* Title (blog-details__title) */}
+        {/* Title  */}
         <h1 className="text-[26px] sm:text-[32px] md:text-[38px] leading-snug md:leading-[48px] font-extrabold text-black mt-[21px] mb-[19px] capitalize">
           Explore the world like never before travel experience
         </h1>
 
-        {/* Paragraphs (blog-details__text-1, text-2) */}
+        {/* Paragraphs  */}
         <p className="text-[15px] leading-relaxed text-gray-600">
           Web designing in a powerful way of just not an only professions,
           however, in a passion for our Company. We have to a tendency to
@@ -79,7 +79,7 @@ export default function BlogContent() {
           impression on visitors.Web designing in a powerful way
         </p>
 
-        {/* Author box (blog-details__author-box) */}
+        {/* Author box  */}
         <div className="relative bg-[#F6FCFD] rounded-[20px] px-6 py-7 md:px-10 md:py-9 mb-[30px]">
           <p className="text-[15px] leading-relaxed text-gray-700">
             Aliquam eros justo, posuere loborti viverra laoreet matti
@@ -87,7 +87,7 @@ export default function BlogContent() {
             viverra laoreet augue mattis fermentu m ul amcorper viverra laoreet.
           </p>
 
-          {/* Author name + line (blog-details__author-name) */}
+          {/* Author name  */}
           <div className="flex items-center gap-3 mt-[34px]">
             <span className="inline-block w-10 h-[2px] bg-[#138808]" />
             <span className="text-[18px] leading-[28px] font-bold text-[#111827]">
@@ -95,7 +95,7 @@ export default function BlogContent() {
             </span>
           </div>
 
-          {/* Quote icon (blog-details__author-quote) */}
+          {/* Quote icon  */}
           <div className="absolute bottom-[37px] right-[43px] text-[40px] text-[#138808]">
             ❝
           </div>
@@ -110,7 +110,6 @@ export default function BlogContent() {
         </p>
       </div>
 
-      {/* Keyword & Tag row (blog-details__keyword-and-tag) */}
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-y border-black/10 py-5 mt-2">
         {/* Keywords */}
         <div className="flex flex-wrap items-center gap-4">

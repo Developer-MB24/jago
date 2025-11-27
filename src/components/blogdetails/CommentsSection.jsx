@@ -1,9 +1,7 @@
 export default function CommentsSection() {
   return (
     <section className="mt-10">
-      {/* Comment wrapper (comment-one) */}
       <div className="mb-8">
-        {/* Title (comment-one__title) */}
         <h3 className="text-[25px] leading-[35px] font-bold mb-5 capitalize">
           2 comments
         </h3>
@@ -34,7 +32,6 @@ export default function CommentsSection() {
               a reader will be distrol acted bioii the.i
             </p>
 
-            {/* Reply button in top-right (comment-one__btn-box) */}
             <div className="absolute top-0 right-0">
               <a
                 href="#"
@@ -46,7 +43,7 @@ export default function CommentsSection() {
           </div>
         </div>
 
-        {/* Comment 2 (with top border, extra spacing) */}
+        {/* Comment 2  */}
         <div className="mt-5 pt-10 border-t border-black/15 flex items-start gap-7">
           {/* Avatar */}
           <div className="max-w-[80px] w-full">
@@ -85,7 +82,7 @@ export default function CommentsSection() {
         </div>
       </div>
 
-      {/* Comment Form (comment-form) */}
+      {/* Comment Form  */}
       <div className="bg-[#F6FCFD] rounded-[20px] px-6 py-8 md:px-10 md:py-10 mt-8">
         <h3 className="text-[28px] sm:text-[32px] md:text-[40px] font-bold leading-[36px] md:leading-[50px]">
           Add a comment
@@ -96,7 +93,6 @@ export default function CommentsSection() {
         </p>
 
         <form className="space-y-5">
-          {/* Three inputs row (name/email/website) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div>
               <input
@@ -133,9 +129,8 @@ export default function CommentsSection() {
             />
           </div>
 
-          {/* Checkbox + Button row */}
+          {/* Checkbox  */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mt-4">
-            {/* ✅ Simple, reliable checkbox (tick will show) */}
             <label className="flex items-center text-[14px] text-[#111827] cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -146,7 +141,6 @@ export default function CommentsSection() {
               Save my name email and website
             </label>
 
-            {/* Submit button (comment-form__btn-box / thm-btn-ish) */}
             <div className="comment-form__btn-box">
               <button
                 type="submit"
@@ -174,7 +168,6 @@ export default function CommentsSection() {
           </div>
         </form>
 
-        {/* result div placeholder */}
         <div className="mt-3 text-sm text-green-600 hidden">{/* result */}</div>
       </div>
     </section>

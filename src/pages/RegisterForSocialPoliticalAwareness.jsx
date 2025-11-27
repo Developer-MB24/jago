@@ -577,7 +577,7 @@ const RegisterForSocialPoliticalAwareness = () => {
     <div
       className="flex items-center justify-center"
       style={{
-        backgroundImage: "url('/images/volunteer-registration-bg.png')",
+        backgroundImage: "url('/images/Social & Political Awareness.png')",
       }}
     >
       <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div>

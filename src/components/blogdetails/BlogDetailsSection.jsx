@@ -27,7 +27,6 @@ export default function BlogDetailsSection() {
 
               {/* Content */}
               <div className="pt-5 pb-7 border-b border-slate-200">
-                {/* Meta */}
                 <ul className="flex flex-wrap items-center gap-5 text-sm font-semibold tracking-wide uppercase text-slate-500">
                   <li className="flex items-center gap-2">
                     <User size={16} className="text-[#FF9933]" />
@@ -187,7 +186,6 @@ export default function BlogDetailsSection() {
                 </p>
 
                 <form className="space-y-5">
-                  {/* Top three inputs */}
                   <div className="grid gap-4 md:grid-cols-3">
                     <input
                       type="text"
@@ -216,7 +214,7 @@ export default function BlogDetailsSection() {
                     className="w-full h-[180px] rounded-[18px] border border-transparent bg-white px-6 py-4 text-base text-slate-700 placeholder:text-slate-400 shadow-sm outline-none resize-none focus:border-[#FF9933] focus:ring-2 focus:ring-[#FF9933]/60"
                   />
 
-                  {/* Checkbox + button row */}
+                  {/* Checkbox */}
                   <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     {/* Checkbox */}
                     <label className="inline-flex cursor-pointer select-none items-center text-sm text-slate-800">
