@@ -1,61 +1,78 @@
-import { motion } from "framer-motion";
 import React from "react";
 
 export default function ContactHero() {
   return (
-    <section className="relative h-[400px] flex items-center justify-center overflow-hidden z-10">
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <motion.div
-          className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#FF9933] to-transparent opacity-20"
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 0.2, y: 0 }}
-          transition={{ duration: 1 }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#138808] to-transparent opacity-20"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 0.2, y: 0 }}
-          transition={{ duration: 1 }}
+    <section
+      className="relative z-[1] overflow-hidden bg-[#0e2c27] pt-[210px] pb-[140px] md:pt-[260px] md:pb-[180px] lg:pt-[332px] lg:pb-[210px]"
+      style={{
+        WebkitMaskImage: "url('images/page-header-mask.png')",
+        maskImage: "url('images/page-header-mask.png')",
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center center",
+        maskPosition: "center center",
+        WebkitMaskSize: "cover",
+        maskSize: "cover",
+      }}
+    >
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-20 -z-[1]"
+        style={{
+          backgroundImage: "url('images/page-header-bg.jpg')",
+          mixBlendMode: "luminosity",
+        }}
+      />
+
+      <div
+        className="absolute inset-0 bg-top bg-cover bg-no-repeat opacity-10 mix-blend-multiply -z-[1]"
+        style={{
+          backgroundImage: "url('images/page-header-shape-bg.png')",
+        }}
+      />
+
+      {/* Shape 1  */}
+      <div className="absolute bottom-0 right-[-30px] -z-[1]">
+        <img
+          src="images/page-header-shape-1.png"
+          alt="decorative shape"
+          className="w-auto max-w-none"
         />
       </div>
 
-      <motion.div
-        className="absolute top-16 left-24 w-32 h-32 rounded-full bg-white opacity-10"
-        animate={{
-          x: [0, 20, -20, 0],
-          y: [0, 10, -10, 0],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 6,
-          ease: "easeInOut",
-        }}
-      />
+      {/* Shape 2 */}
+      <div className="absolute bottom-[-20px] left-0 opacity-20 mix-blend-multiply -z-[1]">
+        <img
+          src="images/page-header-shape-2.png"
+          alt="decorative shape"
+          className="w-auto max-w-none"
+        />
+      </div>
 
-      {/* Image Background */}
-      <img
-        src="/images/about-two-img-2.jpg"
-        alt=""
-        className="absolute inset-0 object-cover w-full h-full z-[-1] brightness-[0.6] pointer-events-none"
-        style={{ mixBlendMode: "multiply" }}
-        aria-hidden="true"
-      />
+      {/* Content */}
+      <div className="relative max-w-6xl mx-auto px-4">
+        <div className="relative">
+          <h2 className="text-[32px] md:text-[40px] lg:text-[50px] leading-[1.3] font-extrabold text-white mb-4">
+            Contact
+          </h2>
 
-      <motion.div
-        className="relative z-10 text-center"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      >
-        <h1 className="text-5xl font-bold text-white mb-4 drop-shadow-lg">
-          Contact
-        </h1>
-        <nav className="flex items-center justify-center gap-2 text-lg text-white/80">
-          <span>Home</span>
-          <span>›</span>
-          <span>Contact</span>
-        </nav>
-      </motion.div>
+          <div className="inline-block relative">
+            <ul className="flex items-center gap-2 text-sm md:text-base text-white">
+              <li>
+                <a
+                  href="/"
+                  className="transition-colors duration-300 hover:text-[#FF9933]"
+                >
+                  Home
+                </a>
+              </li>
+              <li className="flex items-center text-[#FF9933] mx-1">
+                <span className="fas fa-angle-right" />
+              </li>
+              <li className="capitalize">Contact</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

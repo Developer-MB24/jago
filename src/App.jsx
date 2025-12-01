@@ -7,7 +7,7 @@ import About from "./pages/About.jsx";
 import RegisterForEducation from "./pages/RegisterForEducation.jsx";
 import BlogDetails from "./pages/BlogDetails.jsx";
 import SelectVolunteerService from "./pages/SelectVolunteerService.jsx";
-// import Contact from "./pages/Contact.jsx";
+import Contact from "./pages/Contact.jsx";
 import RegisterForHealth from "./pages/RegisterForHealth.jsx";
 import RegisterForAgriculture from "./pages/RegisterForAgriculture.jsx";
 
@@ -35,18 +35,17 @@ function NotFound() {
 export default function App() {
   return (
     <Suspense fallback={<div className="p-8 text-center">Loading…</div>}>
-      {/* Hide native cursor on desktop; keep touch devices untouched */}
       <div
         className="hidden md:block fixed inset-0 pointer-events-none"
         style={{ cursor: "none", zIndex: 9998 }}
       />
-      {/* Custom cursor (dot + trailing ring) */}
+
       <CustomCursor
-        innerSize={12} // dot size (unchanged)
-        outerSize={44} // ⬅️ smaller ring
+        innerSize={12}
+        outerSize={44}
         outerBorder={3}
-        colorInner="#138808" // dot (green)
-        colorOuter="#FF9933" // ring (orange)
+        colorInner="#138808"
+        colorOuter="#FF9933"
         trailEase={0.12}
         snapVelocity={0.12}
       />
@@ -92,7 +91,7 @@ export default function App() {
             element={<RegisterForMiscellaneous />}
           />
 
-          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/contact" element={<Contact />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
