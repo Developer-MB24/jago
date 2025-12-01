@@ -204,6 +204,7 @@ const Services = () => {
           position: relative;
           flex: 1;                       /* fill remaining height */
           display: flex;
+           
           flex-direction: column;
           background-color: #ffffff;     /* white bg */
           box-shadow: -10px 0px 60px 0px rgba(0, 0, 0, 0.07);
@@ -211,6 +212,36 @@ const Services = () => {
           border-bottom-left-radius: 24px;
           border-bottom-right-radius: 24px;
         }
+        /* === Responsive tweaks: do NOT affect desktop design === */
+
+/* Tablet: 2 cards per row, no big side gaps */
+@media (max-width: 1023px) {
+  .services-two__content {
+  height:20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .services-two__single {
+    flex: 0 0 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+  }
+}
+
+/* Mobile: 1 card per row, full width */
+@media (max-width: 640px) {
+  .services-two__content {
+    height:20px ;
+    gap: 20px;
+    
+  }
+
+  .services-two__single {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
 
         /* ---- ICON BADGE ---- */
         .services-two__icon-inner {
@@ -434,7 +465,9 @@ const Services = () => {
         .services-two__dot--active .services-two__dot-center {
           opacity: 1;
           transform: scale(1.1);
+
         }
+        
       `}</style>
 
       <section className="services-two">

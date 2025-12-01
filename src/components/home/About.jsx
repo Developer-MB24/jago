@@ -370,6 +370,41 @@ const AboutUs = () => {
           z-index: -1;
           animation: rotated 18s linear infinite;
         }
+        /* ====== Tablet + Phone (up to 1023px) ====== */
+{/* @media (max-width: 1023px) {
+  .about-two__shape-1 {
+    top: 10px;
+    left: 50%;
+    width: 260px;
+    height: 260px;
+    transform: translateX(-50%);
+  }
+
+  .about-two__img-2 {
+    right: -20px;
+    bottom: -20px;
+    max-width: 170px;
+    border-top-width: 10px;
+    border-left-width: 10px;
+  }
+} */}
+
+/* ====== Small Phones (up to 640px) ====== */
+@media (max-width: 640px) {
+  .about-two__shape-1 {
+    top: 0;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translateX(-50%);
+  }
+
+  .about-two__img-2 {
+    right: -2px;
+    bottom: -12px;
+    max-width: 140px;
+  }
+}
 
         .about-two__support {
           position: absolute;
@@ -422,7 +457,7 @@ const AboutUs = () => {
                   About Us
                 </div>
 
-                <h2 className="text-3xl font-extrabold leading-snug text-slate-900 sm:text-4xl md:text-4xl about-heading">
+                <h2 className="text-3xl font-extrabold leading-snug text-slate-900 sm:text-4xl md:text-xl about-heading">
                   <span className="block">
                     {headingLine1.split("").map((ch, i) => (
                       <span
@@ -542,7 +577,7 @@ const AboutUs = () => {
 
             {/* RIGHT */}
             <div className="about-two__right fade-in-right">
-              <div className="about-two__img-box">
+              <div className="about-two__img-box ">
                 {/* Rotating dashed circle */}
                 <div className="about-two__shape-1"></div>
 
@@ -552,7 +587,7 @@ const AboutUs = () => {
                 </div>
 
                 {/* Secondary image bottom-right */}
-                <div className="about-two__img-2">
+                <div className="about-two__img-2 ">
                   <img src="/images/about-two-img-2.jpg" alt="About 2" />
                 </div>
 
