@@ -25,3 +25,73 @@
     @apply rounded-2xl bg-white p-6 shadow-soft;
   }
 }
+
+.ripple-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  transform: translate(-50%, -50%);
+  animation: ripple 2.2s infinite;
+  z-index: 1;
+}
+
+/* Add in index.css or About.css */
+.rotate-ring {
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.fade-left {
+  animation: fadeLeft 1.4s ease-out;
+}
+
+.fade-right {
+  animation: fadeRight 1.4s ease-out;
+}
+
+@keyframes fadeLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  0% {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.slide-right {
+  animation: slideRight 1.3s ease-out;
+}
+
+@keyframes slideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(120px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

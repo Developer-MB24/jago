@@ -13,7 +13,7 @@ const logos = [
 ];
 
 const TrustedCompaniesCarousel = () => (
-  <section className="relative group  py-10 overflow-hidden">
+  <section className="relative group  py-10 overflow-hidden mt-10">
     <div className="absolute inset-0 pointer-events-none z-0">
       <div className="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-[#FF9933] to-transparent opacity-25 animate-slideDown" />
       <div className="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#138808] to-transparent opacity-25 animate-slideUp" />

@@ -1,157 +1,257 @@
 import React from "react";
-import { Egg, GraduationCap, Pill, ArrowUpRight, Heart } from "lucide-react";
+import {
+  FaGraduationCap,
+  FaHandsHelping,
+  FaHeartbeat,
+  FaDonate,
+  FaArrowRight,
+} from "react-icons/fa";
 
-const SERVICE_ITEMS = [
+const services = [
   {
-    title: "Healthy Foods",
-    desc: "Share stories and experiences from current volunteers to inspire others to join. Allow user to sign up for volunteer opportunities.",
-    badgeBg: "#FFF7E6",
-    iconColor: "#FF9933",
-    Icon: Egg,
+    id: 1,
+    title: "Education Fund",
+    text: "Poor address a range of simply application and infrastructure",
+    icon: <FaGraduationCap />,
+    aos: "fade-right",
+    delay: "0",
   },
   {
-    title: "Education Support",
-    desc: "Share stories and experiences from current volunteers to inspire others to join. Allow user to sign up for volunteer opportunities.",
-    badgeBg: "#EAF6EC",
-    iconColor: "#138808",
-    Icon: GraduationCap,
+    id: 2,
+    title: "Inspire Help",
+    text: "Poor address a range of simply application and infrastructure",
+    icon: <FaHandsHelping />,
+    aos: "fade-right",
+    delay: "100",
   },
   {
-    title: "Medical Help",
-    desc: "Share stories and experiences from current volunteers to inspire others to join. Allow user to sign up for volunteer opportunities.",
-    badgeBg: "#FFF1E8",
-    iconColor: "#FF9933",
-    Icon: Pill,
+    id: 3,
+    title: "Helthcare",
+    text: "Poor address a range of simply application and infrastructure",
+    icon: <FaHeartbeat />,
+    aos: "fade-left",
+    delay: "200",
+  },
+  {
+    id: 4,
+    title: "Fund Raised",
+    text: "Poor address a range of simply application and infrastructure",
+    icon: <FaDonate />,
+    aos: "fade-left",
+    delay: "300",
   },
 ];
 
 const AboutOurServices = () => {
   return (
-    <section className="relative overflow-hidden h-[120vh] bg-[#faf9fa]">
-      <div className="absolute inset-0 pointer-events-none opacity-[0.25] z-0 hidden lg:block">
-        <svg className="w-full h-full" viewBox="0 0 800 400" aria-hidden="true">
-          <filter id="paperNoise">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.85"
-              numOctaves="2"
-            />
-            <feColorMatrix type="saturate" values="0" />
-            <feComponentTransfer>
-              <feFuncA type="table" tableValues="0 0.22" />
-            </feComponentTransfer>
-          </filter>
-          <rect width="100%" height="100%" filter="url(#paperNoise)" />
-        </svg>
-      </div>
+    <>
+      <style>
+        {`
+/* ======================= SERVICES ONE ======================= */
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6 lg:px-8 py-12 md:py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-start">
-          {/* LEFT */}
-          <div className="lg:col-span-5 relative ">
-            <div className="flex items-center gap-2 mb-3">
-              <Heart className="w-5 h-5 text-[#138808]" />
-              <span className="italic text-[#FF9933] font-semibold text-base md:text-lg">
-                Our Services
-              </span>
-            </div>
+.services-one {
+  position: relative;
+  display: block;
+  padding: 120px 0 0;
+  z-index: 1;
+}
 
-            <h2
-              className="font-extrabold tracking-tight text-[#1f1f1f]
-                         text-3xl md:text-4xl lg:text-[46px] leading-[1.12] mb-4 md:mb-5"
-            >
-              We’re Helping People In Need Around The World
-            </h2>
+.services-one__shape-1 {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  opacity: 0.10;
+  z-index: -1;
+}
+.services-one__shape-1 img {
+  width: auto;
+  animation: treeMove 4s linear infinite;
+}
 
-            <p className="text-[14px] md:text-[15px] leading-6 md:leading-7 text-[#50525a] max-w-md">
-              Discover the inspiring stories of individuals and communities
-              transformed by our programs. Our success stories highlight the
-              real-life impact of your donations and the resilience of those we
-              help. These narratives showcase the power of compassion and
-              generosity.
-            </p>
+/* MAIN CARD WRAPPER */
+.services-one__single {
+  position: relative;
+  display: block;
+  text-align: center;
+  margin-bottom: 30px;
+  background-color: var(--helpest-extra);
+  padding: 40px 30px 31px;
+  border-radius: var(--helpest-bdr-radius);
+}
 
-            <div className="">
-              {/* desktop / large */}
-              <div className="hidden lg:block ">
-                <div className="absolute   select-none pointer-events-none">
-                  <img
-                    src="/images/hand-image.png"
-                    alt="Helping Hand"
-                    className="w-[480px] max-w-none"
-                  />
-                </div>
-              </div>
+/* HEXAGON WRAPPER */
+.services-one__icon-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 80px;
+  margin: 0 auto;
+  padding: 5px;
+  background-color: rgba(var(--helpest-base-rgb), .40);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
 
-              {/* mobile / tablet */}
-              <div className="flex justify-center lg:hidden select-none pointer-events-none">
-                <img
-                  src="/images/hand-image.png"
-                  alt="Helping Hand"
-                  className="w-[230px] md:w-[280px]"
-                />
-              </div>
-            </div>
-          </div>
+/* DIFFERENT COLORS PER CHILD */
+.services-one ul li:nth-child(2) .services-one__icon-inner {
+  background-color: rgba(var(--helpest-primary-rgb), .40);
+}
+.services-one ul li:nth-child(3) .services-one__icon-inner {
+  background-color: rgba(var(--helpest-secondary-rgb), .40);
+}
+.services-one ul li:nth-child(4) .services-one__icon-inner {
+  background-color: rgba(255, 60, 207, .40);
+}
 
-          {/* RIGHT – cards */}
-          <div className="lg:col-span-7 flex w-full flex-col gap-4 md:gap-5">
-            {SERVICE_ITEMS.map(({ title, desc, badgeBg, iconColor, Icon }) => (
-              <div
-                key={title}
-                className="group relative flex items-center gap-5 md:gap-6 rounded-[22px] bg-white
-                           shadow-[0_6px_24px_rgba(0,0,0,0.07)] px-5 py-4 md:px-7 md:py-5 lg:px-8 lg:py-6"
-              >
-                {/* icon badge */}
-                <div
-                  className="grid place-items-center w-12 h-12 md:w-14 md:h-14 rounded-2xl ring-1 ring-black/5 flex-shrink-0"
-                  style={{ background: badgeBg }}
-                  aria-hidden="true"
-                >
-                  <Icon
-                    className="w-6 h-6 md:w-7 md:h-7"
-                    style={{ color: iconColor }}
-                  />
-                </div>
+/* INNER HEX SHAPE */
+.services-one__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 70px;
+  margin: 0 auto;
+  background-color: var(--helpest-base);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
 
-                {/* text */}
-                <div className="flex-1 min-w-0">
-                  <div className="font-extrabold text-[#1d1f1f] text-[16px] md:text-[18px] lg:text-[19px] leading-tight">
-                    {title}
-                  </div>
-                  <div className="text-[13px] md:text-[14px] text-[#6d7079] mt-1">
-                    {desc}
-                  </div>
-                </div>
+/* Hover: inner turns white */
+.services-one__single:hover .services-one__icon {
+  background-color: var(--helpest-white);
+  transition-delay: 500ms;
+}
 
-                {/* arrow button */}
-                <a
-                  href="#"
-                  className="shrink-0 grid place-items-center w-10 h-10 md:w-10 md:h-10 rounded-full
-                             bg-[#138808] text-white transition-colors group-hover:bg-[#FF9933]"
-                  aria-label={`Open ${title}`}
-                >
-                  <ArrowUpRight className="w-5 h-5" />
-                </a>
+/* React icon styling */
+.services-one__icon-react {
+  font-size: 40px;
+  color: var(--helpest-white);
+  transition: all 500ms linear;
+}
 
-                {/*  border ring */}
-                <span className="pointer-events-none absolute inset-0 rounded-[22px] ring-1 ring-black/5" />
-              </div>
-            ))}
-          </div>
+.services-one__single:hover .services-one__icon-react {
+  color: var(--helpest-base);
+  animation: wobble-horizontal-hover 1s ease-in-out;
+}
+
+/* Variant icon hover colors */
+.services-one ul li:nth-child(2) .services-one__single:hover .services-one__icon-react {
+  color: var(--helpest-primary);
+}
+.services-one ul li:nth-child(3) .services-one__single:hover .services-one__icon-react {
+  color: var(--helpest-secondary);
+}
+.services-one ul li:nth-child(4) .services-one__single:hover .services-one__icon-react {
+  color: #e13ccf;
+}
+
+/* Title */
+.services-one__title {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 34px;
+  margin: 20px 0 10px;
+}
+
+.services-one__title a {
+  color: var(--helpest-black);
+}
+.services-one__title a:hover {
+  color: var(--helpest-base);
+}
+
+/* Read more */
+.services-one__read-more a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-weight: 600;
+  color: var(--helpest-gray);
+}
+.services-one__read-more a:hover {
+  color: var(--helpest-base);
+}
+
+.services-one__read-more-icon {
+  color: var(--helpest-base);
+  font-size: 14px;
+}
+
+/* Wiggle animation */
+@keyframes wobble-horizontal-hover {
+  16.65% { transform: translateX(5px); }
+  33.3% { transform: translateX(-3px); }
+  49.95% { transform: translateX(4px); }
+  66.6% { transform: translateX(-2px); }
+  83.25% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+/* Floating animation */
+@keyframes treeMove {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+        `}
+      </style>
+
+      <section className="services-one">
+        {/* Floating decorative shape */}
+        <div className="services-one__shape-1">
+          <img src="/images/services-one-shape-1.png" alt="" />
         </div>
-      </div>
 
-      <style>{`
-        .reveal { opacity: 0; transform: translateY(18px); }
-        .reveal.appear { opacity: 1; transform: none; transition: .6s cubic-bezier(.25,.9,.3,1.1); }
+        <div className="container mx-auto px-4">
+          {/* Title */}
+          <div className="section-title text-center mb-12">
+            <div className="section-title__tagline-box">
+              <span className="section-title__tagline">OUR SERVICE</span>
+            </div>
+            <h2 className="section-title__title">
+              We Service Now help Poor people Lives
+            </h2>
+          </div>
 
-        @keyframes slideDown { 0% { transform: translateY(-25%);} 100% { transform: translateY(0%);} }
-        @keyframes slideUp   { 0% { transform: translateY(25%);}  100% { transform: translateY(0%);} }
-        .animate-slideDown { animation: slideDown 14s ease-in-out infinite alternate; }
-        .animate-slideUp   { animation: slideUp   14s ease-in-out infinite alternate; }
-      `}</style>
-    </section>
+          {/* SERVICE ITEMS */}
+          <ul className="list-unstyled grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {services.map((item) => (
+              <li
+                key={item.id}
+                className="aos-init aos-animate"
+                data-aos={item.aos}
+                data-aos-duration="1000"
+                data-aos-delay={item.delay}
+              >
+                <div className="services-one__single">
+                  <div className="services-one__icon-inner">
+                    <div className="services-one__icon">
+                      <span className="services-one__icon-react">
+                        {item.icon}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="services-one__title">
+                    <a href="#">{item.title}</a>
+                  </h3>
+
+                  <p className="services-one__text">{item.text}</p>
+
+                  <div className="services-one__read-more">
+                    <a href="#">
+                      Read More{" "}
+                      <FaArrowRight className="services-one__read-more-icon" />
+                    </a>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    </>
   );
 };
 

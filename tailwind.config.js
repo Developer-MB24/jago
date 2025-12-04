@@ -4,10 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // keep your serif default
         serif: ["Georgia", "serif"],
-
-        // your existing sans stack (kept)
         sans: [
           "Figtree",
           "ui-sans-serif",
@@ -19,19 +16,57 @@ export default {
           "sans-serif",
         ],
 
-        // NEW: app-level roles
-        title: ["Caveat", "cursive"], // for headings/titles
-        paragraph: ["Nunito", "Figtree", "Arial", "sans-serif"], // for body copy
+        // NEW groups
+        title: ["Caveat", "cursive"],
+        paragraph: ["Nunito", "Figtree", "Arial", "sans-serif"],
 
-        // (optional) direct names if you want to use them explicitly
         nunito: ["Nunito", "Figtree", "Arial", "sans-serif"],
         caveat: ["Caveat", "cursive"],
       },
+
       colors: {
         primary: { DEFAULT: "#FF671F", hover: "#e55c1c" },
         secondary: { DEFAULT: "#046A38", hover: "#03572f" },
       },
-      boxShadow: { soft: "0 10px 25px rgba(0,0,0,0.08)" },
+
+      boxShadow: {
+        soft: "0 10px 25px rgba(0,0,0,0.08)",
+      },
+
+      /* -------------------------
+         ⭐ RIPPLE ANIMATION ADDED
+      -------------------------- */
+      keyframes: {
+        ripple: {
+          "0%": {
+            transform: "translate(-50%, -50%) scale(0.9)",
+            opacity: "0.6",
+          },
+          "70%": {
+            transform: "translate(-50%, -50%) scale(1.6)",
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
+      },
+      animation: {
+        ripple: "ripple 2.2s infinite",
+      },
+
+      /* -------------------------
+         ⭐ MASK UTILITIES ADDED
+      -------------------------- */
+      maskImage: {
+        custom: "url('/images/video-mask.png')",
+      },
+      maskSize: {
+        cover: "cover",
+      },
+      maskPosition: {
+        center: "center",
+      },
     },
   },
   plugins: [],

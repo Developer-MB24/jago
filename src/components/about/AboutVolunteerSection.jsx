@@ -1,155 +1,160 @@
-import React from "react";
+// AboutVolunteerSection.jsx
+import React, { useEffect, useRef } from "react";
+import { FaChartLine, FaLightbulb, FaThumbsUp, FaUsers } from "react-icons/fa";
 
-const AboutVolunteerSection = () => (
-  <section className="relative overflow-hidden bg-white px-4 py-14 md:py-20">
-    <div className="pointer-events-none absolute inset-0 z-0">
-      <div className="animate-slideDown absolute left-0 top-0 h-40 w-full opacity-30 md:h-64 bg-gradient-to-b from-[#FF9933] to-transparent" />
-      <div className="animate-slideUp absolute bottom-0 left-0 h-40 w-full opacity-30 md:h-64 bg-gradient-to-t from-[#138808] to-transparent" />
-    </div>
+const stats = [
+  { Icon: FaChartLine, value: "98", suffix: "%", label: "Company Success" },
+  { Icon: FaLightbulb, value: "565", suffix: "+", label: "Company Strategies" },
+  { Icon: FaThumbsUp, value: "36", suffix: "k", label: "Complete Projects" },
+  { Icon: FaUsers, value: "100", suffix: "+", label: "Experienced Members" },
+];
 
-    <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center justify-between md:flex-row t">
-      {/* Left Section */}
-      <div className="relative flex w-full max-w-[520px] flex-col md:flex-row md:items-start">
-        {/* Big Bottom Image */}
-        <div className="relative h-80 w-64 rounded-[3rem] overflow-hidden shadow-xl xs:h-96 xs:w-72 sm:h-[420px] sm:w-80 md:h-[430px] md:w-80">
-          <img
-            src="/images/about-two-img-2.jpg"
-            alt="Children"
-            className="h-full w-full object-cover"
-          />
-        </div>
+const AboutVolunteerSection = () => {
+  const cardsRef = useRef([]);
 
-        {/* Top-Right Small Image */}
-        <div className="absolute right-4 top-[-30px] h-32 w-56 rounded-[3rem] overflow-hidden shadow-md border-8 border-white xs:h-36 xs:w-64 sm:h-64 sm:w-72 md:right-[60px] md:top-[-120px]">
-          <img
-            src="/images/about-two-img-3.jpg"
-            alt="Kids"
-            className="h-full w-full object-cover"
-          />
-        </div>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+            entry.target.classList.add("opacity-100", "translate-y-0");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
 
-        {/*  Stats Box */}
-        <div className="absolute bottom-[-30px] border-8 border-white flex flex-col right-4 justify-center items-center sm:right-8 md:right-[-40px] md:bottom-[40px] w-[240px] sm:w-[270px] bg-[#138808] rounded-[3rem] h-52 px-6 py-4 shadow-xl">
-          <div className="text-3xl font-bold text-white leading-tight">
-            266300+
-          </div>
-          <p className="text-white font-medium text-sm mt-1">
-            Children in Africa Need School
-          </p>
-          <a
-            href="#"
-            className="text-yellow-300 underline text-sm font-semibold hover:text-yellow-400 mt-2 inline-block"
-          >
-            Become A Volunteer
-          </a>
-        </div>
+    cardsRef.current.forEach((card) => card && observer.observe(card));
+    return () => observer.disconnect();
+  }, []);
 
-        <div className="absolute -left-6 -top-6 -z-10 hidden sm:block">
-          <svg width="240" height="240" viewBox="0 0 200 200" fill="none">
-            <path
-              d="M150 10C170 30 190 60 180 100C170 140 130 180 90 190C50 200 10 180 5 130C0 80 30 40 70 20C110 0 130 -10 150 10Z"
-              fill="#FFB347"
-              opacity="0.25"
-            />
-          </svg>
-        </div>
-      </div>
-
-      {/* Right: Text */}
-      <div className="relative z-10 mt-20 w-full max-w-xl md:ml-10 md:mt-0 lg:ml-24">
-        <div className="mb-3 flex items-center gap-2 sm:mb-4">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#138808"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-5 w-5 sm:h-5 sm:w-5"
-          >
-            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z" />
-          </svg>
-          <span className="text-base italic font-semibold text-[#FF9933] sm:text-lg">
-            About Us
-          </span>
-        </div>
-
-        <h2 className="mb-4 text-2xl font-bold leading-snug text-[#181818] sm:mb-5 sm:text-4xl">
-          Give Time, Change Lives
-          <br /> Volunteer Opportunities
-        </h2>
-
-        <p className="mb-4 leading-relaxed text-gray-600 sm:mb-6">
-          Our secure online donation platform allows you to make contribution
-          quickly and safely. Choose from various payment methods and set up
-          one-time or recurring donations with ease. Your support helps us
-          continue our mission.
-        </p>
-
-        <p className="mb-6 leading-relaxed text-gray-600">
-          Discover the inspiring stories of individuals and communities
-          transformed by our programs. Our success stories highlight the
-          real-life impact of your donations and the resilience of those we
-          help. These narratives showcase the power of compassion & generosity.
-        </p>
-
-        {/* Experience */}
-        <div className="mb-7 mt-3 flex items-center gap-3 sm:mb-8 sm:mt-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full border border-[#FF9933] bg-[#fff3e0] sm:h-12 sm:w-12">
-            <svg
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-              className="h-5 w-5 sm:h-6 sm:w-6"
+  return (
+    <section className="about-us-section-2 pt-[100px] xs:pt-20 pb-[300px] md:pb-[200px] xs:pb-20 bg-[#f5f7f6]">
+      <div className="container mx-auto px-4">
+        {/* Top content */}
+        <div className="section-top-5 flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+          {/* Left */}
+          <div className="md:w-1/2 space-y-4">
+            <div
+              className="common-subtitle flex items-center gap-2"
+              data-aos="fade-up"
+              data-aos-delay="200"
+              data-aos-duration="1000"
             >
-              <path
-                d="M12 2C8 2 5 5 5 9c0 4 7 13 7 13s7-9 7-13c0-4-3-7-7-7z"
-                stroke="#FF9933"
-                strokeWidth="2"
-                fill="#FF9933"
-                fillOpacity="0.15"
-              />
-              <circle cx="12" cy="9" r="2" fill="#FF9933" />
-            </svg>
+              <img alt="icon-1" src="/images/icon-2.svg" />
+              <span className="text-sm font-medium text-emerald-700">
+                About Us
+              </span>
+            </div>
+
+            <div
+              className="common-title text-left"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-duration="1000"
+            >
+              <h2 className="text-[32px] md:text-[40px] font-semibold leading-tight text-[#053b33]">
+                We have worked for you since 1989. recycle the world
+              </h2>
+            </div>
           </div>
-          <div>
-            <div className="text-base font-bold text-[#181818] sm:text-lg">
-              32 Years of Experiences
-            </div>
-            <div className="text-xs leading-snug text-gray-600 sm:text-sm">
-              Join our monthly giving program to provide consistent support to
-              our initiatives. Regular contributions,
-            </div>
+
+          {/* Right */}
+          <div
+            className="md:w-1/2 space-y-4 text-left md:text-right"
+            data-aos="fade-up"
+            data-aos-delay="600"
+            data-aos-duration="1000"
+          >
+            <h6 className="text-sm md:text-base font-semibold text-[#053b33]">
+              Welcome to Econest, A leading Recycling Innovator With a Rich
+              History of Excellence.
+            </h6>
+            <p className="text-xs md:text-sm text-slate-500 max-w-md md:ml-auto">
+              The implant fixture is first placed, so that it ilikely to then
+              dental prosthetic is added then dental prosthetic.
+            </p>
           </div>
         </div>
+        <button className="inline-flex -top-96 items-center gap-3 bg-[#f3c839] hover:bg-[#e3b82c] text-[#053b33] text-sm font-semibold px-7 py-3 rounded-full transition-colors">
+          Explore More
+          <span className="flex items-center justify-center w-9 h-9 rounded-full bg-[#053b33] text-white">
+            →
+          </span>
+        </button>
 
-        {/* CTA */}
-        <a
-          href="#"
-          className="inline-block rounded-full bg-[#FF9933] px-6 py-3 text-base font-semibold text-white shadow-lg transition-all hover:bg-[#f7aa46] sm:px-8 sm:py-3.5 sm:text-lg"
-        >
-          About More <span className="ml-1">↗</span>
-        </a>
+        {/* Image + Achievements */}
+        <div className="thumb relative mt-8 md:mt-10 rounded-xl">
+          <img
+            alt="thumb"
+            src="/images/thumb-86.webp"
+            className="w-full rounded-3xl shadow-[0_18px_45px_rgba(0,0,0,0.18)]"
+          />
+
+          <div
+            className="
+              company-achievements-2
+              w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4
+              gap-5 items-center
+              absolute left-1/2 -translate-x-1/2
+              bottom-[-140px]
+              lg:bottom-[-150px]
+              md:bottom-[-180px]
+              xs:static xs:translate-x-0 xs:mt-6
+            "
+          >
+            {stats.map(({ Icon, value, suffix, label }, idx) => (
+              <div
+                key={idx}
+                ref={(el) => (cardsRef.current[idx] = el)}
+                className="
+                  opacity-0 translate-y-10
+                  transition-all duration-700 ease-out
+                  achievement
+                  bg-white/10 border border-white/10 shadow-[0_4px_41.8px_rgba(0,69,64,0.06)]
+                  backdrop-blur-[50.25px]
+                  rounded-2xl text-center
+                  py-10 lg:py-8 md:py-8 xs:py-8
+                "
+                style={{ transitionDelay: `${idx * 120}ms` }}
+              >
+                <div
+                  className="
+                    flex items-center justify-center mx-auto mb-5
+                    text-[26px] bg-[#f7f0d7]
+                    w-[64px] h-[64px]
+                    rounded-full
+                  "
+                >
+                  <Icon className="text-[#f3c839]" />
+                </div>
+
+                <h2
+                  className="
+                    mb-2 font-semibold
+                    text-[30px] md:text-[32px]
+                    leading-[1]
+                    text-[#053b33]
+                  "
+                >
+                  {value}
+                  {suffix}
+                </h2>
+                <p
+                  className="
+                    text-[13px] leading-[18px] text-slate-600
+                  "
+                >
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
-
-    {/* Animations */}
-    <style>{`
-      @keyframes leftRight { 0%,100%{transform:translateX(0)} 25%{transform:translateX(18px)} 50%{transform:translateX(0)} 75%{transform:translateX(-18px)} }
-      .animate-leftRight{ animation:leftRight 2.5s ease-in-out infinite; }
-
-      @keyframes upDown { 0%,100%{transform:translateY(0)} 25%{transform:translateY(-18px)} 50%{transform:translateY(0)} 75%{transform:translateY(18px)} }
-      .animate-upDown{ animation:upDown 2.5s ease-in-out infinite; }
-
-      @keyframes slideDown { 0%{transform:translateY(-25%)} 100%{transform:translateY(0%)} }
-      @keyframes slideUp   { 0%{transform:translateY(25%)}  100%{transform:translateY(0%)} }
-      .animate-slideDown{ animation:slideDown 14s ease-in-out infinite alternate; }
-      .animate-slideUp{   animation:slideUp   14s ease-in-out infinite alternate; }
-    `}</style>
-  </section>
-);
+    </section>
+  );
+};
 
 export default AboutVolunteerSection;
