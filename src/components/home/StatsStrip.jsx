@@ -27,7 +27,7 @@ const Statsstrip = () => {
           position: relative;
           display: block;
           padding: 120px 0 90px;
-          background-color: var(--helpest-extra);
+     
           z-index: 1;
         }
 
@@ -287,8 +287,7 @@ const Statsstrip = () => {
           <div
             className="counter-one__bg"
             style={{
-              backgroundImage:
-                "url(assets/images/backgrounds/counter-one-bg.jpg)",
+              backgroundImage: "url(/images/counter-one-bg.jpg)",
             }}
           ></div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 /* Icons  */
 const ChevronDown = (props) => (
@@ -251,7 +251,7 @@ export default function Header() {
             <img
               src="/images/jaago-manav-logo.png"
               alt="Jaago Manav Logo"
-              className="h-14 w-auto md:h-24"
+              className="h-14 w-auto md:h-16"
               loading="eager"
             />
           </Link>
@@ -274,19 +274,40 @@ export default function Header() {
           </button>
 
           {/* Desktop nav */}
-          <div className="hidden lg:flex flex-1 items-center justify-center gap-5 ml-6 text-lg font-semibold tracking-wide">
-            <Link to="/" className="hover:text-[#FFE9CC]">
+          <div className="hidden lg:flex flex-1 items-center justify-center gap-1 ml-6 text-lg font-semibold tracking-wide">
+            {/* Home */}
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
+            >
               Home
-            </Link>
-            <Link to="/about" className="hover:text-[#FFE9CC]">
+            </NavLink>
+
+            {/* About */}
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
+            >
               About
-            </Link>
+            </NavLink>
 
             {/* Services dropdown */}
             <div className="relative">
               <button
                 ref={servicesButtonRef}
-                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
+                className="flex items-center gap-2 text-white hover:text-[#FFE9CC] focus:outline-none"
                 aria-haspopup="true"
                 aria-expanded={servicesOpen}
                 onClick={(e) => {
@@ -330,7 +351,7 @@ export default function Header() {
             <div className="relative">
               <button
                 ref={blogButtonRef}
-                className="flex items-center gap-2 hover:text-[#FFE9CC] focus:outline-none"
+                className="flex items-center gap-2 text-white hover:text-[#FFE9CC] focus:outline-none"
                 aria-haspopup="true"
                 aria-expanded={blogOpen}
                 onClick={(e) => {
@@ -358,24 +379,50 @@ export default function Header() {
               )}
             </div>
 
-            <Link to="/whoarewe" className="hover:text-[#FFE9CC]">
+            {/* WhoWeAre */}
+            <NavLink
+              to="/whoarewe"
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
+            >
               WhoWeAre
-            </Link>
+            </NavLink>
 
-            <Link to="/contact" className="hover:text-[#FFE9CC]">
+            {/* Contact */}
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                `px-3 py-1 rounded-full transition-colors ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
+            >
               Contact
-            </Link>
+            </NavLink>
           </div>
 
           {/* Desktop: Volunteer Registration + Search + Donate */}
           <div className="ml-6 hidden lg:flex items-center gap-5 shrink-0">
-            {/* NEW: single button that goes to selection screen */}
-            <Link
+            {/* Volunteer Registration */}
+            <NavLink
               to="/register"
-              className="inline-flex items-center rounded-full border-2 border-[#FF9933]  px-4 py-1.5 text-sm font-semibold tracking-wide text-[#fff] shadow-sm hover:bg-[#138808] hover:text-white transition-colors"
+              className={({ isActive }) =>
+                `inline-flex items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold tracking-wide shadow-sm transition-colors ${
+                  isActive
+                    ? "bg-[#FF9933] border-[#FF9933] text-white"
+                    : "border-[#FF9933] text-white hover:bg-[#138808]"
+                }`
+              }
             >
               Volunteer Registration
-            </Link>
+            </NavLink>
 
             {/* Search */}
             <button
@@ -387,15 +434,21 @@ export default function Header() {
             </button>
 
             {/* Donate */}
-            <Link
+            <NavLink
               to="/donate"
-              className="group relative inline-flex items-center gap-2 rounded-full border-[3px] border-[#FF5A1F] px-2 py-1 text-lg font-extrabold tracking-wide text-white shadow-sm transition hover:bg-white/10"
+              className={({ isActive }) =>
+                `group relative inline-flex items-center gap-2 rounded-full border-[3px] px-2 py-1 text-lg font-extrabold tracking-wide shadow-sm transition ${
+                  isActive
+                    ? "bg-[#FF9933] border-[#FF9933] text-white"
+                    : "border-[#FF5A1F] text-white hover:bg-white/10"
+                }`
+              }
             >
               <span>Donate Now</span>
               <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
                 <ArrowRight className="h-6 w-4" />
               </span>
-            </Link>
+            </NavLink>
           </div>
         </div>
       </nav>
@@ -404,23 +457,36 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden">
           <div className="space-y-2 border-t border-white/30 px-4 py-4 text-white/95 bg-black/25 backdrop-blur-sm">
-            <Link
+            <NavLink
               to="/"
-              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 text-lg font-semibold ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               Home
-            </Link>
-            <Link
+            </NavLink>
+
+            <NavLink
               to="/about"
-              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 text-lg font-semibold ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               About
-            </Link>
+            </NavLink>
 
             {/* Services group */}
-            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
+            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg:white/15">
               <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
                 <span>Services</span>
                 <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
@@ -443,13 +509,19 @@ export default function Header() {
                   { label: "Miscellaneous", to: "/service/miscellaneous" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <Link
+                    <NavLink
                       to={item.to}
-                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                      className={({ isActive }) =>
+                        `block rounded-md px-3 py-2 text-base ${
+                          isActive
+                            ? "bg-[#FF9933] text-white"
+                            : "text-white hover:bg-white/10"
+                        }`
+                      }
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>
@@ -467,47 +539,71 @@ export default function Header() {
                   { label: "Blog Details", to: "/blogdetails" },
                 ].map((item) => (
                   <li key={item.label}>
-                    <Link
+                    <NavLink
                       to={item.to}
-                      className="block rounded-md px-3 py-2 text-base hover:bg-white/10"
+                      className={({ isActive }) =>
+                        `block rounded-md px-3 py-2 text-base ${
+                          isActive
+                            ? "bg-[#FF9933] text-white"
+                            : "text-white hover:bg:white/10"
+                        }`
+                      }
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>
             </details>
 
-            {/* NEW: simple Volunteer Registration link (no dropdown) */}
-            <Link
+            {/* Volunteer Registration */}
+            <NavLink
               to="/register"
-              className="block py-2 text-lg font-semibold hover:text-[#FF9933]"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 text-lg font-semibold ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FF9933]"
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               Volunteer Registration
-            </Link>
+            </NavLink>
 
-            <Link
+            <NavLink
               to="/donations"
-              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 text-lg font-semibold ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               Donations
-            </Link>
+            </NavLink>
 
-            <Link
+            <NavLink
               to="/contact"
-              className="block py-2 text-lg font-semibold hover:text-[#FFE9CC]"
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2 text-lg font-semibold ${
+                  isActive
+                    ? "bg-[#FF9933] text-white"
+                    : "text-white hover:text-[#FFE9CC]"
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               Contact
-            </Link>
+            </NavLink>
 
             <div className="flex items-center gap-4 pt-3">
               {/* Mobile search opens overlay + closes menu */}
               <button
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
+                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
                 aria-label="Search"
                 onClick={() => {
                   setSearchOpen(true);
@@ -518,7 +614,7 @@ export default function Header() {
               </button>
 
               <button
-                className="relative grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
+                className="relative grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
                 aria-label="Cart"
               >
                 <CartIcon className="h-5 w-5" />
@@ -526,22 +622,30 @@ export default function Header() {
                   02
                 </span>
               </button>
+
               <button
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg-white/10"
+                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
                 aria-label="Account"
               >
                 <UserIcon className="h-5 w-5" />
               </button>
-              <Link
+
+              <NavLink
                 to="/donate"
-                className="ml-auto inline-flex items-center gap-3 rounded-full border-2 border-[#FF5A1F] px-4 py-2 font-extrabold text-white hover:bg-white/10"
+                className={({ isActive }) =>
+                  `ml-auto inline-flex items-center gap-3 rounded-full border-2 px-4 py-2 font-extrabold ${
+                    isActive
+                      ? "bg-[#FF9933] border-[#FF9933] text-white"
+                      : "border-[#FF5A1F] text-white hover:bg:white/10"
+                  }`
+                }
                 onClick={() => setMobileOpen(false)}
               >
                 Donate Now
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F]">
                   <ArrowRight className="h-5 w-5 text-white" />
                 </span>
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -55,7 +55,7 @@ const VolunteerSection = () => {
           position: relative;
           display: block;
           padding: 120px 0 0px;
-          background: #FFF7EA;
+         
           z-index: 1;
         }
 
@@ -324,9 +324,9 @@ const VolunteerSection = () => {
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <div className="mb-2 inline-block">
-              <span className="px-4 py-1 bg-white text-orange-500 rounded-full text-xs font-semibold tracking-widest">
-                Expert Volunteer
-              </span>
+              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                <span>Expert Volunteer</span>
+              </p>
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-[#020617] leading-snug">
               Meet Our <span className="text-orange-500">Volunteer</span>

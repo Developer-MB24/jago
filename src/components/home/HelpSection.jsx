@@ -112,7 +112,7 @@ const HelpSection = () => {
         }
 
         .services-three__tab-box .tab-buttons .tab-btn:nth-child(3) span::before {
-          background-color: #10B981; /* secondary */
+          background-color: #138808; /* secondary */
         }
 
         .services-three__tab-box .tab-buttons .tab-btn.active-btn span::before {
@@ -271,12 +271,13 @@ const HelpSection = () => {
         <div className="container mx-auto max-w-6xl px-4">
           {/* Section title */}
           <div className="mb-10 text-center">
-            <div className="mb-3 inline-flex rounded-full bg-black/5 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#111827]">
-              We take care them
-            </div>
+            <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <span>We take care them</span>
+            </p>
+
             <h2 className="text-3xl font-semibold leading-snug text-slate-900 sm:text-4xl md:text-5xl">
               <span className="block">We Always Help The</span>
-              <span className="block text-[#EB5757]">Needy People</span>
+              <span className="block text-[#FF9933]">Needy People</span>
             </h2>
           </div>
 

@@ -115,15 +115,15 @@ const headingText = "Our Donating Work Process";
 
 const WorkProcess = () => {
   return (
-    <section className="relative py-24 bg-[#FFF7EA]">
+    <section className="relative py-24 ">
       <style>{extraCSS}</style>
 
       <div className="container mx-auto px-4">
         {/* Title */}
         <div className="mb-12 text-center">
-          <span className="text-[#FFB42A] uppercase tracking-wide font-semibold block mb-2">
-            Work Process
-          </span>
+          <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+            <span>Work Process</span>
+          </p>
 
           <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
             {headingText.split("").map((ch, index) => (

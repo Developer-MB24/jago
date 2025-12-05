@@ -21,12 +21,12 @@ const AboutUs = () => {
   }, []);
 
   const headingLine1 = "We Believe This Give";
-  const headingLine2 = "For Poor People Changing Lives";
+  const headingLine2 = "For Poor People";
+  const headingLine3 = "Changing Lives";
 
   return (
     <>
       <style>{`
-        /* === About Two base === */
         .about-two {
           position: relative;
           display: block;
@@ -76,6 +76,45 @@ const AboutUs = () => {
           animation-fill-mode: forwards;
         }
 
+        /* ===== LEFT SIDE TYPOGRAPHY (match reference) ===== */
+
+        .about-two__left {
+          max-width: 640px;
+        }
+
+        .about-two__heading {
+          font-family: var(--helpest-font-two);
+          font-weight: 800;
+          font-size: 42px;
+          line-height: 1.25;
+          color: var(--helpest-black);
+          margin: 0 0 18px;
+        }
+
+        .about-two__heading-line {
+          display: block;
+          color: var(--helpest-black);
+        }
+
+        .about-two__heading-highlight {
+          display: block;
+          color: var(--helpest-base);
+        }
+
+        .about-two__eyebrow {
+          font-family: var(--helpest-font);
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          color: var(--helpest-base);
+          display: inline-block;
+          padding-top: 4px;
+          padding-bottom: 4px;
+          border-bottom: 1px solid rgba(250, 75, 28, 0.4);
+          margin-bottom: 22px;
+        }
+
         /* ====== Rest of your original styling ====== */
 
         .about-two__points-list {
@@ -86,6 +125,7 @@ const AboutUs = () => {
           margin: 30px 0 30px;
           gap: 24px;
           flex-wrap: wrap;
+          margin-top:40px !important;
         }
 
         .about-two__points-list li {
@@ -370,46 +410,28 @@ const AboutUs = () => {
           z-index: -1;
           animation: rotated 18s linear infinite;
         }
-        /* ====== Tablet + Phone (up to 1023px) ====== */
-{/* @media (max-width: 1023px) {
-  .about-two__shape-1 {
-    top: 10px;
-    left: 50%;
-    width: 260px;
-    height: 260px;
-    transform: translateX(-50%);
-  }
 
-  .about-two__img-2 {
-    right: -20px;
-    bottom: -20px;
-    max-width: 170px;
-    border-top-width: 10px;
-    border-left-width: 10px;
-  }
-} */}
+        /* ====== Small Phones (up to 640px) ====== */
+        @media (max-width: 640px) {
+          .about-two__shape-1 {
+            top: 0;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            transform: translateX(-50%);
+          }
 
-/* ====== Small Phones (up to 640px) ====== */
-@media (max-width: 640px) {
-  .about-two__shape-1 {
-    top: 0;
-    left: 50%;
-    width: 200px;
-    height: 200px;
-    transform: translateX(-50%);
-  }
-
-  .about-two__img-2 {
-    right: -2px;
-    bottom: -12px;
-    max-width: 140px;
-  }
-}
+          .about-two__img-2 {
+            right: -2px;
+            bottom: -12px;
+            max-width: 140px;
+          }
+        }
 
         .about-two__support {
           position: absolute;
           bottom: -35px;
-          left: -40px;
+          left: -20px;
           z-index: 1;
           background: #ffffff;
           padding: 12px 18px;
@@ -446,19 +468,18 @@ const AboutUs = () => {
         }
       `}</style>
 
-      <section className="about-two bg-[#FFF7EA]">
+      <section className="about-two ">
         <div className="container mx-auto px-4">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             {/* LEFT */}
             <div className="about-two__left fade-in-left">
-              {/* Section title */}
-              <div className="mb-8">
-                <div className="mb-3 inline-flex rounded-full bg-black/5 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#111827]">
-                  About Us
-                </div>
-
-                <h2 className="text-3xl font-extrabold leading-snug text-slate-900 sm:text-4xl md:text-xl about-heading">
-                  <span className="block">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                <span>ABOUT US</span>
+              </p>
+              {/* Heading + ABOUT US exactly like reference */}
+              <div className="mb-2">
+                <h2 className="about-two__heading about-heading">
+                  <span className="about-two__heading-line">
                     {headingLine1.split("").map((ch, i) => (
                       <span
                         key={`h1-${i}`}
@@ -469,12 +490,25 @@ const AboutUs = () => {
                       </span>
                     ))}
                   </span>
-                  <span className="block mt-1">
+
+                  <span className="about-two__heading-line">
                     {headingLine2.split("").map((ch, i) => (
                       <span
-                        key={`h2-${i}`}
+                        key={`h2a-${i}`}
                         className="wave-letter"
-                        style={{ animationDelay: `${0.6 + i * 0.06}s` }}
+                        style={{ animationDelay: `${0.5 + i * 0.06}s` }}
+                      >
+                        {ch === " " ? "\u00A0" : ch}
+                      </span>
+                    ))}
+                  </span>
+
+                  <span className="about-two__heading-highlight">
+                    {headingLine3.split("").map((ch, i) => (
+                      <span
+                        key={`h2b-${i}`}
+                        className="wave-letter"
+                        style={{ animationDelay: `${1 + i * 0.06}s` }}
                       >
                         {ch === " " ? "\u00A0" : ch}
                       </span>
@@ -491,7 +525,7 @@ const AboutUs = () => {
               </p>
 
               {/* Points list / counters */}
-              <ul className="about-two__points-list list-unstyled">
+              <ul className="about-two__points-list list-unstyled ">
                 <li>
                   <div className="about-two__points-icon-inner">
                     <div className="about-two__points-icon">
@@ -536,7 +570,7 @@ const AboutUs = () => {
               </ul>
 
               {/* Button + client */}
-              <div className="about-two__btn-and-client-box mt-4">
+              <div className="about-two__btn-and-client-box mt-10">
                 <div className="about-two__btn-box">
                   <a href="donate-now.html" className="thm-btn">
                     <span className="thm-btn-text">Donate Now</span>
@@ -576,46 +610,48 @@ const AboutUs = () => {
             </div>
 
             {/* RIGHT */}
-            <div className="about-two__right fade-in-right">
-              <div className="about-two__img-box ">
-                {/* Rotating dashed circle */}
-                <div className="about-two__shape-1"></div>
+            <div className="slideRight">
+              <div className="about-two__right slideRight">
+                <div className="about-two__img-box ">
+                  {/* Rotating dashed circle */}
+                  <div className="about-two__shape-1"></div>
 
-                {/* Main image */}
-                <div className="about-two__img">
-                  <img src="/images/about-two-img-1.jpg" alt="About" />
-                </div>
+                  {/* Main image */}
+                  <div className="about-two__img">
+                    <img src="/images/about-two-img-1.jpg" alt="About" />
+                  </div>
 
-                {/* Secondary image bottom-right */}
-                <div className="about-two__img-2 ">
-                  <img src="/images/about-two-img-2.jpg" alt="About 2" />
-                </div>
+                  {/* Secondary image bottom-right */}
+                  <div className="about-two__img-2 ">
+                    <img src="/images/about-two-img-2.jpg" alt="About 2" />
+                  </div>
 
-                {/* Tertiary image top-left */}
-                <div className="about-two__img-3">
-                  <img src="/images/about-two-img-3.jpg" alt="About 3" />
-                </div>
+                  {/* Tertiary image top-left */}
+                  <div className="about-two__img-3">
+                    <img src="/images/about-two-img-3.jpg" alt="About 3" />
+                  </div>
 
-                {/* Video link with ripple */}
-                <div className="about-two__video-link">
-                  <a
-                    href="https://www.youtube.com/watch?v=Get7rqXYrbQ"
-                    className="video-popup"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="about-two__video-icon">
-                      <span>▶</span>
-                      <span className="ripple" />
-                    </div>
-                  </a>
-                </div>
+                  {/* Video link with ripple */}
+                  <div className="about-two__video-link">
+                    <a
+                      href="https://www.youtube.com/watch?v=Get7rqXYrbQ"
+                      className="video-popup"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <div className="about-two__video-icon">
+                        <span>▶</span>
+                        <span className="ripple" />
+                      </div>
+                    </a>
+                  </div>
 
-                {/* Support badge */}
-                <div className="about-two__support">
-                  <h3>
-                    24 hour <span>support</span>
-                  </h3>
+                  {/* Support badge */}
+                  <div className="about-two__support">
+                    <h3>
+                      24 hour <span>support</span>
+                    </h3>
+                  </div>
                 </div>
               </div>
             </div>

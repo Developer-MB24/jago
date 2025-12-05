@@ -69,7 +69,7 @@ const BlogNewsSection = () => {
           display: block;
           padding: 120px 0 90px;
           z-index: 1;
-          background-color: #FFF7EA;
+        
         }
 
         .blog-two__single {
@@ -363,7 +363,9 @@ const BlogNewsSection = () => {
           {/* Section title */}
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box">
-              <span className="section-title__tagline">News And Blogs</span>
+              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                <span>News And Blogs</span>
+              </p>
             </div>
             <h2 className="section-title__title">
               <span>We Articles From Blog</span>{" "}

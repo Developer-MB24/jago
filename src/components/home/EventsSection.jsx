@@ -68,7 +68,7 @@ const EventsSection = () => {
           display: block;
           padding: 90px 0 0;
           z-index: 1;
-          background-color: #FFF7EA;
+        
         }
 
         .causes-two__shape-1 {
@@ -329,9 +329,10 @@ const EventsSection = () => {
         <div className="container mx-auto max-w-6xl px-4">
           {/* Section title */}
           <div className="section-title text-center mb-10">
-            <div className="section-title__tagline-box">
-              <span className="section-title__tagline">Our Events</span>
-            </div>
+            <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <span>Our Events</span>
+            </p>
+
             <h2 className="section-title__title">
               <span className="block">
                 Our Best Popular <span>Upcoming</span>

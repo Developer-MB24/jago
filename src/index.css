@@ -1,5 +1,4 @@
-/* 1) Imports must come first */
-@import "@fontsource-variable/figtree"; /* npm i @fontsource-variable/figtree */
+@import "@fontsource-variable/figtree";
 
 /* 2) Tailwind layers next */
 @tailwind base;
@@ -94,4 +93,150 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+:root {
+  --helpest-font: "Figtree", sans-serif;
+  --helpest-font-two: "Nunito", sans-serif;
+  --helpest-font-three: "Caveat", cursive;
+  --helpest-gray: #667471;
+  --helpest-gray-rgb: 102, 116, 113;
+  --helpest-base: #fa4b1c;
+  --helpest-base-rgb: 250, 75, 28;
+  --helpest-black: #0e2c27;
+  --helpest-black-rgb: 14, 44, 39;
+  --helpest-primary: #ffc107;
+  --helpest-primary-rgb: 255, 193, 7;
+  --helpest-white: #ffffff;
+  --helpest-white-rgb: 255, 255, 255;
+  --helpest-extra: #f1f9fb;
+  --helpest-extra-rgb: 241, 249, 251;
+  --helpest-secondary: #26cc8c;
+  --helpest-secondary-rgb: 38, 204, 140;
+  --helpest-bdr-radius: 20px;
+}
+.row {
+  --bs-gutter-x: 30px;
+}
+.gutter-y-30 {
+  --bs-gutter-y: 30px;
+}
+body {
+  font-family: var(--helpest-font);
+  color: var(--helpest-gray);
+  font-size: 16px;
+  line-height: 28px;
+  font-weight: 400;
+}
+body.locked {
+  overflow: hidden;
+}
+a {
+  color: var(--helpest-base);
+  -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
+}
+a,
+a:hover,
+a:focus,
+a:visited {
+  text-decoration: none;
+}
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--helpest-font-two);
+  color: var(--helpest-black);
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+dl,
+ol,
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+.page-wrapper {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 300px;
+  overflow: hidden;
+}
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.list-unstyled {
+  padding-left: 0;
+}
+@media (min-width: 1320px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::-ms-input-placeholder {
+  color: inherit;
+  opacity: 1;
+}
+::placeholder {
+  color: inherit;
+  opacity: 1;
+}
+#particles-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-position: 50% 50%;
+  opacity: 0.4;
+  z-index: -1;
 }
