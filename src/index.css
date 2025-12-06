@@ -139,3 +139,75 @@
   color: #138808 !important;
   font-weight: 800 !important;
 }
+
+/* === Moving underline under WORK PROCESS (label-osc) === */
+.label-osc {
+  position: relative;
+  display: inline-block;
+}
+
+.label-osc span {
+  position: relative;
+  display: inline-block;
+  padding: 0 2px;
+}
+
+/* two small lines with gap in the middle */
+.label-osc span::before,
+.label-osc span::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  height: 2px;
+  width: 40%;
+  background-color: #ff9933;
+}
+
+/* left line */
+.label-osc span::before {
+  left: 0;
+  transform-origin: right;
+  animation: labelOscLeft 1.8s ease-in-out infinite;
+}
+
+/* right line */
+.label-osc span::after {
+  right: 0;
+  transform-origin: left;
+  animation: labelOscRight 1.8s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+@keyframes labelOscLeft {
+  0%,
+  25% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  40%,
+  80% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
+
+@keyframes labelOscRight {
+  0%,
+  25% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  40%,
+  80% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+}
