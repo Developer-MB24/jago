@@ -186,8 +186,8 @@ const ContactSection = () => {
           z-index: 2;
           cursor: pointer;
           background: transparent;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            sans-serif;
+          
+            
         }
 
         .thm-btn .thm-btn-text {
@@ -468,11 +468,11 @@ const ContactSection = () => {
                   {/* Section title */}
                   <div className="section-title text-left mb-5">
                     <div className="section-title__tagline-box mb-3">
-                      <span className="section-title__tagline inline-block rounded-full bg-white/10 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-white">
-                        OUR CONTACT
-                      </span>
+                      <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+                        <span>OUR CONTACT</span>
+                      </p>
                     </div>
-                    <h2 className="section-title__title text-3xl font-semibold leading-snug text-white sm:text-4xl md:text-5xl">
+                    <h2 className=" text-3xl font-semibold leading-snug text-white sm:text-4xl md:text-5xl">
                       <span className="block">Join With Us To As</span>
                       <span className="block text-[#FF9933]">
                         Volunteer Contact Now!

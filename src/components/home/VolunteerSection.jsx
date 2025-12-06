@@ -324,12 +324,13 @@ const VolunteerSection = () => {
         <div className="container max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
             <div className="mb-2 inline-block">
-              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
                 <span>Expert Volunteer</span>
               </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#020617] leading-snug">
-              Meet Our <span className="text-orange-500">Volunteer</span>
+
+            <h2 className="section-title__title  font-heading   ">
+              Meet Our <span className="text-[#FF9933]">Volunteer</span>
             </h2>
           </div>
 

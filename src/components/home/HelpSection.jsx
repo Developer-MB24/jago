@@ -80,7 +80,7 @@ const HelpSection = () => {
           transition-delay: 0.1s;
           overflow: hidden;
           z-index: 1;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+         
             sans-serif;
         }
 
@@ -275,9 +275,9 @@ const HelpSection = () => {
               <span>We take care them</span>
             </p>
 
-            <h2 className="text-3xl font-semibold leading-snug text-slate-900 sm:text-4xl md:text-5xl">
-              <span className="block">We Always Help The</span>
-              <span className="block text-[#FF9933]">Needy People</span>
+            <h2 className="section-title__title  font-heading   ">
+              We Always Help The{" "}
+              <span className="text-[#FF9933]">Needy People</span>
             </h2>
           </div>
 

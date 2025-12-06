@@ -27,7 +27,8 @@ const Statsstrip = () => {
           position: relative;
           display: block;
           padding: 120px 0 90px;
-     
+          overflow: hidden;        /* ⭐ FIX — prevents horizontal scrollbar */
+          width: 100%;
           z-index: 1;
         }
 
@@ -169,13 +170,9 @@ const Statsstrip = () => {
 
         .counter-one__single:hover .counter-one__icon span {
           color: var(--helpest-base);
-          -webkit-animation-name: wobble-horizontal-hover;
           animation-name: wobble-horizontal-hover;
-          -webkit-animation-duration: 1s;
           animation-duration: 1s;
-          -webkit-animation-timing-function: ease-in-out;
           animation-timing-function: ease-in-out;
-          -webkit-animation-iteration-count: 1;
           animation-iteration-count: 1;
         }
 
@@ -204,13 +201,6 @@ const Statsstrip = () => {
           margin: 25px 0 5px;
         }
 
-        .counter-one__count span {
-          font-size: 36px;
-          font-weight: 800;
-          letter-spacing: 0.54px;
-          text-transform: uppercase;
-        }
-
         .counter-one__text {
           font-size: 18px;
           font-weight: 500;
@@ -228,9 +218,7 @@ const Statsstrip = () => {
           100% { opacity: 1; transform: translateX(0); }
         }
 
-        .wow {
-          opacity: 0;
-        }
+        .wow { opacity: 0; }
 
         .wow.fadeInLeft {
           animation-name: fadeInLeft;
@@ -286,9 +274,7 @@ const Statsstrip = () => {
         <div className="counter-one__bg-color">
           <div
             className="counter-one__bg"
-            style={{
-              backgroundImage: "url(/images/counter-one-bg.jpg)",
-            }}
+            style={{ backgroundImage: "url(/images/counter-one-bg.jpg)" }}
           ></div>
         </div>
 
@@ -304,7 +290,6 @@ const Statsstrip = () => {
                   <div className="counter-one__single-shape" />
                   <div className="counter-one__icon-inner">
                     <div className="counter-one__icon">
-                      {/* React Icon wrapped in span so original CSS applies */}
                       <span>
                         <FaUser />
                       </span>

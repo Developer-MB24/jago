@@ -136,7 +136,7 @@ const CharityStrip = () => {
           position: relative;
           display: block;
           transition: all 500ms ease;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          font-family:nunito;
             sans-serif;
         }
 

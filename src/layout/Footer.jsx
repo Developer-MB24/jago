@@ -103,7 +103,7 @@ const Footer = () => {
           position: relative;
           display: block;
           z-index: 1;
-          font-family: var(--helpest-font-two);
+         
         }
 
         .site-footer-two__newsletter {
@@ -545,11 +545,11 @@ const Footer = () => {
           font-size: 35px;
           font-weight: 800;
           line-height: 45px;
-          color: var(--helpest-base);
+          color: #FF9933;
         }
 
         .site-footer-two__content-title span {
-          color: var(--helpest-secondary);
+          color: #138808;
         }
 
         .site-footer-two__content-text {
@@ -624,7 +624,7 @@ const Footer = () => {
           gap: 10px;
           z-index: 2;
           text-align: center;
-          font-family: var(--helpest-font-two);
+          
           background: transparent;
           cursor: pointer;
         }

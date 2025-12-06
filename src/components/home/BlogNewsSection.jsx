@@ -341,10 +341,12 @@ const BlogNewsSection = () => {
         }
 
         .blog-two .section-title__title {
-          font-size: 30px;
-          font-weight: 800;
-          line-height: 1.3;
-          color: #020617;
+          color: var(--helpest-black);
+    font-size: 40px;
+    line-height: 50px;
+    font-weight: 800;
+    text-transform: capitalize;
+    margin: 5px 0 0;
         }
 
         .blog-two .section-title__title span {
@@ -363,13 +365,14 @@ const BlogNewsSection = () => {
           {/* Section title */}
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box">
-              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
                 <span>News And Blogs</span>
               </p>
             </div>
-            <h2 className="section-title__title">
-              <span>We Articles From Blog</span>{" "}
-              <span className="block">News and Story</span>
+
+            <h2 className="section-title__title  font-heading   ">
+              We Articles From Blog{" "}
+              <span className="text-[#FF9933]">News and Story</span>
             </h2>
           </div>
 

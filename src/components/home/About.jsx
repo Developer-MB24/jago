@@ -83,11 +83,11 @@ const AboutUs = () => {
         }
 
         .about-two__heading {
-          font-family: var(--helpest-font-two);
+         
           font-weight: 800;
           font-size: 42px;
           line-height: 1.25;
-          color: var(--helpest-black);
+          
           margin: 0 0 18px;
         }
 
@@ -98,16 +98,16 @@ const AboutUs = () => {
 
         .about-two__heading-highlight {
           display: block;
-          color: var(--helpest-base);
+         
         }
 
         .about-two__eyebrow {
-          font-family: var(--helpest-font);
+          
           font-weight: 700;
           font-size: 13px;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: var(--helpest-base);
+          
           display: inline-block;
           padding-top: 4px;
           padding-bottom: 4px;
@@ -476,8 +476,12 @@ const AboutUs = () => {
               <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
                 <span>ABOUT US</span>
               </p>
+              <h2 className="section-title__title  font-heading mt-3  ">
+                We Believe This Give For Poor People{" "}
+                <span className="text-[#FF9933]">Changing Lives</span>
+              </h2>
               {/* Heading + ABOUT US exactly like reference */}
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <h2 className="about-two__heading about-heading">
                   <span className="about-two__heading-line">
                     {headingLine1.split("").map((ch, i) => (
@@ -515,10 +519,10 @@ const AboutUs = () => {
                     ))}
                   </span>
                 </h2>
-              </div>
+              </div> */}
 
               {/* Text */}
-              <p className="text-sm leading-relaxed text-slate-600 md:text-base">
+              <p className="text-sm font-figtree leading-relaxed text-slate-600 mt-5 ">
                 Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
                 sit aspernatur aut odit aut fugit, sed quia consequuntur. Dicta
                 sunt explicabo. Nemo enim ipsam voluptatem quia voluptas.

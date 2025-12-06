@@ -215,8 +215,7 @@ const EventsSection = () => {
           font-size: 18px;
           font-weight: 600;
           color: #ffffff;
-          font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-            sans-serif;
+         
         }
 
         .causes-two__title {
@@ -329,15 +328,13 @@ const EventsSection = () => {
         <div className="container mx-auto max-w-6xl px-4">
           {/* Section title */}
           <div className="section-title text-center mb-10">
-            <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+            <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
               <span>Our Events</span>
             </p>
 
-            <h2 className="section-title__title">
-              <span className="block">
-                Our Best Popular <span>Upcoming</span>
-              </span>
-              <span className="block">Events.</span>
+            <h2 className="section-title__title text-[#138808]  font-heading   ">
+              Our Best Popular{" "}
+              <span className="text-[#FF9933]">Upcoming Events.</span>
             </h2>
           </div>
 

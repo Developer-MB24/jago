@@ -137,22 +137,23 @@ export default function HeroCarousel() {
         {/* Left content */}
         <div key={`text-${enterKey}`} className="relative z-30">
           {/* Kicker with entrance */}
+          {/* Kicker with entrance */}
           <div className="flex items-center gap-[10px] opacity-0 -translate-y-5 animate-[fadeDown_1500ms_ease_forwards] [animation-delay:1200ms]">
             <span className="h-px w-10 bg-[#f27b21]" />
-            <p className="text-sm uppercase tracking-[0.2em] text-white/80">
+            <p className="font-paragraph text-sm uppercase tracking-[0.2em] text-white/80">
               {active.kicker}
             </p>
           </div>
 
           {/* Title with entrance */}
-          <h1 className="mt-[31px] mb-[13px] text-[42px] leading-tight font-extrabold capitalize text-white md:text-[90px] md:leading-[1.1] opacity-0 -translate-y-5 animate-[fadeDown_1500ms_ease_forwards] [animation-delay:900ms]">
+          <h1 className="font-title mt-[31px] mb-[13px] text-[42px] leading-tight font-extrabold capitalize text-white md:text-[90px] md:leading-[1.1] opacity-0 -translate-y-5 animate-[fadeDown_1500ms_ease_forwards] [animation-delay:900ms]">
             {active.titleTop}
             <br />
             <span className="text-[#f27b21]">{active.titleBottomAccent}</span>
           </h1>
 
           {/* Text */}
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 md:text-lg opacity-0 translate-y-5 animate-[fadeUp_1500ms_ease_forwards] [animation-delay:1200ms]">
+          <p className="font-paragraph mt-5 max-w-xl text-base leading-relaxed text-white/85 md:text-lg opacity-0 translate-y-5 animate-[fadeUp_1500ms_ease_forwards] [animation-delay:1200ms]">
             {active.text}
           </p>
 

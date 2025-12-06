@@ -81,7 +81,7 @@ export default function TestimonialSection() {
       {/* Title - outside above the curve */}
       <div className="relative z-[999] text-center pt-20 mb-8 md:mb-12 bg-transparent">
         {/* italic orange label with oscillating underline */}
-        <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+        <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
           <span>Our testimonials</span>
         </p>
 

@@ -127,8 +127,8 @@ const Services = () => {
           display: block;
           padding: 120px 0 0;
           z-index: 1;
-          background-color: var(--helpest-extra);
-          font-family: var(--helpest-font);
+         
+          
         }
 
         .services-two__shape-1 {
@@ -328,7 +328,7 @@ const Services = () => {
 
         /* ---- TEXT & READ MORE ---- */
         .services-two__title {
-          font-family: var(--helpest-font-two);
+         
           font-size: 20px;
           font-weight: 700;
           line-height: 30px;
@@ -468,11 +468,15 @@ const Services = () => {
               <span>OUR SERVICE</span>
             </p>
             <h2
-              className="text-3xl sm:text-4xl md:text-5xl leading-snug text-slate-900"
-              style={{ fontFamily: "var(--helpest-font-two)", fontWeight: 800 }}
+              className="section-title__title  font-heading  leading-snug "
+              style={{ fontWeight: 800 }}
             >
-              <span className="block">We Do it for all charity</span>
-              <span className="block text-[#FF9933]">Service Now</span>
+              <span className="block font-heading">
+                We Do it for all charity
+              </span>
+              <span className="block text-[#FF9933] font-heading">
+                Service Now
+              </span>
             </h2>
           </div>
 
