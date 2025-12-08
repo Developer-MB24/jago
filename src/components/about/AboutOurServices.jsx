@@ -206,11 +206,14 @@ const AboutOurServices = () => {
         <div className="container mx-auto px-4">
           {/* Title */}
           <div className="section-title text-center mb-12">
-            <div className="section-title__tagline-box">
-              <span className="section-title__tagline">OUR SERVICE</span>
+            <div className="section-title__tagline-box mb-3">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+                <span>OUR SERVICE</span>
+              </p>
             </div>
-            <h2 className="section-title__title">
-              We Service Now help Poor people Lives
+            <h2 className="section-title__title  font-heading   ">
+              We Service Now help{" "}
+              <span className="text-[#FF9933]">Poor people Lives</span>
             </h2>
           </div>
 

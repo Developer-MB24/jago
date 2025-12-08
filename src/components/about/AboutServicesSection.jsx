@@ -12,6 +12,89 @@ const AboutServicesSection = () => {
   return (
     <>
       <style>{`
+
+      /* Scoped thm-btn only for AboutServicesSection */
+.about-one .thm-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  appearance: none;
+  outline: none !important;
+  font-weight: 700;
+  font-size: 17px;
+  color: black;
+  border: 1px solid #FF9933;
+  padding: 8px 30px;
+  border-radius: 30px;
+  transition: 0.5s ease-in-out;
+  text-transform: capitalize;
+  overflow: hidden;
+  letter-spacing: 0.25px;
+  gap: 14px;
+  z-index: 2;
+  cursor: pointer;
+  background: transparent;
+}
+
+.about-one .thm-btn .thm-btn-text {
+  position: relative;
+  display: block;
+  z-index: 2;
+  color:black;
+}
+
+.about-one .thm-btn::before {
+  content: "";
+  background-color: #FF9933;
+  position: absolute;
+  inset: 0;
+  clip-path: circle(0% at 50% 50%);
+  transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+  z-index: 1;
+}
+
+.about-one .thm-btn:hover::before {
+  clip-path: circle(100% at 50% 50%);
+  transition-delay: 300ms;
+}
+
+.about-one .thm-btn::after {
+  content: "";
+  background-color: rgba(255, 153, 51, 0.3);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  clip-path: circle(0% at 50% 50%);
+  transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+}
+
+.about-one .thm-btn:hover::after {
+  clip-path: circle(100% at 50% 50%);
+}
+
+.about-one .thm-btn .thm-btn-icon-box {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-color: #FF9933;
+  border-radius: 50%;
+  font-size: 14px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 500ms ease;
+  z-index: 2;
+}
+
+.about-one .thm-btn:hover .thm-btn-icon-box {
+  background-color: white;
+  color: #FF9933;
+  transition-delay: 200ms;
+}
+
 .about-one {
   position: relative;
   display: block;
@@ -206,7 +289,6 @@ const AboutServicesSection = () => {
   font-size: 25px;
   font-weight: 700;
   line-height: 35px;
-  font-family: var(--helpest-font-three);
 }
 
 .about-one__contact-box .content p a {
@@ -300,7 +382,7 @@ const AboutServicesSection = () => {
 }
 
 .about-one__video-icon:hover {
-  background-color: #004540;
+  background-color: #138808;
   color: var(--helpest-white);
 }
 
@@ -360,8 +442,8 @@ const AboutServicesSection = () => {
   font-size: 24px;
   font-weight: 700;
   line-height: 24px;
-  font-family: var(--helpest-font-three);
-  color: var(--helpest-secondary);
+ color:#FF9933;
+ 
 }
 
 .about-one__img-3 {
@@ -427,9 +509,9 @@ const AboutServicesSection = () => {
 }
 
 .about-one__found-title span {
-  font-family: var(--helpest-font-two) !important;
   line-height: 30px !important;
 }
+
 /* ABOUT US tagline */
 .section-title__tagline {
   display: inline-block;
@@ -482,7 +564,7 @@ const AboutServicesSection = () => {
 /* Learn More button fix */
 .about-left-btn {
   background-color: white;
-  color: black;
+  color: black !important;
   border: 1px solid var(--helpest-base);
 }
 
@@ -499,6 +581,139 @@ const AboutServicesSection = () => {
   font-weight: 700;
 }
 
+/* ========================= */
+/*   RESPONSIVE STYLES       */
+/* ========================= */
+
+/* Large tablets / small desktops */
+@media (max-width: 1199px) {
+  .about-one {
+    padding: 90px 0 40px;
+  }
+  .about-one__left .section-title {
+    margin-right: 0;
+  }
+  .about-one__right {
+    margin-right: 0;
+    margin-left: 40px;
+  }
+  .about-left-title,
+  .section-title__title {
+    font-size: 34px;
+    line-height: 44px;
+  }
+  .about-one__video-and-support {
+    right: 120px;
+    bottom: -40px;
+  }
+  .about-one__img-2 {
+    left: -80px;
+    bottom: -40px;
+  }
+  .about-one__found-box-inner {
+    right: -30px;
+  }
+}
+
+/* Tablets (portrait & below) */
+/* Keep original right-side design on laptop/desktop */
+@media (min-width: 992px) {
+  .about-one__right {
+    margin-right: 40px;
+    margin-left: 90px;
+  }
+
+  .about-one__img-2 {
+    position: absolute;
+    bottom: -50px;
+    left: -150px;
+    transform: none;
+  }
+
+  .about-one__found-box-inner {
+    position: absolute;
+    top: 50%;
+    right: -70px;
+    transform: translateY(-50%);
+  }
+
+  .about-one__video-and-support {
+    position: absolute;
+    bottom: -50px;
+    right: 190px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+
+/* Phones */
+@media (max-width: 767px) {
+  /* Right column wrapper */
+  .about-one__right {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 360px;
+  }
+
+  .about-one__img-box {
+    position: relative;
+    max-width: 100%;
+  }
+
+  .about-one__img img {
+    width: 100%;
+    border-radius: 24px;
+  }
+
+  .about-one__img-2 {
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    transform: scale(0.8);
+    transform-origin: left bottom;
+  }
+
+  .about-one__found-box-inner {
+    position: absolute;
+    top: 55%;
+    right: -10px;
+    transform: translateY(-50%) scale(0.85);
+    transform-origin: right center;
+  }
+
+  .about-one__video-and-support {
+    position: absolute;
+    bottom: -35px;
+    right: 25px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .about-one__video-icon {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 18px;
+  }
+
+  .about-one__video-link .ripple,
+  .about-one__video-icon .ripple:before,
+  .about-one__video-icon .ripple:after {
+    width: 70px;
+    height: 70px;
+  }
+
+  .about-one__support span {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
+
       `}</style>
 
       <section className="about-one">
@@ -512,22 +727,19 @@ const AboutServicesSection = () => {
               <div className="about-one__left">
                 {/* ABOUT US TAGLINE */}
                 <div className="section-title text-left">
-                  <div className="section-title__tagline-box">
-                    <span className="section-title__tagline">ABOUT US</span>
-                  </div>
+                  <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+                    <span>ABOUT Us</span>
+                  </p>
 
-                  {/* MAIN HEADING */}
-                  <h2 className="section-title__title about-left-title">
-                    We Believe This Give For <br />
-                    <span className="about-left-highlight">
-                      Poor People
-                    </span>{" "}
+                  <h2 className="section-title__title about-left-title font-heading">
+                    We Believe This Give For{" "}
+                    <span className="about-left-highlight">Poor People</span>{" "}
                     Changing Lives
                   </h2>
                 </div>
 
                 {/* PARAGRAPH */}
-                <p className="about-one__text about-left-para">
+                <p className="about-one__text about-left-para font-caveat">
                   Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
                   sit aspernatur aut odit aut fugit, sed quia consequuntur.
                   Dicta sunt explicabo. Nemo enim ipsam voluptatem quia
@@ -556,7 +768,7 @@ const AboutServicesSection = () => {
                 </ul>
 
                 {/* Checklist */}
-                <ul className="about-one__points-2  about-left-checklist">
+                <ul className="about-one__points-2 about-left-checklist">
                   <li>
                     <div className="icon">
                       <FaCheck />

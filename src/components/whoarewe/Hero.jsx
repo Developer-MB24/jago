@@ -55,17 +55,15 @@ export default function Hero({ onPlay }) {
                       <li className="inline-block text-sm sm:text-base md:text-[18px] leading-[26px] md:leading-[30px] text-[#F8F7F0] mr-2 sm:mr-3">
                         <a
                           href="/"
-                          className="hover:text-[#FFCC40] transition-colors"
+                          className="text-white hover:text-[#FFCC40] transition-colors"
                         >
                           Home
                         </a>
-                        <span className="mx-1 sm:mx-2 text-xs sm:text-sm align-middle">
+                        <span className="text-white mx-1 sm:mx-2 text-xs sm:text-sm align-middle">
                           →
                         </span>
                       </li>
-                      <li className="inline-block text-sm sm:text-base md:text-[18px] leading-[26px] md:leading-[30px] text-[#F8F7F0]">
-                        About Us
-                      </li>
+                      <li className="inline-block text-white ">About Us</li>
                     </ul>
                   </nav>
 

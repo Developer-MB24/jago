@@ -724,9 +724,9 @@ const Footer = () => {
         }
       `}</style>
 
-      <footer className="site-footer-two site-footer-three">
+      <footer className="site-footer-two ">
         {/* Top CTA content box — kept as you had it */}
-        <div className="container">
+        {/* <div className="container">
           <div className="site-footer-two__content-and-social-box">
             <div className="site-footer-two__content-shape-1">
               <img src="/images/site-footer-two-content-shape-1.png" alt="" />
@@ -766,7 +766,7 @@ const Footer = () => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Main footer top section (bottom design updated) */}
         <div className="site-footer-two__top">

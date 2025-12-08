@@ -167,45 +167,90 @@ const WhyChooseUsSection = () => {
           transition: width 0.4s ease;
         }
 
-        /* CTA button */
+        /* CTA button wrapper */
         .why-choose-cta {
           display: inline-flex;
         }
 
-        .why-choose-btn {
+        /* Scoped thm-btn only for WhyChooseUsSection */
+        .why-choose-section .thm-btn {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 10px;
-          padding: 12px 26px;
-          border-radius: 999px;
-          border: none;
-          background: #FF9933;
+          vertical-align: middle;
+          appearance: none;
+          outline: none !important;
+          font-weight: 700;
+          font-size: 15px;
           color: #ffffff;
-          font-size: 14px;
-          font-weight: 600;
-          text-decoration: none;
-          cursor: pointer;
+          border: 1px solid #FF9933;
+          padding: 10px 26px;
+          border-radius: 999px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
           overflow: hidden;
-          transition: background 0.3s ease, transform 0.2s ease;
+          letter-spacing: 0.25px;
+          gap: 10px;
+          z-index: 2;
+          cursor: pointer;
+          background: #FF9933;
+          text-decoration: none;
         }
 
-        .why-choose-btn:hover {
-          background: #138808;
-          transform: translateY(-1px);
+        .why-choose-section .thm-btn .thm-btn-text {
+          position: relative;
+          z-index: 2;
         }
 
-        .why-choose-btn-icon-wrap {
-          display: inline-flex;
+        .why-choose-section .thm-btn::before {
+          content: "";
+          background-color: #138808;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .why-choose-section .thm-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 300ms;
+        }
+
+        .why-choose-section .thm-btn::after {
+          content: "";
+          background-color: rgba(19, 136, 8, 0.25);
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+        }
+
+        .why-choose-section .thm-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .why-choose-section .thm-btn .thm-btn-icon-box {
+          position: relative;
+          width: 28px;
+          height: 28px;
+          background-color: #ffffff;
+          border-radius: 999px;
+          font-size: 12px;
+          color: #138808;
+          display: flex;
           align-items: center;
           justify-content: center;
-          width: 26px;
-          height: 26px;
-          border-radius: 999px;
-          background: #ffffff;
-          color: #138808;
-          font-size: 12px;
+          transition: all 500ms ease;
+          z-index: 2;
+        }
+
+        .why-choose-section .thm-btn:hover .thm-btn-icon-box {
+          background-color: #ffffff;
+          color: #FF9933;
+          transition-delay: 200ms;
         }
 
         /* Right thumb side */
@@ -438,9 +483,14 @@ const WhyChooseUsSection = () => {
                 data-aos-delay="200"
                 data-aos-duration="1000"
               >
-                <div className="why-choose-subtitle">Why Choose Us</div>
-                <h2 className="why-choose-title">
-                  We take practical steps for 100% transparency.
+                <div className="section-title__tagline-box mb-3">
+                  <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                    <span>Why Choose Us</span>
+                  </p>
+                </div>
+                <h2 className="section-title__title font-heading">
+                  We take practical steps for{" "}
+                  <span className="text-[#FF9933]">100% transparency.</span>
                 </h2>
                 <p className="why-choose-text">
                   We directly support communities in need, ensuring every
@@ -522,9 +572,9 @@ const WhyChooseUsSection = () => {
                 </div>
 
                 <div className="why-choose-cta">
-                  <a href="/econest/project" className="why-choose-btn">
-                    Discover More
-                    <span className="why-choose-btn-icon-wrap">
+                  <a href="/econest/project" className="thm-btn">
+                    <span className="thm-btn-text">Discover More</span>
+                    <span className="thm-btn-icon-box">
                       <FaArrowRight />
                     </span>
                   </a>

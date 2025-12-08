@@ -380,12 +380,17 @@ const FAQSection = () => {
             <div className="col-xl-6">
               <div ref={leftRef} className="faq-one__left faq-animate-left">
                 <div className="section-title text-left sec-title-animation animation-style2">
-                  <div className="section-title__tagline-box">
-                    <span className="section-title__tagline">OUR FAQ</span>
+                  <div className="section-title__tagline-box mb-3">
+                    <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                      <span>OUR FAQ</span>
+                    </p>
                   </div>
-                  <h2 className="section-title__title">
-                    There Are Donation Center <br />
-                    Can Do Every Question.
+                  <h2 className="section-title__title  font-heading   ">
+                    There Are Donation Center{" "}
+                    <span className="text-[#FF9933]">
+                      {" "}
+                      Can Do Every Question.
+                    </span>
                   </h2>
                 </div>
 
@@ -439,10 +444,7 @@ const FAQSection = () => {
                   </div>
 
                   <div className="faq-one__video-link">
-                    <a
-                      href="https://www.youtube.com/watch?v=Get7rqXYrbQ"
-                      className="video-popup"
-                    >
+                    <a href="" className="video-popup">
                       <div className="faq-one__video-icon">
                         <FaPlay />
                         <i className="ripple" />

@@ -1,4 +1,5 @@
 import React from "react";
+import { FaAngleRight } from "react-icons/fa";
 
 export default function HeroBlogDetails() {
   return (
@@ -56,7 +57,7 @@ export default function HeroBlogDetails() {
           </h2>
 
           <div className="inline-block relative">
-            <ul className="flex items-center gap-2 text-sm md:text-base text-white">
+            <ul className="flex items-center gap-2 text-sm text-white">
               <li>
                 <a
                   href="/"
@@ -65,8 +66,8 @@ export default function HeroBlogDetails() {
                   Home
                 </a>
               </li>
-              <li className="flex items-center text-[#FF9933] mx-1">
-                <span className="fas fa-angle-right" />
+              <li className="flex items-center mx-1 text-white">
+                <FaAngleRight className="text-xs text-[#FF9933]" />
               </li>
               <li className="capitalize">Blog Details</li>
             </ul>

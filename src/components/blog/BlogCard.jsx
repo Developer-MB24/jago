@@ -77,11 +77,8 @@ export default function BlogCard({
           </li>
         </ul>
 
-        <h3 className="text-[24px] leading-[30px] font-extrabold capitalize my-2 text-[var(--helpest-black)]">
-          <Link
-            to={link}
-            className="hover:text-[var(--helpest-primary)] transition-colors"
-          >
+        <h3 className="text-[24px] leading-[30px] font-extrabold font-nunito capitalize my-2 text-[var(--helpest-black)]">
+          <Link to={link} className="hover:text-[#FF9933] transition-colors">
             {title}
           </Link>
         </h3>

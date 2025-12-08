@@ -279,40 +279,88 @@ const DonationCausesSection = () => {
           justify-content: flex-start;
         }
 
-        .donation-cause-btn {
+        /* Scoped thm-btn only for DonationCausesSection */
+        .donation-causes-section .thm-btn {
           position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
-          padding: 10px 20px;
-          border-radius: 999px;
-          border: none;
-          background: #FF9933;
+          vertical-align: middle;
+          appearance: none;
+          outline: none !important;
+          font-weight: 700;
+          font-size: 15px;
           color: #ffffff;
-          font-size: 14px;
-          font-weight: 600;
-          text-decoration: none;
-          cursor: pointer;
+          border: 1px solid #FF9933;
+          padding: 8px 24px;
+          border-radius: 999px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
           overflow: hidden;
-          transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+          letter-spacing: 0.25px;
+          gap: 10px;
+          z-index: 2;
+          cursor: pointer;
+          {/* background: #FF9933; */}
         }
 
-        .donation-cause-btn:hover {
-          background: #138808;
-          transform: translateY(-1px);
+        .donation-causes-section .thm-btn .thm-btn-text {
+          position: relative;
+          z-index: 2;
+          color:black
         }
 
-        .donation-cause-btn .icon-wrap {
-          display: inline-flex;
+        .donation-causes-section .thm-btn::before {
+          content: "";
+          background-color: #138808;
+          position: absolute;
+          color:white !important;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .donation-causes-section .thm-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 300ms;
+          color:white !important;
+        }
+
+        .donation-causes-section .thm-btn::after {
+          content: "";
+          background-color: rgba(19, 136, 8, 0.25);
+          position: absolute;
+          color:white;
+          inset: 0;
+          z-index: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+        }
+
+        .donation-causes-section .thm-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .donation-causes-section .thm-btn .thm-btn-icon-box {
+          position: relative;
+          width: 28px;
+          height: 28px;
+          background-color: #FF9933;
+          border-radius: 999px;
+          font-size: 12px;
+          color: #fff;
+          display: flex;
           align-items: center;
           justify-content: center;
-          width: 26px;
-          height: 26px;
-          border-radius: 999px;
-          background: #ffffff;
-          color: #138808;
-          font-size: 12px;
+          transition: all 500ms ease;
+          z-index: 2;
+        }
+
+        .donation-causes-section .thm-btn:hover .thm-btn-icon-box {
+          background-color: #ffffff;
+          color: #FF9933;
+          transition-delay: 200ms;
         }
 
         /* Slider arrows */
@@ -436,10 +484,14 @@ const DonationCausesSection = () => {
 
         <div className="donation-causes-inner">
           <div className="donation-causes-header">
-            <div className="donation-causes-subtitle">
-              Start donating poor people
+            <div className="section-title__tagline-box mb-3">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                <span>Start donating poor people</span>
+              </p>
             </div>
-            <h2 className="donation-causes-title">Introduce Our Campaigns</h2>
+            <h2 className="section-title__title font-heading">
+              Introduce Our <span className="text-[#FF9933]">Campaigns</span>
+            </h2>
           </div>
 
           <div className="donation-causes-slider-wrapper">
@@ -491,12 +543,9 @@ const DonationCausesSection = () => {
                     </div>
 
                     <div className="donation-cause-bottom">
-                      <a
-                        href="/econest/donations"
-                        className="donation-cause-btn"
-                      >
-                        Donate Now
-                        <span className="icon-wrap">
+                      <a href="/econest/donations" className="thm-btn">
+                        <span className="thm-btn-text">Donate Now</span>
+                        <span className="thm-btn-icon-box">
                           <FaArrowRight />
                         </span>
                       </a>

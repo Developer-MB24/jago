@@ -1,4 +1,5 @@
 import React from "react";
+import { FaAngleRight } from "react-icons/fa";
 
 export default function ContactHero() {
   return (
@@ -51,12 +52,12 @@ export default function ContactHero() {
       {/* Content */}
       <div className="relative max-w-6xl mx-auto px-4">
         <div className="relative">
-          <h2 className="text-[32px] md:text-[40px] lg:text-[50px] leading-[1.3] font-extrabold text-white mb-4">
+          <h2 className="font-heading text-[32px] md:text-[40px] lg:text-[50px] leading-[1.3] font-extrabold text-white mb-4">
             Contact
           </h2>
 
           <div className="inline-block relative">
-            <ul className="flex items-center gap-2 text-sm md:text-base text-white">
+            <ul className="flex items-center gap-2 text-sm text-white">
               <li>
                 <a
                   href="/"
@@ -65,8 +66,8 @@ export default function ContactHero() {
                   Home
                 </a>
               </li>
-              <li className="flex items-center text-[#FF9933] mx-1">
-                <span className="fas fa-angle-right" />
+              <li className="flex items-center mx-1 text-white">
+                <FaAngleRight className="text-xs text-[#FF9933]" />
               </li>
               <li className="capitalize">Contact</li>
             </ul>

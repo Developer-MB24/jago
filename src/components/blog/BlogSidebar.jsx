@@ -58,7 +58,7 @@ export default function BlogSidebar() {
             />
             <button
               type="submit"
-              className="absolute top-1/2 right-[15px] -translate-y-1/2 w-10 h-10 flex items-center justify-center text-[20px] text-slate-500 hover:text-[#138808] transition"
+              className="absolute top-1/2 right-[15px] -translate-y-1/2 w-10 h-10 flex items-center justify-center text-[20px] text-slate-500 hover:text-[#FF9933] transition"
             >
               {/* search icon */}
               <svg
@@ -88,7 +88,7 @@ export default function BlogSidebar() {
               <li key={idx}>
                 <Link
                   to={cat.href}
-                  className="flex items-center justify-between text-[15px] text-slate-600 bg-[linear-gradient(to_right,currentColor_0%,currentColor_100%)] bg-[length:0_1px] bg-no-repeat bg-[position:0_95%] transition-[background-size,color] duration-500 hover:text-[#138808] hover:bg-[length:100%_1px]"
+                  className="flex items-center justify-between text-[15px] text-slate-600 bg-[linear-gradient(to_right,currentColor_0%,currentColor_100%)] bg-[length:0_1px] bg-no-repeat bg-[position:0_95%] transition-[background-size,color] duration-500 hover:text-[#FF9933] hover:bg-[length:100%_1px]"
                 >
                   <span>{cat.label}</span>
                   <span>{cat.count}</span>
@@ -116,7 +116,7 @@ export default function BlogSidebar() {
                 </div>
                 <div className="ml-[15px] flex-1">
                   <p className="text-sm text-slate-500 mt-1 flex items-center gap-2">
-                    <span className="font-bold text-[#138808]">
+                    <span className="font-bold text-[#FF9933]">
                       {/* calendar icon */}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +142,7 @@ export default function BlogSidebar() {
                   <h4 className="text-[18px] leading-[28px] font-bold mt-1">
                     <Link
                       to={post.href}
-                      className="text-slate-900 hover:text-[#138808] transition-colors"
+                      className="text-slate-900 hover:text-[#FF9933] transition-colors"
                     >
                       {post.title}
                     </Link>
@@ -164,7 +164,7 @@ export default function BlogSidebar() {
               <Link
                 key={idx}
                 to="/blog-details"
-                className="ml-[10px] mt-[10px] inline-block rounded-[10px] bg-white px-[14px] py-[9px] text-[16px] font-medium leading-[26px] text-slate-600 hover:bg-[#138808] hover:text-white transition"
+                className="ml-[10px] mt-[10px] inline-block rounded-[10px] bg-white px-[14px] py-[9px] text-[16px] font-medium leading-[26px] text-slate-600 hover:bg-[#FF9933] hover:text-white transition"
               >
                 {tag}
               </Link>

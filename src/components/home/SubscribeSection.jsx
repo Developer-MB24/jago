@@ -16,7 +16,7 @@ export default function SubscribeSection() {
           aria-label="Subscribe to our newsletter"
         >
           {/* Title */}
-          <h2 className="lg:col-span-5 text-3xl md:text-3xl font-extrabold tracking-tight font-title">
+          <h2 className="lg:col-span-5 text-white text-3xl md:text-3xl font-extrabold tracking-tight font-title">
             Subscribe Our Newsletters
           </h2>
 

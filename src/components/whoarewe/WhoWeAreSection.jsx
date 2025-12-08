@@ -3,7 +3,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { Check, TrendingUp, Lightbulb, ThumbsUp, Users } from "lucide-react";
 
-/* ---------- COUNT-UP + STAT (same idea as your working code) ---------- */
+/* ---------- COUNT-UP + STAT ---------- */
 
 function useCountUp(target = 0, start = false, { duration = 1500 } = {}) {
   const [value, setValue] = useState(0);
@@ -57,7 +57,6 @@ function Stat({ icon: Icon, value = "0", label = "" }) {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="flex flex-col items-center text-center"
     >
-      {/* icon circle – white bg as you asked */}
       <div
         className="h-[70px] w-[70px] md:h-[60px] md:w-[60px] rounded-full flex items-center justify-center shadow-md"
         style={{
@@ -67,19 +66,18 @@ function Stat({ icon: Icon, value = "0", label = "" }) {
       >
         <Icon size={24} color="#138808" />
       </div>
-      {/* animated number */}
       <div className="mt-2 text-4xl md:text-3xl font-bold text-[#138808] leading-none">
         {rolled}
         <span>{suffix}</span>
       </div>
-      <div className="mt-1 text-sm md:text-base font-medium text-[#138808]">
+      <div className="mt-1 text-sm md:text-gray-300 font-medium text-[#138808]">
         {label}
       </div>
     </motion.div>
   );
 }
 
-/* ---------- MAIN SECTION ---------- */
+/* ---------- DATA ---------- */
 
 const services = [
   "Specialized Company",
@@ -107,10 +105,71 @@ export default function WhoWeAreSection() {
         backgroundSize: "contain, contain",
       }}
     >
+      {/* Local button styles (scoped with .who-we-are-btn) */}
+      <style>{`
+        .who-we-are-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 16px;
+          color: black;
+          border: 1px solid #FF9933;
+          padding: 10px 32px;
+          border-radius: 30px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
+          overflow: hidden;
+          letter-spacing: 0.25px;
+          gap: 12px;
+          cursor: pointer;
+          background: transparent;
+        }
+
+        .who-we-are-btn .text {
+          position: relative;
+          z-index: 2;
+        }
+
+        .who-we-are-btn::before {
+          content: "";
+          background-color: #FF9933;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all 0.6s cubic-bezier(0.2, 0.8, 0.4, 1);
+          z-index: 1;
+        }
+
+        .who-we-are-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .who-we-are-btn .icon {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background: #FF9933;
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
+          transition: 0.3s ease;
+          font-size: 14px;
+        }
+
+        .who-we-are-btn:hover .icon {
+          background: white;
+          color: #FF9933;
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto">
         {/* Top content row */}
         <div className="flex flex-col xl:flex-row items-center gap-36 sm:gap-14 pb-16 md:pb-10">
-          {/* LEFT: stacked thumbs (same as before) */}
+          {/* LEFT: stacked thumbs */}
           <div className="w-full xl:w-1/2">
             <div className="relative h-[420px] md:h-[480px] lg:h-[520px]">
               {/* thumb-1 */}
@@ -139,20 +198,18 @@ export default function WhoWeAreSection() {
               </div>
 
               {/* thumb-3 + experience badge */}
-              <div className="absolute z-20 -bottom-32 right-1  md:-bottom-24 md:right-5 w-[210px] md:w-[250px] lg:w-[270px]">
+              <div className="absolute z-20 -bottom-32 right-1 md:-bottom-24 md:right-5 w-[210px] md:w-[250px] lg:w-[270px]">
                 <div className="relative">
                   <img
                     src="/images/thumb-26.webp"
                     alt="thumb-3"
-                    className="rounded-xl shadow-xl "
+                    className="rounded-xl shadow-xl"
                   />
-
-                  {/* Experience badge */}
                   <div className="absolute -top-16 -left-32 md:-left-44 bg-[#138808] text-[#138808] border-4 border-white rounded-xl px-6 py-4 flex items-center gap-4 shadow-2xl">
                     <h3 className="text-4xl md:text-5xl font-extrabold leading-none text-white">
                       29<span className="align-top text-2xl">+</span>
                     </h3>
-                    <p className="max-w-[110px] text-sm md:text-base font-semibold leading-snug text-white">
+                    <p className="max-w-[110px] text-sm md:text-gray-300 font-semibold leading-snug text-white">
                       Years of experience
                     </p>
                   </div>
@@ -170,20 +227,21 @@ export default function WhoWeAreSection() {
                 alt="icon-2"
                 className="w-10 h-10"
               />
-              <span className="uppercase tracking-wide text-sm font-semibold text-black">
+              <span className="uppercase label-osc tracking-wide text-sm font-semibold text-[#f27b21]">
                 Who We Are
               </span>
             </div>
 
             {/* title */}
             <div className="mb-4">
-              <h2 className="text-3xl md:text-4xl font-bold text-black leading-tight">
-                Some Reasons to Choose Econest Organization
+              <h2 className="section-title__title font-heading">
+                Some Reasons to Choose{" "}
+                <span className="text-[#FF9933]">Econest Organization</span>
               </h2>
             </div>
 
             {/* description */}
-            <p className="text-gray-500 mb-6 max-w-xl text-base leading-relaxed">
+            <p className="text-gray-300 mb-6 font-caveat">
               The implant fixture is first placed, so that it is likely to then
               a dental prosthetic is added, creating a strong, lasting solution
               for better smiles and healthier lives.
@@ -197,7 +255,7 @@ export default function WhoWeAreSection() {
                     <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#fff]">
                       <Check size={16} />
                     </span>
-                    <p className="text-black font-medium text-sm md:text-base">
+                    <p className="text-black font-medium text-sm md:text-gray-300">
                       {item}
                     </p>
                   </div>
@@ -209,7 +267,7 @@ export default function WhoWeAreSection() {
                     <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#138808] text-[#fff]">
                       <Check size={16} />
                     </span>
-                    <p className="text-black font-medium text-sm md:text-base">
+                    <p className="text-black font-medium text-sm md:text-gray-300">
                       {item}
                     </p>
                   </div>
@@ -219,32 +277,15 @@ export default function WhoWeAreSection() {
 
             {/* CTA + Annual donation */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              {/* EXPLORE BUTTON – gradient + hover color change */}
-              <motion.a
-                href="/project"
-                className="group inline-flex items-center gap-3 rounded-full px-7 py-3 text-sm md:text-base font-semibold text-[#fff] overflow-hidden"
-                initial={{ backgroundPosition: "0% 0%" }}
-                whileHover={{ backgroundPosition: "100% 0%" }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                style={{
-                  backgroundImage:
-                    "linear-gradient(120deg,#138808 0%,#138808 50%,#0f5950 100%)",
-                  backgroundSize: "200% 100%",
-                  backgroundPosition: "0% 0%",
-                }}
-              >
-                <span>Explore More</span>
-                <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#138808] transition-colors duration-300 group-hover:bg-white group-hover:text-[#FF9933]">
-                  <span className="flex items-center gap-[2px]">
-                    <span className="block text-xs leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
-                      →
-                    </span>
-                    <span className="block text-xs leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
-                      →
-                    </span>
+              {/* Explore button with thm-style behavior */}
+              <a href="/project" className="who-we-are-btn">
+                <span className="text">Explore More</span>
+                <span className="icon">
+                  <span className="flex gap-[2px]">
+                    <span className="block text-xs leading-none">→</span>
                   </span>
                 </span>
-              </motion.a>
+              </a>
 
               {/* Annual donation */}
               <div className="flex items-center gap-4">
@@ -264,7 +305,7 @@ export default function WhoWeAreSection() {
           </div>
         </div>
 
-        {/* COMPANY ACHIEVEMENTS using the same Stat logic */}
+        {/* COMPANY ACHIEVEMENTS */}
         <div className="mt-10 md:mt-28 mb-10 md:mb-0">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {achievements.map((item) => (

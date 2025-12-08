@@ -38,6 +38,7 @@ export default function CallToActionSection() {
             position: relative;
             display: block;
             z-index: 2;
+            color:white;
           }
           .thm-btn::before {
             content: "";
@@ -101,9 +102,9 @@ export default function CallToActionSection() {
               alt="icon"
               className="w-7 h-7 object-contain"
             />
-            <span className="text-[#004540] font-medium text-[16px]">
-              Contact Us
-            </span>
+            <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+              <span>Contact Us</span>
+            </p>
           </div>
 
           <div
@@ -112,8 +113,9 @@ export default function CallToActionSection() {
             data-aos-delay="400"
             data-aos-duration="1000"
           >
-            <h2 className="text-[32px] md:text-[36px] lg:text-[40px] font-semibold text-[#004540] leading-snug">
-              Simple Steps Wastage to Recycling Item Processing
+            <h2 className="section-title__title  font-heading   ">
+              Simple Steps Wastage to{" "}
+              <span className="text-[#FF9933]">Recycling Item Processing</span>
             </h2>
           </div>
         </div>
@@ -176,11 +178,11 @@ export default function CallToActionSection() {
                         w-[70px] h-[70px]
                         rounded-full border-2 border-white
                         flex items-center justify-center
-                        bg-[#004540]
+                        bg-[#138808]
                         shadow-[0_15px_32.2px_-9px_rgba(0,24,25,0.2)]
                       "
                     >
-                      <h4 className="text-[24px] leading-9 font-semibold text-[#FF9933] mb-0">
+                      <h4 className="text-[24px] leading-9 font-semibold text-white mb-0">
                         {step.num}
                       </h4>
                     </div>
@@ -188,10 +190,10 @@ export default function CallToActionSection() {
 
                   {/* card content */}
                   <div className="card-content">
-                    <h4 className="text-[#004540] font-medium text-[26px] leading-[30px] max-w-[210px]">
+                    <h4 className="text-[#138808] font-medium text-[26px] leading-[30px] max-w-[210px]">
                       {step.t1}
                     </h4>
-                    <h4 className="text-[#004540] font-medium text-[26px] leading-[30px] max-w-[210px] mb-3">
+                    <h4 className="text-[#138808] font-medium text-[26px] leading-[30px] max-w-[210px] mb-3">
                       {step.t2}
                     </h4>
                     <p className="text-[17px] leading-[28px] text-[#4b5563]">
@@ -206,13 +208,13 @@ export default function CallToActionSection() {
           {/* right: contact form */}
           <div className="w-full xl:w-5/12">
             <div
-              className="contact-form-3 relative bg-[#004540] rounded-[10px] px-9 pr-12 py-9 text-white overflow-hidden"
+              className="contact-form-3 relative bg-[#138808] rounded-[10px] px-9 pr-12 py-9 text-white overflow-hidden"
               data-aos="fade-up"
               data-aos-delay="800"
               data-aos-duration="1000"
             >
               <div className="form-content relative z-[1]">
-                <h3 className="text-[28px] lg:text-[32px] xl:text-[36px] leading-[1.3] font-medium mb-3">
+                <h3 className=" font-heading text-white text-[28px] lg:text-[32px] xl:text-[36px] leading-[1.3] font-medium mb-3">
                   Have you any questions?{" "}
                   <span role="img" aria-label="smile">
                     😍

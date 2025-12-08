@@ -141,15 +141,14 @@ const ContactForm = () => {
         <div className="container mx-auto px-4">
           {/* Section Title */}
           <div className="mb-10 text-center">
-            <div className="mb-3 inline-flex rounded-full bg-black/5 px-4 py-1 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#111827]">
-              Our Contact
+            <div className="section-title__tagline-box mb-3">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+                <span>Our Contact</span>
+              </p>
             </div>
-
-            <h2 className="fade-in-up text-3xl font-semibold leading-snug sm:text-4xl md:text-5xl text-slate-900">
-              <span className="block">Join With Us To As</span>
-              <span className="block text-[#FF9933]">
-                Volunteer Contact Now!
-              </span>
+            <h2 className="section-title__title  font-heading   ">
+              Join With Us To As{" "}
+              <span className="text-[#FF9933]">Volunteer Contact Now!</span>
             </h2>
           </div>
 
