@@ -89,7 +89,7 @@ export default function ContactBar() {
                   </h3>
                   <p
                     className={[
-                      "text-sm sm:text-base",
+                      "text-sm sm:text-gray-300",
                       isActive ? "text-white/80" : "text-[#134A43]",
                     ].join(" ")}
                   >

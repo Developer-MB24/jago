@@ -227,7 +227,7 @@ export default function WhoWeAreSection() {
                 alt="icon-2"
                 className="w-10 h-10"
               />
-              <span className="uppercase label-osc tracking-wide text-sm font-semibold text-[#f27b21]">
+              <span className="uppercase label-osc tracking-wide text-sm font-semibold text-[#FF9933]">
                 Who We Are
               </span>
             </div>
