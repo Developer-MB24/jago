@@ -104,9 +104,10 @@ export default function MajorPartnersSection() {
               className="w-full h-auto"
             />
           </div>
-          <h3 className="text-2xl md:text-3xl font-semibold text-[#FF9933]">
-            Major Partners
-          </h3>
+
+          <p className="label-osc mx-auto md:text-3xl inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+            <span>Major Partners</span>
+          </p>
           <div className="hidden sm:block w-20 md:w-28">
             <img
               src="/images/shape-4.webp"

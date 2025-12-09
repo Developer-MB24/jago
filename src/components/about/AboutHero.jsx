@@ -154,7 +154,7 @@ export default function AboutHero() {
                 alt="Eco icon"
                 className="w-7 h-7"
               />
-              <span className="text-[#138808] text-sm font-medium">
+              <span className="text-[#FF9933] text-sm ">
                 Eco-friendly designs
               </span>
             </div>

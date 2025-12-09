@@ -83,6 +83,84 @@ const ServiceCampaigns = () => {
 
   return (
     <>
+      {/* 🔥 Local button style (only for this section) */}
+      <style>{`
+        .campaign-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          padding: 9px 24px;
+          border-radius: 999px;
+          border: 1px solid #FF9933;
+          font-weight: 700;
+          font-size: 15px;
+          letter-spacing: 0.25px;
+          text-transform: capitalize;
+          cursor: pointer;
+          background: transparent;
+          color: #ffffff !important;
+          overflow: hidden;
+          z-index: 2;
+          transition: 0.5s ease-in-out;
+        }
+
+        .campaign-btn-text {
+          position: relative;
+          z-index: 2;
+          color: black !important;
+        }
+
+        .campaign-btn::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-color: #FF9933;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .campaign-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 250ms;
+        }
+
+        .campaign-btn::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-color: rgba(255,153,51,0.3);
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 0;
+        }
+
+        .campaign-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .campaign-btn-icon {
+          width: 34px;
+          height: 34px;
+          border-radius: 999px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #FF9933;
+          color: #ffffff;
+          font-size: 12px;
+          z-index: 2;
+          transition: all 0.4s ease;
+        }
+
+        .campaign-btn:hover .campaign-btn-icon {
+          background: #ffffff;
+          color: #FF9933;
+        }
+      `}</style>
+
       <section
         className="relative overflow-x-clip py-24 sm:py-20"
         style={{
@@ -102,12 +180,15 @@ const ServiceCampaigns = () => {
                 alt="icon-2"
                 className="h-7 w-7 object-contain"
               />
-              <span className="text-sm font-semibold tracking-wide text-[#004540]">
-                Our Camping
-              </span>
+
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
+                <span>Our Camping</span>
+              </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-semibold text-[#004540]">
-              Your Gift For a Greener Tomorrow
+
+            <h2 className="section-title__title  font-heading   ">
+              Your Gift For a{" "}
+              <span className="text-[#FF9933]">Greener Tomorrow</span>
             </h2>
           </div>
 
@@ -132,7 +213,6 @@ const ServiceCampaigns = () => {
                 clickable: true,
               }}
               onSlideChange={(swiper) => {
-                // realIndex goes 0..campaigns.length-1 even in loop mode
                 setActiveIndex(swiper.realIndex);
               }}
               className="camping-slider-active w-full"
@@ -180,7 +260,6 @@ const ServiceCampaigns = () => {
           transition: all 0.3s ease;
         }
 
-        /* inner dot */
         .camping-slider-active .swiper-pagination-bullet::before {
           content: "";
           position: absolute;
@@ -196,7 +275,6 @@ const ServiceCampaigns = () => {
             #FFFFFF;
         }
 
-        /* active bullet = white ring + green dot (like hero) */
         .camping-slider-active .swiper-pagination-bullet-active {
           background: rgba(255, 255, 255, 0.60);
           border-color: #F8F7F0;
@@ -214,19 +292,12 @@ const ServiceCampaigns = () => {
 };
 
 const CampaignCard = ({ campaign, isActive }) => {
-  // classes change based on isActive = "center" card
   const donationBg = isActive ? "bg-[#004540]" : "bg-[#f8f7f0]";
   const titleColor = isActive ? "text-[#FFFBEB]" : "text-[#004540]";
   const percentColor = isActive ? "text-[#FFFBEB]" : "text-[#004540]";
   const labelColor = isActive ? "text-[#FFFBEB]" : "text-[#868681]";
   const amountColor = isActive ? "text-[#FFDB57]" : "text-[#004540]";
   const progressColor = isActive ? "bg-[#FFCC40]" : "bg-[#004540]";
-  const buttonBg = isActive
-    ? "bg-[#FFCC40] text-[#004540]"
-    : "bg-[#004540] text-[#FFFBEB]";
-  const buttonCircleBg = isActive
-    ? "bg-[#004540] text-[#FFFBEB]"
-    : "bg-[#FFFBEB] text-[#004540]";
   const wishlistBorder = isActive
     ? "border-[rgba(255,251,235,0.4)] text-[#FFFBEB]"
     : "border-[rgba(0,24,25,0.1)] text-[#004540]";
@@ -335,21 +406,10 @@ const CampaignCard = ({ campaign, isActive }) => {
 
           {/* Bottom buttons */}
           <div className="d-bottom flex items-center justify-between gap-4">
-            <a
-              href={campaign.href}
-              className={`d-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-[999px] text-sm font-semibold transition-colors duration-300 ${buttonBg}`}
-            >
-              <span className="flex items-center gap-2">
-                Donate Now
-                <span
-                  className={`icon-wrap inline-flex items-center justify-center w-8 h-8 rounded-full ${buttonCircleBg}`}
-                >
-                  <span className="icon relative flex items-center gap-[2px] text-[11px]">
-                    <span>→</span>
-                    <span className="-ml-0.5 opacity-70">→</span>
-                  </span>
-                </span>
-              </span>
+            {/* ✅ Updated Donate Now button using local thm-btn style */}
+            <a href={campaign.href} className="campaign-btn">
+              <span className="campaign-btn-text">Donate Now</span>
+              <span className="campaign-btn-icon">→</span>
             </a>
 
             <button

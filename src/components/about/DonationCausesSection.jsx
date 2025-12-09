@@ -485,7 +485,7 @@ const DonationCausesSection = () => {
         <div className="donation-causes-inner">
           <div className="donation-causes-header">
             <div className="section-title__tagline-box mb-3">
-              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
                 <span>Start donating poor people</span>
               </p>
             </div>

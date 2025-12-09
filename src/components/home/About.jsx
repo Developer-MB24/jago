@@ -473,7 +473,7 @@ const AboutUs = () => {
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             {/* LEFT */}
             <div className="about-two__left fade-in-left">
-              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
                 <span>ABOUT US</span>
               </p>
               <h2 className="section-title__title  font-heading mt-3  ">

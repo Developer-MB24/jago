@@ -464,7 +464,7 @@ const Services = () => {
         <div className="container mx-auto px-4">
           {/* Section title */}
           <div className="mb-10 text-center">
-            <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+            <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
               <span>OUR SERVICE</span>
             </p>
             <h2

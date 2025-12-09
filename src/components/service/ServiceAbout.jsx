@@ -5,7 +5,86 @@ const ServiceAbout = () => {
   const [activeTab, setActiveTab] = useState("history");
 
   return (
-    <section className="about-us-section mt-28 md:mt-24 sm:mt-20">
+    <section className="about-us-section mt-28 md:mt-24 sm:mt-20 service-about">
+      {/* Scoped button styles ONLY for this section */}
+      <style>{`
+        .service-about .thm-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 16px;
+          color: #ffffff !important;
+          border: 1px solid #FF9933;
+          padding: 5px 30px;
+          border-radius: 999px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
+          overflow: hidden;
+          letter-spacing: 0.25px;
+          gap: 4px;
+          cursor: pointer;
+          background: transparent;
+          z-index: 2;
+        }
+
+        .service-about .thm-btn .thm-btn-text {
+          position: relative;
+          z-index: 2;
+          color: black !important;
+        }
+
+        .service-about .thm-btn::before {
+          content: "";
+          background-color: #FF9933;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .service-about .thm-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 300ms;
+        }
+
+        .service-about .thm-btn::after {
+          content: "";
+          background-color: rgba(0, 69, 64, 0.2);
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+        }
+
+        .service-about .thm-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .service-about .thm-btn .thm-btn-icon-box {
+          width: 36px;
+          height: 36px;
+          background-color: #FF9933;
+          border-radius: 50%;
+          font-size: 14px;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 500ms ease;
+          z-index: 2;
+        }
+
+        .service-about .thm-btn:hover .thm-btn-icon-box {
+          background-color: #ffffff;
+          color: #FF9933;
+          transition-delay: 200ms;
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* LEFT: Image composition */}
@@ -25,18 +104,15 @@ const ServiceAbout = () => {
                          md:right-[70px]
                          sm:top-[-8%] sm:right-1/2 sm:translate-x-1/2"
             >
-              <h3
-                className="m-0 text-[56px] md:text-[44px] sm:text-[40px] font-semibold leading-none text-transparent"
-                style={{ WebkitTextStroke: "1px #004540" }}
-              >
+              <h3 className="m-0 text-[56px] md:text-[44px] sm:text-[40px] text-[#fff] font-semibold leading-none ">
                 29<span className="align-top text-2xl">+</span>
               </h3>
-              <p className="m-0 max-w-[110px] text-[17px] leading-[1.4] font-semibold text-[#004540]">
+              <p className="m-0 max-w-[110px] text-[17px] leading-[1.4] font-semibold text-[#fff]">
                 Years of experience
               </p>
             </div>
 
-            {/* Award shape + text (positioned like the reference) */}
+            {/* Award shape + text */}
             <div
               className="absolute inline-flex items-center gap-4 px-6 py-4 rounded-md bg-[#004540] z-20
                          bottom-6 left-[-40px]
@@ -66,7 +142,7 @@ const ServiceAbout = () => {
               <img src="/images/shape-14.webp" alt="box shape" />
             </div>
 
-            {/* Positioned video thumb */}
+            {/* Video thumb */}
             <div
               className="absolute top-1/2 right-[70px] rounded-[150px_150px_12px_12px] sm:right-[6%] sm:w-[88%]
                          xl:right-[-20px] lg:right-[-60px] md:right-[50px]"
@@ -86,7 +162,6 @@ const ServiceAbout = () => {
                                bg-white/5 backdrop-blur-[13px] transition hover:bg-[#FF9933] hover:text-[#004540] hover:border-[#FF9933]
                                animate-pulse"
                   >
-                    {/* React icon instead of Font Awesome */}
                     <FaPlay className="text-[20px]" />
                   </a>
                 </div>
@@ -112,15 +187,18 @@ const ServiceAbout = () => {
                 alt="icon-2"
                 className="h-7 w-7 object-contain"
               />
-              <span className="text-sm font-semibold tracking-wide text-[#004540]">
+              <span className="text-sm font-semibold tracking-wide text-[#FF9933]">
                 About Us
               </span>
             </div>
 
             {/* Title */}
             <div className="mb-6">
-              <h2 className="text-3xl md:text-4xl font-semibold text-[#004540]">
-                Building Greener Future Together And Protect
+              <h2 className="section-title__title  font-heading   ">
+                Building Greener{" "}
+                <span className="text-[#FF9933]">
+                  Future Together And Protect
+                </span>
               </h2>
             </div>
 
@@ -149,7 +227,7 @@ const ServiceAbout = () => {
                 {activeTab === "history" && (
                   <div>
                     <div className="text mb-4">
-                      <p className="text-slate-700 leading-7">
+                      <p className="text-slate-700 font-caveat leading-7">
                         The implant fixture is first placed, so that it ilikely
                         to then a dental prosthetic is added then dental
                         prosthetic.
@@ -162,7 +240,7 @@ const ServiceAbout = () => {
                 {activeTab === "mission" && (
                   <div>
                     <div className="text mb-4">
-                      <p className="text-slate-700 leading-7">
+                      <p className="text-slate-700 font-caveat leading-7">
                         The implant fixture is first placed, so that it ilikely
                         to then a dental prosthetic is added then dental
                         prosthetic.
@@ -188,18 +266,11 @@ const ServiceAbout = () => {
 
             {/* CTA + Rating */}
             <div className="annual-donation-wrap flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-4">
-              <a
-                href="/econest/about"
-                className="inline-flex items-center gap-3 rounded-full bg-[#004540] text-[#FFFBEB] px-7 py-3 text-sm font-semibold shadow hover:bg-[#FF9933] hover:text-[#004540] transition relative overflow-hidden"
-              >
-                <span className="relative z-[1] flex items-center gap-3">
-                  Explore More
-                  <span className="icon-wrap relative inline-flex items-center justify-center w-8 h-8 rounded-full bg-[#FFFBEB] text-[#004540]">
-                    <span className="icon flex items-center">
-                      <FaArrowRight className="text-[11px]" />
-                      <FaArrowRight className="text-[11px] -ml-0.5 opacity-70" />
-                    </span>
-                  </span>
+              {/* UPDATED BUTTON USING LOCAL thm-btn STYLE */}
+              <a href="/econest/about" className="thm-btn">
+                <span className="thm-btn-text">Explore More</span>
+                <span className="thm-btn-icon-box">
+                  <FaArrowRight className="text-[11px]" />
                 </span>
               </a>
 
@@ -261,11 +332,14 @@ const BenefitsList = () => (
         "Ecology is the study of the relationship between living",
         "Focus on your important tasks and orders",
       ].map((item, idx) => (
-        <li key={idx} className="relative pl-9 flex items-center sm:pl-8">
+        <li
+          key={idx}
+          className="relative pl-9 flex font-caveat items-center sm:pl-8"
+        >
           {/* Outer bullet */}
           <span className="absolute left-0 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow-[0_6px_10px_-3px_rgba(0,69,64,0.11)]" />
 
-          {/* ✅ Inner dot with gradient using inline style */}
+          {/* Inner dot */}
           <span
             className="absolute left-[7px] top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
             style={{

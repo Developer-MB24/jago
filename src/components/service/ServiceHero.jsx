@@ -47,7 +47,86 @@ export default function ServiceHero() {
   }, []);
 
   return (
-    <section className="relative z-[1]">
+    <section className="relative z-[1] service-hero">
+      {/* Scoped thm-btn styles ONLY for this section */}
+      <style>{`
+        .service-hero .thm-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 17px;
+          color: #fff !important;
+          border: 1px solid #FF9933;
+          padding: 10px 32px;
+          border-radius: 30px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
+          overflow: hidden;
+          letter-spacing: 0.25px;
+          gap: 14px;
+          cursor: pointer;
+          background: transparent;
+          z-index: 2;
+        }
+
+        .service-hero .thm-btn .thm-btn-text {
+          position: relative;
+          z-index: 2;
+          color: #fff !important;
+        }
+
+        .service-hero .thm-btn::before {
+          content: "";
+          background-color: #FF9933;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .service-hero .thm-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 300ms;
+        }
+
+        .service-hero .thm-btn::after {
+          content: "";
+          background-color: rgba(255, 153, 51, 0.3);
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+        }
+
+        .service-hero .thm-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .service-hero .thm-btn .thm-btn-icon-box {
+          width: 40px;
+          height: 40px;
+          background-color: #FF9933;
+          border-radius: 50%;
+          font-size: 14px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 500ms ease;
+          z-index: 2;
+        }
+
+        .service-hero .thm-btn:hover .thm-btn-icon-box {
+          background-color: #ffffff;
+          color: #FF9933;
+          transition-delay: 200ms;
+        }
+      `}</style>
+
       <div className="relative h-[540px] md:h-[620px] lg:h-[700px] overflow-hidden">
         {slides.map((slide, index) => {
           const isActive = index === activeIndex;
@@ -92,15 +171,15 @@ export default function ServiceHero() {
                       alt="icon-1"
                       className="w-7 h-7 md:w-8 md:h-8"
                     />
-                    <span className="text-sm md:text-base font-medium text-white leading-6">
+                    <span className="text-sm md:text-gray-300 font-medium text-white leading-6">
                       {slide.subtitle}
                     </span>
                   </div>
 
                   <div className="mb-4">
-                    <h1 className="font-semibold text-white text-[2.4rem] leading-tight md:text-[3.4rem] lg:text-[4.4rem] lg:leading-[1.05]">
+                    <h1 className="font-semibold font-nunito text-white text-[2.4rem] leading-tight md:text-[3.4rem] lg:text-[4.4rem] lg:leading-[1.05]">
                       {slide.title}{" "}
-                      <span className="text-[#FFB347]">{slide.highlight}</span>
+                      <span className="text-[#FF9933]">{slide.highlight}</span>
                     </h1>
                   </div>
 
@@ -111,22 +190,10 @@ export default function ServiceHero() {
                   </div>
 
                   <div className="flex flex-col xs:flex-row items-start xs:items-center gap-4 xs:gap-7">
-                    <a
-                      href="/donations"
-                      className="relative inline-flex items-center gap-3 rounded-full border border-white/60 bg-white/20 backdrop-blur-md px-7 py-3 text-sm md:text-base font-semibold text-white overflow-hidden group"
-                    >
-                      <span className="relative z-10">{slide.ctaText}</span>
-                      <span className="relative z-10 flex items-center justify-center w-9 h-9 rounded-full bg-[#FFB347] text-[#004540] text-xs group-hover:bg-white group-hover:text-[#FFB347] transition-colors duration-200">
-                        <span className="flex items-center gap-[2px]">
-                          <span className="block leading-none group-hover:-translate-x-[1px] transition-transform duration-200">
-                            →
-                          </span>
-                          <span className="block leading-none group-hover:translate-x-[1px] transition-transform duration-200 delay-75">
-                            →
-                          </span>
-                        </span>
-                      </span>
-                      <span className="absolute inset-0 bg-[#FFB347]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    {/* CTA BUTTON – now scoped & always white text */}
+                    <a href="/donations" className="thm-btn inline-flex">
+                      <span className="thm-btn-text">{slide.ctaText}</span>
+                      <span className="thm-btn-icon-box">→</span>
                     </a>
 
                     <div className="flex items-center gap-4">

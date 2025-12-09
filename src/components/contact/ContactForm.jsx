@@ -142,7 +142,7 @@ const ContactForm = () => {
           {/* Section Title */}
           <div className="mb-10 text-center">
             <div className="section-title__tagline-box mb-3">
-              <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+              <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
                 <span>Our Contact</span>
               </p>
             </div>

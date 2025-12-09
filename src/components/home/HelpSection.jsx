@@ -271,7 +271,7 @@ const HelpSection = () => {
         <div className="container mx-auto max-w-6xl px-4">
           {/* Section title */}
           <div className="mb-10 text-center">
-            <p className="label-osc mx-auto inline-block font-caveat text-[#f27b21] text-sm tracking-wide">
+            <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
               <span>We take care them</span>
             </p>
 

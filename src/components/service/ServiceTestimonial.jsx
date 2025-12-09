@@ -77,26 +77,21 @@ export default function ServiceTestimonial() {
                   alt="icon-2"
                   className="w-9 h-9"
                 />
-                <span className="text-sm font-semibold text-[#138808]">
+                <span className="text-sm font-semibold text-[#FF9933]">
                   Testimonials
                 </span>
               </div>
 
               {/* Title */}
               <div>
-                <h2 className="text-[2.3rem] md:text-[2.7rem] font-bold leading-tight text-[#134A43]">
-                  Why They Believe{" "}
-                  <span className="inline-flex items-center gap-3">
-                    <span className="inline-flex items-center justify-center rounded-full bg-[#134A43] text-[#FFCC40] px-3 py-1">
-                      <i className="fa-solid fa-quote-right text-base" />
-                    </span>
-                    In Us
-                  </span>
+                <h2 className="section-title__title  font-heading   ">
+                  Why They Believe -
+                  <span className="text-[#FF9933]"> In Us</span>
                 </h2>
               </div>
 
               {/* Text */}
-              <p className="text-[#4B5563] text-[15px] md:text-base max-w-md">
+              <p className="text-[#4B5563] text-[15px] font-caveat md:text-gray-300 max-w-md">
                 Likely to then a dental prosthetic is added, creating a stronger
                 foundation for long-lasting and sustainable smiles.
               </p>
@@ -104,7 +99,7 @@ export default function ServiceTestimonial() {
               {/* Reviews summary */}
               <div className="flex items-center gap-4">
                 <h3
-                  className="text-[40px] md:text-[46px] font-semibold leading-none"
+                  className="text-[40px] md:text-[46px] font-semibold font-caveat leading-none"
                   style={{
                     color: "transparent",
                     WebkitTextStroke: "1px #4B5563",
@@ -235,7 +230,7 @@ export default function ServiceTestimonial() {
                         </div>
 
                         {/* Review text */}
-                        <p className="text-[15px] md:text-base text-white leading-relaxed mb-8">
+                        <p className="text-[15px] md:text-gray-300 text-white leading-relaxed mb-8">
                           {item.review}
                         </p>
 

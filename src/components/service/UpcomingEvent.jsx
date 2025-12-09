@@ -29,67 +29,127 @@ const events = [
 export default function UpcomingEvent() {
   return (
     <section className="our-events-section pt-24 pb-24 md:pt-20 md:pb-20">
+      {/* LOCAL thm-btn CSS (safe & isolated) */}
+      <style>{`
+        .event-thm-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 16px;
+          color: #fff !important;
+          border: 1px solid #FF9933;
+          padding: 10px 28px;
+          border-radius: 30px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
+          overflow: hidden;
+          letter-spacing: 0.3px;
+          gap: 14px;
+          background: transparent;
+          cursor: pointer;
+          z-index: 2;
+        }
+
+        .event-thm-btn-text {
+          position: relative;
+          z-index: 2;
+          color: black !important;
+        }
+
+        .event-thm-btn::before {
+          content: "";
+          background-color: #FF9933;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0,0.96,0.58,1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .event-thm-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 300ms;
+        }
+
+        .event-thm-btn::after {
+          content: "";
+          background-color: rgba(255,153,51,0.35);
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          z-index: 0;
+          transition: all cubic-bezier(0,0.96,0.58,1.1) 0.9s;
+        }
+
+        .event-thm-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .event-thm-btn-icon-box {
+          width: 38px;
+          height: 38px;
+          background-color: #FF9933;
+          border-radius: 50%;
+          font-size: 14px;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
+          transition: all 500ms ease;
+        }
+
+        .event-thm-btn:hover .event-thm-btn-icon-box {
+          background-color: #fff;
+          color: #FF9933;
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* Section heading */}
+        {/* Heading */}
         <div className="mb-12 md:mb-10">
           <div className="flex items-center justify-center gap-3 mb-3">
             <img src="images/icon-2.svg" alt="icon-2" className="w-9 h-9" />
-            <span className="text-sm font-semibold text-[#138808]">
+            <span className="text-sm font-semibold text-[#FF9933]">
               Upcoming Event
             </span>
           </div>
-          <div>
-            <h2 className="text-[2rem] md:text-[2.4rem] font-bold leading-tight text-[#134A43]">
-              Our Events, Let&apos;s{" "}
-              <span className="inline-flex items-center gap-2">
-                <img
-                  src="images/icon-2.svg"
-                  alt="icon-2"
-                  className="w-7 h-7 md:w-8 md:h-8"
-                />
-                All Participate
-              </span>
-            </h2>
-          </div>
+          <h2 className="section-title__title font-heading">
+            Our Events, Let&apos;s{" "}
+            <span className="text-[#FF9933]">All Participate</span>
+          </h2>
         </div>
 
-        {/* Events grid */}
+        {/* Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {events.map((event) => (
             <div
               key={event.id}
               className="event-card relative bg-[#F8F7F0] rounded-[18px] p-5 md:p-6 overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.03)] group"
             >
-              {/* Top content */}
               <div className="card-content pb-5 border-b border-black/10">
-                {/* Top row: date + joined people */}
+                {/* Date + people */}
                 <div className="event-card-top flex items-center justify-between gap-4">
-                  {/* Left: calendar + date */}
                   <div className="top-left flex items-start gap-4 md:gap-5">
                     <img
                       src="images/calendar-2.svg"
-                      alt="calendar-icon"
-                      className="w-10 h-10 md:w-11 md:h-11"
+                      alt="calendar"
+                      className="w-10 h-10"
                     />
-                    <div className="event-date text-left">
-                      <h3 className="text-[#134A43] font-medium text-[32px] md:text-[40px] leading-[1] mb-0">
-                        {event.day}
-                        <span className="block text-[16px] md:text-[18px] text-[#4B5563] leading-[1.3] whitespace-pre-line">
-                          {event.dateText}
-                        </span>
-                      </h3>
-                    </div>
+                    <h3 className="text-[#134A43] font-medium text-[32px] leading-none">
+                      {event.day}
+                      <span className="block text-[16px] text-[#4B5563] whitespace-pre-line">
+                        {event.dateText}
+                      </span>
+                    </h3>
                   </div>
 
-                  {/* Right: joined people */}
-                  <div className="top-right flex items-center gap-3 md:gap-4">
-                    <img
-                      src="images/author-1.webp"
-                      alt="authors"
-                      className="max-w-[90px] md:max-w-[118px] w-full"
-                    />
-                    <div className="people-joined text-left">
-                      <h5 className="text-[18px] md:text-[20px] font-semibold text-[#134A43] leading-tight mb-0">
+                  <div className="top-right flex items-center gap-3">
+                    <img src="images/author-1.webp" className="max-w-[90px]" />
+                    <div>
+                      <h5 className="text-[18px] font-semibold text-[#134A43] leading-tight mb-0">
                         {event.joined}
                       </h5>
                       <span className="text-sm text-[#4B5563]">
@@ -100,76 +160,43 @@ export default function UpcomingEvent() {
                 </div>
 
                 {/* Title */}
-                <div className="event-card-middle text-left">
-                  <h2 className="text-[1.6rem] md:text-[2rem] font-medium text-[#134A43] mt-5 mb-3">
-                    <a href="/camping-details">{event.title}</a>
-                  </h2>
+                <h2 className="text-left text-[1.6rem] md:text-[2rem] mt-5 mb-3 text-[#134A43] font-medium">
+                  <a href="/camping-details">{event.title}</a>
+                </h2>
 
-                  {/* Address row */}
-                  <div className="address flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-5 mb-5">
-                    <div className="location flex items-center gap-2 text-sm text-[#4B5563]">
-                      <i className="fa-regular fa-location-dot text-[#134A43]" />
-                      <span>{event.location}</span>
-                    </div>
-                    <div className="time flex items-center gap-2 text-sm text-[#4B5563]">
-                      <i className="fa-regular fa-clock text-[#134A43]" />
-                      <span>{event.time}</span>
-                    </div>
+                {/* Location + time */}
+                <div className="address flex flex-col sm:flex-row gap-3 mb-5">
+                  <div className="flex items-center gap-2 text-sm text-[#4B5563]">
+                    <i className="fa-regular fa-location-dot text-[#134A43]" />
+                    <span>{event.location}</span>
                   </div>
+                  <div className="flex items-center gap-2 text-sm text-[#4B5563]">
+                    <i className="fa-regular fa-clock text-[#134A43]" />
+                    <span>{event.time}</span>
+                  </div>
+                </div>
 
-                  {/* Join Event button */}
-                  <div className="event-btn">
-                    <a
-                      href="/camping-details"
-                      className="inline-flex items-center gap-3 rounded-full bg-[#134A43] text-[#FF9933] px-7 py-2.5 text-sm md:text-base font-semibold relative overflow-hidden group/button"
-                    >
-                      <span className="relative z-10">Join Event</span>
-                      <span className="relative z-10 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF9933] text-[#134A43] text-xs transition-colors duration-200 group-hover/button:bg-white group-hover/button:text-[#FF9933]">
-                        <span className="flex items-center gap-[2px]">
-                          <span className="block leading-none group-hover/button:-translate-x-[1px] transition-transform duration-200">
-                            →
-                          </span>
-                          <span className="block leading-none group-hover/button:translate-x-[1px] transition-transform duration-200 delay-75">
-                            →
-                          </span>
-                        </span>
-                      </span>
-                      <span className="absolute inset-0 bg-[#FF9933]/10 opacity-0 group-hover/button:opacity-100 transition-opacity duration-200" />
-                    </a>
-                  </div>
+                {/* UPDATED BUTTON */}
+                <div className="event-btn text-left">
+                  <a href="/camping-details" className="event-thm-btn">
+                    <span className="event-thm-btn-text">Join Event</span>
+                    <span className="event-thm-btn-icon-box">→</span>
+                  </a>
                 </div>
               </div>
 
-              {/* Bottom thumbnail */}
+              {/* Bottom thumb */}
               <div className="thumb relative mt-4 rounded-[16px] overflow-hidden">
-                <a
-                  href="/camping-details"
-                  className="block rounded-[16px] overflow-hidden"
-                >
-                  <img
-                    src={event.thumb}
-                    alt={event.title}
-                    className="w-full h-full object-cover rounded-[16px] transition-transform duration-500 group-hover:scale-110"
-                  />
-                </a>
+                <img
+                  src={event.thumb}
+                  className="w-full h-full object-cover rounded-[16px] transition-transform duration-500 group-hover:scale-110"
+                />
 
-                {/* Category pill */}
-                <div className="category absolute bottom-4 right-4">
-                  <a
-                    href="/camping-details"
-                    className="inline-block px-4 py-2 rounded-full text-white text-sm border border-white/30 bg-white/5 shadow-[inset_0_4px_11px_rgba(255,255,255,0.4),inset_-1px_-4px_23.1px_rgba(0,24,25,0.28)] backdrop-blur-[24px] hover:bg-white hover:text-[#134A43] transition-colors duration-200"
-                  >
+                {/* Category */}
+                <div className="absolute bottom-4 right-4">
+                  <a className="inline-block px-4 py-2 rounded-full bg-white/10 text-white border border-white/30 backdrop-blur-md hover:bg-white hover:text-[#134A43] transition">
                     {event.category}
                   </a>
-                </div>
-
-                {/* Shape image (restored) */}
-                <div className="shape-3 absolute top-0 right-0 z-[2]">
-                  <img
-                    src="images/shape-3.webp"
-                    alt="shape-3"
-                    className="w-full"
-                  />
                 </div>
               </div>
             </div>
