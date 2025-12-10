@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { Link, NavLink } from "react-router-dom";
+import {
+  FaTwitter,
+  FaFacebookF,
+  FaPinterestP,
+  FaInstagram,
+} from "react-icons/fa";
 
 /* Icons  */
 const ChevronDown = (props) => (
@@ -241,6 +247,98 @@ export default function Header() {
       </div>
       <div className="absolute inset-0 -z-20 bg-black/10 backdrop-blur-[2px]" />
 
+      <style>{`
+        .header-donate-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 16px;
+          color: #ffffff !important;
+          border: 1px solid #FF9933;
+          padding: 8px 24px;
+          border-radius: 999px;
+          transition: 0.5s ease-in-out;
+          text-transform: capitalize;
+          overflow: hidden;
+          letter-spacing: 0.25px;
+          gap: 12px;
+          z-index: 2;
+          cursor: pointer;
+          background: transparent;
+        }
+
+        .header-donate-btn-text {
+          position: relative;
+          z-index: 2;
+          color: #ffffff !important;
+        }
+
+        .header-donate-btn::before {
+          content: "";
+          background-color: #FF9933;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .header-donate-btn:hover::before,
+        .header-donate-btn--active::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 250ms;
+        }
+
+        .header-donate-btn::after {
+          content: "";
+          background-color: rgba(255, 153, 51, 0.3);
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+        }
+
+        .header-donate-btn:hover::after,
+        .header-donate-btn--active::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        .header-donate-btn-icon-box {
+          width: 36px;
+          height: 36px;
+          background-color: #FF9933;
+          border-radius: 50%;
+          font-size: 14px;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 500ms ease;
+          z-index: 2;
+        }
+
+        .header-donate-btn:hover .header-donate-btn-icon-box,
+        .header-donate-btn--active .header-donate-btn-icon-box {
+          background-color: #ffffff;
+          color: #FF9933;
+          transition-delay: 200ms;
+        }
+
+        @keyframes slideDown { 
+          0% { transform: translateY(-24px); opacity:.45 } 
+          100% { transform: translateY(0); opacity:.30 } 
+        }
+        @keyframes slideUp { 
+          0% { transform: translateY(24px);  opacity:.45 } 
+          100% { transform: translateY(0); opacity:.30 } 
+        }
+        .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
+        .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
+      `}</style>
+
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
         <div className="flex w-full items-center justify-between gap-1 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
           {/* Logo (bigger) */}
@@ -408,20 +506,21 @@ export default function Header() {
             </NavLink>
           </div>
 
-          {/* Desktop: Volunteer Registration + Search + Donate */}
+          {/* Desktop: Register as Volunteer + Search + Donate */}
           <div className="ml-6 hidden lg:flex items-center gap-5 shrink-0">
-            {/* Volunteer Registration */}
+            {/* Register as Volunteer */}
+            {/* Register as Volunteer (same animation as Donate, but no icon) */}
             <NavLink
               to="/register"
               className={({ isActive }) =>
-                `inline-flex items-center rounded-full border-2 px-4 py-1.5 text-sm font-semibold tracking-wide shadow-sm transition-colors ${
-                  isActive
-                    ? "bg-[#FF9933] border-[#FF9933] text-white"
-                    : "border-[#FF9933] text-white hover:bg-[#138808]"
+                `header-donate-btn ${
+                  isActive ? "header-donate-btn--active" : ""
                 }`
               }
             >
-              Volunteer Registration
+              <span className="header-donate-btn-text">
+                Register as Volunteer
+              </span>
             </NavLink>
 
             {/* Search */}
@@ -433,219 +532,128 @@ export default function Header() {
               <SearchIcon className="h-6 w-6" />
             </button>
 
-            {/* Donate */}
+            {/* Desktop Donate – new header-donate-btn */}
             <NavLink
               to="/donate"
               className={({ isActive }) =>
-                `group relative inline-flex items-center gap-2 rounded-full border-[3px] px-2 py-1 text-lg font-extrabold tracking-wide shadow-sm transition ${
-                  isActive
-                    ? "bg-[#FF9933] border-[#FF9933] text-white"
-                    : "border-[#FF5A1F] text-white hover:bg-white/10"
+                `header-donate-btn ${
+                  isActive ? "header-donate-btn--active" : ""
                 }`
               }
             >
-              <span>Donate Now</span>
-              <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F] text-white transition group-hover:translate-x-0.5">
-                <ArrowRight className="h-6 w-4" />
+              <span className="header-donate-btn-text">Donate Now</span>
+              <span className="header-donate-btn-icon-box">
+                <ArrowRight className="h-4 w-4" />
               </span>
             </NavLink>
           </div>
         </div>
       </nav>
 
-      {/* Mobile / Tablet */}
+      {/* ========= NEW MOBILE NAV DRAWER (like screenshot) ========= */}
       {mobileOpen && (
-        <div className="lg:hidden">
-          <div className="space-y-2 border-t border-white/30 px-4 py-4 text-white/95 bg-black/25 backdrop-blur-sm">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-lg font-semibold ${
-                  isActive
-                    ? "bg-[#FF9933] text-white"
-                    : "text-white hover:text-[#FFE9CC]"
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              Home
-            </NavLink>
-
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-lg font-semibold ${
-                  isActive
-                    ? "bg-[#FF9933] text-white"
-                    : "text-white hover:text-[#FFE9CC]"
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              About
-            </NavLink>
-
-            {/* Services group */}
-            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg:white/15">
-              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
-                <span>Services</span>
-                <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
-              </summary>
-              <ul className="mt-2 space-y-1">
-                {[
-                  { label: "Service", to: "/service/service" },
-                  { label: "Education", to: "/service/education" },
-                  { label: "Health", to: "/service/health" },
-                  { label: "Agriculture", to: "/service/agriculture" },
-                  { label: "Employment", to: "/service/employment" },
-                  {
-                    label: "Geographical Issues",
-                    to: "/service/geographical-issues",
-                  },
-                  {
-                    label: "Social & Political Awareness",
-                    to: "/service/social-&-political-awareness",
-                  },
-                  { label: "Miscellaneous", to: "/service/miscellaneous" },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <NavLink
-                      to={item.to}
-                      className={({ isActive }) =>
-                        `block rounded-md px-3 py-2 text-base ${
-                          isActive
-                            ? "bg-[#FF9933] text-white"
-                            : "text-white hover:bg-white/10"
-                        }`
-                      }
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.label}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </details>
-
-            {/* Blog group */}
-            <details className="group rounded-lg bg-white/10 p-2 ring-1 ring-white/20 open:bg-white/15">
-              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold">
-                <span>Blog</span>
-                <ChevronDown className="h-5 w-5 transition group-open:rotate-180" />
-              </summary>
-              <ul className="mt-2 space-y-1">
-                {[
-                  { label: "Blog", to: "/blog" },
-                  { label: "Blog Details", to: "/blogdetails" },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <NavLink
-                      to={item.to}
-                      className={({ isActive }) =>
-                        `block rounded-md px-3 py-2 text-base ${
-                          isActive
-                            ? "bg-[#FF9933] text-white"
-                            : "text-white hover:bg:white/10"
-                        }`
-                      }
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.label}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </details>
-
-            {/* Volunteer Registration */}
-            <NavLink
-              to="/register"
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-lg font-semibold ${
-                  isActive
-                    ? "bg-[#FF9933] text-white"
-                    : "text-white hover:text-[#FF9933]"
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              Volunteer Registration
-            </NavLink>
-
-            <NavLink
-              to="/donations"
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-lg font-semibold ${
-                  isActive
-                    ? "bg-[#FF9933] text-white"
-                    : "text-white hover:text-[#FFE9CC]"
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              Donations
-            </NavLink>
-
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-lg font-semibold ${
-                  isActive
-                    ? "bg-[#FF9933] text-white"
-                    : "text-white hover:text-[#FFE9CC]"
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              Contact
-            </NavLink>
-
-            <div className="flex items-center gap-4 pt-3">
-              {/* Mobile search opens overlay + closes menu */}
-              <button
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
-                aria-label="Search"
-                onClick={() => {
-                  setSearchOpen(true);
-                  setMobileOpen(false);
-                }}
-              >
-                <SearchIcon className="h-5 w-5" />
-              </button>
-
-              <button
-                className="relative grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
-                aria-label="Cart"
-              >
-                <CartIcon className="h-5 w-5" />
-                <span className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-[#FF5A1F] text-[10px] font-black text-white ring-2 ring-black/40">
-                  02
-                </span>
-              </button>
-
-              <button
-                className="grid h-10 w-10 place-items-center rounded-full ring-1 ring-white/30 hover:bg:white/10"
-                aria-label="Account"
-              >
-                <UserIcon className="h-5 w-5" />
-              </button>
-
-              <NavLink
-                to="/donate"
-                className={({ isActive }) =>
-                  `ml-auto inline-flex items-center gap-3 rounded-full border-2 px-4 py-2 font-extrabold ${
-                    isActive
-                      ? "bg-[#FF9933] border-[#FF9933] text-white"
-                      : "border-[#FF5A1F] text-white hover:bg:white/10"
-                  }`
-                }
+        <div className="fixed inset-0 z-[1200] lg:hidden">
+          {/* dark overlay */}
+          <button
+            className="absolute inset-0 bg-black/40"
+            onClick={() => setMobileOpen(false)}
+            aria-label="Close menu"
+          />
+          {/* drawer */}
+          <div className="relative z-10 h-full w-72 max-w-[80%] bg-[#032720] text-white flex flex-col">
+            {/* top bar with logo & close */}
+            <div className="flex items-center justify-between px-4 pt-4 pb-3">
+              <Link
+                to="/"
+                className="shrink-0"
                 onClick={() => setMobileOpen(false)}
               >
-                Donate Now
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-[#FF5A1F]">
-                  <ArrowRight className="h-5 w-5 text-white" />
-                </span>
-              </NavLink>
+                <img
+                  src="/images/jaago-manav-logo.png"
+                  alt="Jaago Manav logo"
+                  className="h-28 w-auto"
+                />
+              </Link>
+              <button
+                className="text-2xl leading-none"
+                onClick={() => setMobileOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* nav links */}
+            <nav className="flex-1 overflow-y-auto px-4 pb-4 text-[15px]">
+              {[
+                { label: "Home", to: "/", arrow: false },
+                { label: "About", to: "/about", arrow: false },
+                // You can adjust which ones show the orange arrow
+                { label: "Services", to: "/service/service", arrow: true },
+                {
+                  label: "Register as Volunteer",
+                  to: "/register",
+                  arrow: true,
+                },
+                { label: "Donations", to: "/donations", arrow: true },
+                { label: "Blog", to: "/blog", arrow: true },
+                { label: "Contact", to: "/contact", arrow: false },
+              ].map((item, idx) => (
+                <React.Fragment key={item.label}>
+                  {item.label === "Contact" && (
+                    <div className="my-2 h-px bg-white/15" />
+                  )}
+                  <NavLink
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={({ isActive }) =>
+                      `flex items-center justify-between border-b border-white/10 py-2 ${
+                        isActive ? "font-semibold text-[#FFB36A]" : ""
+                      }`
+                    }
+                  >
+                    <span>{item.label}</span>
+                    {item.arrow && (
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-sm bg-[#FF9933]">
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    )}
+                  </NavLink>
+                </React.Fragment>
+              ))}
+
+              {/* contact + email block */}
+              <div className="mt-4 border-t border-white/15 pt-4 space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#FF9933] text-lg">
+                    ✉
+                  </span>
+                  <span className="text-sm break-all">info@jaagomanav.org</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#FF9933] text-lg">
+                    ☎
+                  </span>
+                  <span className="text-sm">+91 99999 99999</span>
+                </div>
+              </div>
+            </nav>
+
+            {/* bottom social icons */}
+            <div className="px-4 pb-5 pt-1 flex items-center gap-3">
+              {[
+                { icon: <FaTwitter />, label: "Twitter" },
+                { icon: <FaFacebookF />, label: "Facebook" },
+                { icon: <FaPinterestP />, label: "Pinterest" },
+                { icon: <FaInstagram />, label: "Instagram" },
+              ].map((s) => (
+                <button
+                  key={s.label}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/35 text-sm"
+                  aria-label={s.label}
+                >
+                  {s.icon}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -659,14 +667,6 @@ export default function Header() {
         onChange={(e) => setSearchQuery(e.target.value)}
         onSubmit={handleSearchSubmit}
       />
-
-      {/* Keyframes */}
-      <style>{`
-        @keyframes slideDown { 0% { transform: translateY(-24px); opacity:.45 } 100% { transform: translateY(0); opacity:.30 } }
-        @keyframes slideUp   { 0% { transform: translateY(24px);  opacity:.45 } 100% { transform: translateY(0); opacity:.30 } }
-        .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
-        .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
-      `}</style>
     </header>
   );
 }

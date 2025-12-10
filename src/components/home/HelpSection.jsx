@@ -272,7 +272,7 @@ const HelpSection = () => {
           {/* Section title */}
           <div className="mb-10 text-center">
             <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-              <span>We take care them</span>
+              <span> Home Page {">"} We take care them</span>
             </p>
 
             <h2 className="section-title__title  font-heading   ">
@@ -333,34 +333,36 @@ const HelpSection = () => {
                               alt="Education Help"
                             />
                           </div>
+
                           <div className="services-three__content">
                             <h3 className="services-three__title">
-                              How You Can Help Us?
+                              Support Children’s Education
                             </h3>
+
                             <ul className="services-three__points-box list-unstyled">
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>Child Deserves Better Healthy Foods</h4>
+                                  <h4>Sponsor a Child’s Schooling</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Provide books, uniforms, tuition fees and
+                                    everything needed for uninterrupted
+                                    education.
                                   </p>
                                 </div>
                               </li>
+
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>
-                                    Childhood Education Development support
-                                  </h4>
+                                  <h4>Community Learning Support</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Help us run after-school programs, digital
+                                    literacy centers, and educational workshops.
                                   </p>
                                 </div>
                               </li>
@@ -385,34 +387,36 @@ const HelpSection = () => {
                               alt="Treatment Help"
                             />
                           </div>
+
                           <div className="services-three__content">
                             <h3 className="services-three__title">
-                              How You Can Help Us?
+                              Medical & Treatment Support
                             </h3>
+
                             <ul className="services-three__points-box list-unstyled">
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>Child Deserves Better Healthy Foods</h4>
+                                  <h4>Emergency Medical Assistance</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Support patients who need urgent treatment,
+                                    surgeries or life-saving medical help.
                                   </p>
                                 </div>
                               </li>
+
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>
-                                    Childhood Education Development support
-                                  </h4>
+                                  <h4>Provide Medicines & Health Kits</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Help distribute essential medicines,
+                                    diagnostic tests and primary healthcare
+                                    kits.
                                   </p>
                                 </div>
                               </li>
@@ -437,34 +441,35 @@ const HelpSection = () => {
                               alt="Healthy Food"
                             />
                           </div>
+
                           <div className="services-three__content">
                             <h3 className="services-three__title">
-                              How You Can Help Us?
+                              Nutritious Food for Families
                             </h3>
+
                             <ul className="services-three__points-box list-unstyled">
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>Child Deserves Better Healthy Foods</h4>
+                                  <h4>Daily Meal Distribution</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Provide balanced meals to children, elderly
+                                    people, and underprivileged families.
                                   </p>
                                 </div>
                               </li>
+
                               <li>
                                 <div className="icon">
                                   <span>✔</span>
                                 </div>
                                 <div className="content">
-                                  <h4>
-                                    Childhood Education Development support
-                                  </h4>
+                                  <h4>Nutrition Awareness Programs</h4>
                                   <p>
-                                    Category that involves giving financial or
-                                    material support.
+                                    Help us educate communities on healthy
+                                    eating and balanced nutrition habits.
                                   </p>
                                 </div>
                               </li>
@@ -473,6 +478,7 @@ const HelpSection = () => {
                         </div>
                       </div>
                     </div>
+
                     {/* End tabs */}
                   </div>
                 </div>

@@ -274,7 +274,7 @@ const ContactSection = () => {
         /* ===== RIGHT IMAGE + CALL BOX (desktop) ===== */
         .contact-one__img-1 {
           position: absolute;
-          bottom: 0;
+          bottom: 9px;
           right: 0;
           width: 45%;
           display: flex;
@@ -469,7 +469,7 @@ const ContactSection = () => {
                   <div className="section-title text-left mb-5">
                     <div className="section-title__tagline-box mb-3">
                       <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                        <span>OUR CONTACT</span>
+                        <span> Home Page {">"} OUR CONTACT</span>
                       </p>
                     </div>
                     <h2 className=" text-3xl font-semibold leading-snug text-white sm:text-4xl md:text-5xl">

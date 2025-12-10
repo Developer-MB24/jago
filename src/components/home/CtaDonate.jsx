@@ -162,7 +162,7 @@ export default function CtaDonate({
             {/* Soft color overlay (tweak opacity to taste) */}
             <div
               className="absolute inset-0 -z-10 mix-blend-multiply pointer-events-none"
-              style={{ backgroundColor: "#0e2c27" }} // 0.28 = lighter; increase to darken
+              style={{ backgroundColor: "#1f6f61" }}
               aria-hidden="true"
             />
 

@@ -8,7 +8,89 @@ export default function SubscribeSection() {
   };
 
   return (
-    <section className="w-full bg-[#FF9933] text-white px-16">
+    <section className="w-full bg-[#FF9933] text-white px-16 relative">
+      {/* BUTTON ANIMATION CSS — scoped ONLY to this section */}
+      <style>
+        {`
+        .subscribe-btn {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 0 28px 0 32px;
+          height: 56px;
+          border-radius: 999px;
+          border: 1px solid #ffffff;
+          font-weight: 700;
+          font-size: 17px;
+          background: transparent;
+          color: #ffffff;
+          cursor: pointer;
+          overflow: hidden;
+          transition: 0.5s ease-in-out;
+        }
+
+        .subscribe-btn-text {
+          position: relative;
+          z-index: 2;
+          color: black !important;
+        }
+
+        /* expanding background */
+        .subscribe-btn::before {
+          content: "";
+          background-color: #ffffff;
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0, 0.96, 0.58, 1.1) 0.8s;
+          z-index: 1;
+        }
+
+        .subscribe-btn:hover::before {
+          clip-path: circle(100% at 50% 50%);
+          transition-delay: 200ms;
+        }
+
+        /* second soft ring */
+        .subscribe-btn::after {
+          content: "";
+          background-color: rgba(255,255,255,0.35);
+          position: absolute;
+          inset: 0;
+          clip-path: circle(0% at 50% 50%);
+          transition: all cubic-bezier(0,0.96,0.58,1.1) 0.8s;
+          z-index: 0;
+        }
+
+        .subscribe-btn:hover::after {
+          clip-path: circle(100% at 50% 50%);
+        }
+
+        /* Arrow Circle */
+        .subscribe-btn-icon {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          background-color: #ffffff;
+          color: #FF9933;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 2;
+          transition: all 500ms ease;
+        }
+
+        /* icon in hover */
+        .subscribe-btn:hover .subscribe-btn-icon {
+          background-color: #FF9933;
+          color: #ffffff;
+        }
+      `}
+      </style>
+
       <div className="max-w-7xl mx-auto px-4 py-10 md:py-14">
         <form
           onSubmit={onSubmit}
@@ -41,20 +123,12 @@ export default function SubscribeSection() {
             </div>
           </div>
 
+          {/* Animated Subscribe Button */}
           <div className="lg:col-span-2">
-            <button
-              type="submit"
-              className="group w-full md:w-auto inline-flex items-center justify-between gap-4
-                         rounded-full bg-white px-6 pl-7 pr-2 h-14 shadow-soft
-                         text-[#FF9933] font-semibold hover:opacity-95 transition"
-            >
-              <span className="font-paragraph text-lg">Subscribe</span>
+            <button type="submit" className="subscribe-btn w-full md:w-auto">
+              <span className="subscribe-btn-text">Subscribe</span>
 
-              <span
-                className="grid place-items-center size-10 rounded-full bg-[#FF9933] text-white
-                               group-hover:translate-x-[2px] transition-transform"
-              >
-                {/* Arrow icon */}
+              <span className="subscribe-btn-icon">
                 <svg
                   width="18"
                   height="18"

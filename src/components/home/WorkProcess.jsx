@@ -253,7 +253,7 @@ const WorkProcess = () => {
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box mb-3">
               <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                <span>Work Process</span>
+                <span> Home Page {">"} Work Process</span>
               </p>
             </div>
             <h2 className="section-title__title  font-heading   ">

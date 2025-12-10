@@ -474,7 +474,7 @@ const AboutUs = () => {
             {/* LEFT */}
             <div className="about-two__left fade-in-left">
               <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                <span>ABOUT US</span>
+                <span>Home Page {">"} About us </span>
               </p>
               <h2 className="section-title__title  font-heading mt-3  ">
                 We Believe This Give For Poor People{" "}

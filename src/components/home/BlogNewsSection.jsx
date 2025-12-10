@@ -366,7 +366,7 @@ const BlogNewsSection = () => {
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box">
               <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                <span>News And Blogs</span>
+                <span> Home Page {">"} News And Blogs</span>
               </p>
             </div>
 
