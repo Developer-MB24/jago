@@ -56,6 +56,14 @@ const AboutUs = () => {
           animation-delay: 0.2s;
         }
 
+        /* Added: make existing .slideRight class use the same fade-in-from-right animation
+           so you don't need to change your markup. */
+        .slideRight {
+          opacity: 0;
+          animation: fadeInRight 1.3s ease-out forwards;
+          animation-delay: 0.2s;
+        }
+
         /* ====== Heading wave animation (smooth + slow) ====== */
         @keyframes headingWaveLetter {
           0%   { opacity: 0; transform: translateY(35px); }
