@@ -154,7 +154,7 @@ const BlogNewsSection = () => {
         .blog-two__date p {
           font-size: 18px;
           line-height: 28px;
-          font-weight: 600;
+          
           color: #6b7280;
           text-transform: capitalize;
           display: flex;
@@ -435,7 +435,7 @@ const BlogNewsSection = () => {
 
                         {/* Date */}
                         <div className={`blog-two__date ${calendarClass}`}>
-                          <p>
+                          <p className="font-caveat">
                             <span className="blog-two__date-icon">📅</span>
                             {post.date}
                           </p>

@@ -96,10 +96,10 @@ const SelectVolunteerService = () => {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0E2C27] mb-3">
               Where would you like to volunteer?
             </h1>
-            <p className="max-w-2xl mx-auto text-sm md:#FF9933 text-[#4B5563]">
+            {/* <p className="max-w-2xl mx-auto text-sm md:#FF9933 text-[#4B5563]">
               Pick the area that best matches your skills and passion. You can
               always update your preferences later in your volunteer profile.
-            </p>
+            </p> */}
           </div>
 
           {/* Cards grid */}

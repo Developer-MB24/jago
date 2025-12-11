@@ -102,19 +102,81 @@ const Services = () => {
     return result;
   }, [services, perSlide]);
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // Create a clone of the first slide and append so the visual wrap is left-to-right visually
+  const slidesWithClone = useMemo(() => {
+    if (slides.length === 0) return slides;
+    // shallow copy required so we don't mutate original
+    return [...slides, slides[0]];
+  }, [slides]);
 
-  // AUTO PLAY
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const TRANSITION_MS = 600; // must match CSS transition duration
+
+  // reset when slides/perSlide change
+  useEffect(() => {
+    setIsTransitioning(true);
+    setCurrentSlide(0);
+  }, [perSlide, slides.length]);
+
+  // AUTO PLAY (always forward — right -> left motion visually)
   useEffect(() => {
     if (slides.length <= 1) return;
-    const interval = setInterval(
-      () => setCurrentSlide((prev) => (prev + 1) % slides.length),
-      4000
-    );
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => prev + 1);
+    }, 4000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
-  const goToSlide = (index) => setCurrentSlide(index);
+  // Watch for when we reach the cloned slide (index === slides.length),
+  // then snap back to 0 without transition so user doesn't see rightward animation.
+  useEffect(() => {
+    // if we've moved to the cloned slide index (the last entry in slidesWithClone)
+    if (currentSlide === slides.length && slides.length > 0) {
+      // after the visible transition finishes, snap back to 0 without transition
+      const t = setTimeout(() => {
+        setIsTransitioning(false); // disable transition for the snap
+        setCurrentSlide(0); // instant reset
+        // re-enable transition after next tick so next animation is smooth
+        setTimeout(() => setIsTransitioning(true), 20);
+      }, TRANSITION_MS);
+      return () => clearTimeout(t);
+    }
+    // ensure transition is enabled when at normal indexes
+    if (currentSlide < slides.length) {
+      setIsTransitioning(true);
+    }
+  }, [currentSlide, slides.length]);
+
+  // manual navigation helpers (keeps same wrap behaviour)
+  const goToSlide = (index) => {
+    if (index < 0) index = 0;
+    if (index >= slides.length) index = slides.length - 1;
+    setCurrentSlide(index);
+  };
+
+  const goNext = () => setCurrentSlide((s) => s + 1);
+  const goPrev = () => {
+    // if we're at 0 and press prev, jump to last real slide (not the clone)
+    if (currentSlide === 0) {
+      // temporarily disable transition, snap to clone index (which is visually the same as index 0),
+      // then set to last real slide with transition disabled, then enable
+      // simpler approach: set to last real slide directly (no animation)
+      setIsTransitioning(false);
+      setCurrentSlide(slides.length - 1);
+      setTimeout(() => setIsTransitioning(true), 20);
+    } else {
+      setCurrentSlide((s) => s - 1);
+    }
+  };
+
+  // track transform percent: each slide is 100% width
+  const trackStyle = {
+    transform: `translateX(-${currentSlide * 100}%)`,
+    transition: isTransitioning
+      ? `transform ${TRANSITION_MS}ms cubic-bezier(.2,.9,.3,1)`
+      : "none",
+  };
 
   return (
     <>
@@ -127,8 +189,6 @@ const Services = () => {
           display: block;
           padding: 120px 0 0;
           z-index: 1;
-         
-          
         }
 
         .services-two__shape-1 {
@@ -157,7 +217,6 @@ const Services = () => {
 
         .services-two__carousel-track {
           display: flex;
-          transition: transform 0.5s ease;
           will-change: transform;
         }
 
@@ -328,7 +387,6 @@ const Services = () => {
 
         /* ---- TEXT & READ MORE ---- */
         .services-two__title {
-         
           font-size: 20px;
           font-weight: 700;
           line-height: 30px;
@@ -362,12 +420,13 @@ const Services = () => {
 
         .services-two__read-more a {
           position: relative;
-          display: flex;
+          display: inline-flex;
           align-items: center;
-          gap: 5px;
+          gap: 8px;
           font-weight: 500;
           font-size: 13px;
           color: #6b7280;
+          text-decoration: none;
         }
 
         .services-two__read-more a:hover {
@@ -380,16 +439,18 @@ const Services = () => {
         .services-two__single-5 .services-two__read-more a:hover { color: #48B1BC; }
         .services-two__single-6 .services-two__read-more a:hover { color: #e13ccf; }
 
-        .services-two__read-more a span {
-          color: #FF9933;
-          font-weight: 900;
+        .services-two__read-more a .services-two__read-more-arrow {
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          flex: 0 0 14px;
         }
 
-        .services-two__single-2 .services-two__read-more a span { color: #3B82F6; }
-        .services-two__single-3 .services-two__read-more a span { color: #10B981; }
-        .services-two__single-4 .services-two__read-more a span { color: #7726eb; }
-        .services-two__single-5 .services-two__read-more a span { color: #48B1BC; }
-        .services-two__single-6 .services-two__read-more a span { color: #e13ccf; }
+        .services-two__read-more a .services-two__read-more-arrow svg {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
 
         /* ---- DOTS ---- */
         .services-two__dots {
@@ -432,9 +493,37 @@ const Services = () => {
           transform: scale(1.1);
         }
 
-        /* ========= RESPONSIVE (no flex-wrap hacks) ========= */
+        /* Prev / Next buttons (fixes direction control) */
+        .services-two__nav {
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          transform: translateY(-50%);
+          display: flex;
+          justify-content: space-between;
+          pointer-events: none;
+          padding: 0 8px;
+          z-index: 20;
+        }
+        .services-two__nav button {
+          pointer-events: auto;
+          background: rgba(0,0,0,0.45);
+          border: none;
+          color: white;
+          width: 40px;
+          height: 40px;
+          border-radius: 999px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background .18s;
+        }
+        .services-two__nav button:hover { background: rgba(0,0,0,0.6); }
+        .services-two__nav button:focus { outline: 2px solid rgba(255,153,51,0.6); }
 
-        /* tablet: cards a bit wider, but still 2 per slide because perSlide=2 */
+        /* ========= RESPONSIVE (no flex-wrap hacks) ========= */
         @media (max-width: 1023px) {
           .services-two__single {
             max-width: 360px;
@@ -444,7 +533,6 @@ const Services = () => {
           }
         }
 
-        /* phone: one card per slide (perSlide=1), full width */
         @media (max-width: 640px) {
           .services-two__single {
             max-width: 100%;
@@ -452,17 +540,17 @@ const Services = () => {
           .services-two__content {
             padding: 24px 20px 18px;
           }
+          /* hide prev/next on very small screens if you prefer */
+          .services-two__nav { display: none; }
         }
       `}</style>
 
       <section className="services-two">
-        {/* Floating shape */}
         <div className="services-two__shape-1">
           <img src="/images/services-two-shape-1.png" alt="" />
         </div>
 
         <div className="container mx-auto px-4">
-          {/* Section title */}
           <div className="mb-10 text-center">
             <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
               <span> Home Page {">"} OUR SERVICE</span>
@@ -480,13 +568,9 @@ const Services = () => {
             </h2>
           </div>
 
-          {/* Slider */}
           <div className="services-two__carousel-wrapper">
-            <div
-              className="services-two__carousel-track"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {slides.map((group, slideIndex) => (
+            <div className="services-two__carousel-track" style={trackStyle}>
+              {slidesWithClone.map((group, slideIndex) => (
                 <div className="services-two__slide" key={slideIndex}>
                   {group.map((item) => (
                     <div
@@ -514,7 +598,22 @@ const Services = () => {
                         <div className="services-two__read-more">
                           <a href={item.link}>
                             Read More
-                            <span>›</span>
+                            <span
+                              className="services-two__read-more-arrow"
+                              aria-hidden="true"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                width="14"
+                                height="14"
+                                aria-hidden="true"
+                              >
+                                <path d="M9 6l6 6-6 6" />
+                              </svg>
+                            </span>
                           </a>
                         </div>
                       </div>
@@ -524,16 +623,23 @@ const Services = () => {
               ))}
             </div>
 
-            {/* Dots */}
-            <div className="services-two__dots">
+            <div
+              className="services-two__dots"
+              role="tablist"
+              aria-label="Slides navigation"
+            >
               {slides.map((_, index) => (
                 <button
                   key={index}
                   type="button"
                   onClick={() => goToSlide(index)}
                   className={`services-two__dot ${
-                    index === currentSlide ? "services-two__dot--active" : ""
+                    index === currentSlide % slides.length
+                      ? "services-two__dot--active"
+                      : ""
                   }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                  aria-current={index === currentSlide % slides.length}
                 >
                   <span className="services-two__dot-inner">
                     <span className="services-two__dot-center" />
