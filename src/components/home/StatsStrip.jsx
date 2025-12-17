@@ -152,7 +152,7 @@ const Statsstrip = () => {
         }
 
         .counter-one__count-list li:nth-child(3) .counter-one__icon {
-          background-color: var(--helpest-secondary);
+          background-color: #138808;
         }
 
         .counter-one__count-list li:nth-child(4) .counter-one__icon {

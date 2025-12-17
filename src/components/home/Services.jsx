@@ -5,7 +5,7 @@ const Services = () => {
     {
       id: 1,
       variantClass: "",
-      img: "/images/services-2-1.jpg",
+      img: "/images/our services images1.jpg",
       icon: "🛡️",
       title: "Water & Health Food",
       text: "With schools closed in Nsw and Victoria, and childcare.",
@@ -14,7 +14,7 @@ const Services = () => {
     {
       id: 2,
       variantClass: "services-two__single-2",
-      img: "/images/services-2-2.jpg",
+      img: "/images/our services images2.jpg",
       icon: "🎗️",
       title: "Cancer Help Fund",
       text: "With schools closed in Nsw and Victoria, and childcare.",
@@ -23,7 +23,7 @@ const Services = () => {
     {
       id: 3,
       variantClass: "services-two__single-3",
-      img: "/images/services-2-3.jpg",
+      img: "/images/our services images3.png",
       icon: "📚",
       title: "Child Education Help",
       text: "With schools closed in Nsw and Victoria, and childcare.",
@@ -32,7 +32,7 @@ const Services = () => {
     {
       id: 4,
       variantClass: "services-two__single-4",
-      img: "/images/services-2-4.jpg",
+      img: "/images/our services images4.jpg",
       icon: "⚕️",
       title: "Medicine For Africans",
       text: "With schools closed in Nsw and Victoria, and childcare.",
@@ -328,7 +328,7 @@ const Services = () => {
         }
 
         .services-two__single-2 .services-two__icon { background-color: #3B82F6; }
-        .services-two__single-3 .services-two__icon { background-color: #10B981; }
+        .services-two__single-3 .services-two__icon { background-color: #138808; }
         .services-two__single-4 .services-two__icon { background-color: #7726eb; }
         .services-two__single-5 .services-two__icon { background-color: #48B1BC; }
         .services-two__single-6 .services-two__icon { background-color: #e13ccf; }
@@ -370,7 +370,7 @@ const Services = () => {
         }
 
         .services-two__single-2:hover .services-two__icon span { color: #3B82F6; }
-        .services-two__single-3:hover .services-two__icon span { color: #10B981; }
+        .services-two__single-3:hover .services-two__icon span { color: #138808; }
         .services-two__single-4:hover .services-two__icon span { color: #7726eb; }
         .services-two__single-5:hover .services-two__icon span { color: #48B1BC; }
         .services-two__single-6:hover .services-two__icon span { color: #e13ccf; }
@@ -402,7 +402,7 @@ const Services = () => {
         }
 
         .services-two__single-2 .services-two__title a:hover { color: #3B82F6; }
-        .services-two__single-3 .services-two__title a:hover { color: #10B981; }
+        .services-two__single-3 .services-two__title a:hover { color: #138808; }
         .services-two__single-4 .services-two__title a:hover { color: #7726eb; }
         .services-two__single-5 .services-two__title a:hover { color: #48B1BC; }
         .services-two__single-6 .services-two__title a:hover { color: #e13ccf; }
@@ -434,7 +434,7 @@ const Services = () => {
         }
 
         .services-two__single-2 .services-two__read-more a:hover { color: #3B82F6; }
-        .services-two__single-3 .services-two__read-more a:hover { color: #10B981; }
+        .services-two__single-3 .services-two__read-more a:hover { color: #138808; }
         .services-two__single-4 .services-two__read-more a:hover { color: #7726eb; }
         .services-two__single-5 .services-two__read-more a:hover { color: #48B1BC; }
         .services-two__single-6 .services-two__read-more a:hover { color: #e13ccf; }

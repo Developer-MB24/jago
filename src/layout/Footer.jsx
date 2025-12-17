@@ -18,7 +18,7 @@ const Footer = () => {
           --helpest-black-rgb: 17, 24, 39;
           --helpest-base: #FF9933;
           --helpest-base-rgb: 255, 153, 51;
-          --helpest-secondary: #10B981;
+          --helpest-secondary: #138808;
           --helpest-extra: #FFF7EA;
           --helpest-primary: #3B82F6;
           --helpest-gray: #6B7280;
@@ -321,7 +321,7 @@ const Footer = () => {
           position: relative;
           display: block;
           border-top: 1px solid rgba(var(--helpest-white-rgb), 0.10);
-          background-color: #0e2c27;
+          {/* background-color: #0e2c27; */}
         }
 
         .site-footer-two__bottom-inner {

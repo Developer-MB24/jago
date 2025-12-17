@@ -5,7 +5,7 @@ const EventsSection = () => {
   const events = [
     {
       id: 1,
-      image: "/images/cause-2-1.jpg",
+      image: "/images/Our Events1.jpg",
       date: "03 Sep 2025",
       location: "African city",
       title: "Provides them Poor",
@@ -14,7 +14,7 @@ const EventsSection = () => {
     },
     {
       id: 2,
-      image: "/images/cause-2-2.jpg",
+      image: "/images/Our Events2.jpg",
       date: "03 Sep 2025",
       location: "African city",
       title: "Donation Drive",
@@ -23,7 +23,7 @@ const EventsSection = () => {
     },
     {
       id: 3,
-      image: "/images/cause-2-3.jpg",
+      image: "/images/Our Events3.jpg",
       date: "03 Sep 2025",
       location: "African city",
       title: "Event of Shares",
@@ -101,13 +101,13 @@ const EventsSection = () => {
           left: 0;
           right: 0;
           height: 67%;
-          background: rgb(255, 85, 40);
-          background: linear-gradient(
+          background: #FF9933;
+          {/* background: linear-gradient(
             0deg,
             rgba(255, 85, 40, 1) 0%,
             rgba(255, 85, 40, 0.7455) 30%,
             rgba(255, 193, 7, 0) 90%
-          );
+          ); */}
           border-radius: 24px;
         }
 
@@ -122,13 +122,13 @@ const EventsSection = () => {
         }
 
         .causes-two ul li:nth-child(3) .causes-two__img-box::before {
-          background: rgb(38, 204, 140);
-          background: linear-gradient(
+          background: #138808;
+          {/* background: linear-gradient(
             0deg,
             rgba(38, 204, 140, 1) 0%,
             rgba(38, 204, 140, 0.7455) 30%,
             rgba(255, 193, 7, 0) 90%
-          );
+          ); */}
         }
 
         .causes-two__img {

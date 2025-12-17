@@ -183,7 +183,7 @@ const AboutUs = () => {
         }
 
         .about-two__points-list li:nth-child(3) .about-two__points-icon {
-          background-color: #10B981;
+          background-color: #138808;
         }
 
         .about-two__points-icon span {
@@ -225,7 +225,7 @@ const AboutUs = () => {
         }
 
         .about-two__points-list li:nth-child(3) .about-two__count {
-          color: #10B981;
+          color: #138808;
         }
 
         .about-two__btn-and-client-box {
@@ -455,7 +455,7 @@ const AboutUs = () => {
         }
 
         .about-two__support h3 span {
-          color: #10B981;
+          color: #138808;
         }
 
         @keyframes rotated {
@@ -630,17 +630,26 @@ const AboutUs = () => {
 
                   {/* Main image */}
                   <div className="about-two__img">
-                    <img src="/images/about-two-img-1.jpg" alt="About" />
+                    <img
+                      src="/images/About Us Section - Middle      (440x440px).jpg"
+                      alt="About"
+                    />
                   </div>
 
                   {/* Secondary image bottom-right */}
                   <div className="about-two__img-2 ">
-                    <img src="/images/about-two-img-2.jpg" alt="About 2" />
+                    <img
+                      src="/images/About Us Section - Right      (250x250px).jpg"
+                      alt="About 2"
+                    />
                   </div>
 
                   {/* Tertiary image top-left */}
                   <div className="about-two__img-3">
-                    <img src="/images/about-two-img-3.jpg" alt="About 3" />
+                    <img
+                      src="/images/About Us Section -Left - 140x215px.jpg"
+                      alt="About 3"
+                    />
                   </div>
 
                   {/* Video link with ripple */}

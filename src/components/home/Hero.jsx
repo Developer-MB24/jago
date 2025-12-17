@@ -5,7 +5,7 @@ import { FaArrowRight, FaPlay } from "react-icons/fa";
 const slides = [
   {
     id: 1,
-    bg: "/images/slider-2-2.jpg",
+    bg: "/images/hero1.png",
     title: (
       <>
         Helping Hands <br /> Changing <span>Lives</span>
@@ -19,11 +19,11 @@ const slides = [
         and employee engagement strategies. Dicta sunt explicabo. Nemo
       </>
     ),
-    person: "/images/main-slider-two-img-1-2.jpg",
+    person: "/images/Round Circular Image - 1(600x600px).jpg",
   },
   {
     id: 2,
-    bg: "/images/slider-2-3.jpg",
+    bg: "/images/hero2.png",
     title: (
       <>
         Help Them <br /> With <span>Donation</span>
@@ -37,11 +37,11 @@ const slides = [
         and employee engagement strategies. Dicta sunt explicabo. Nemo
       </>
     ),
-    person: "/images/main-slider-two-img-1-3.jpg",
+    person: "/images/Round Circular 2 - 600x600px.jpg",
   },
   {
     id: 3,
-    bg: "/images/slider-2-1.jpg",
+    bg: "/images/hero3.png",
     title: (
       <>
         Help Leading <br /> <span>better</span> Life
@@ -55,7 +55,7 @@ const slides = [
         and employee engagement strategies. Dicta sunt explicabo. Nemo
       </>
     ),
-    person: "/images/main-slider-two-img-1-1.jpg",
+    person: "/images/Round Circular 3 - 600x600px.jpg",
   },
 ];
 
@@ -86,10 +86,10 @@ const HeroCarousel = () => {
   return (
     <>
       <style>{`
-        /* ================== BASE LAYOUT ================== */
+       
         .main-slider-two {
           position: relative;
-          background-color: var(--helpest-black);
+         
           z-index: 10;
           overflow: hidden;
         }
@@ -122,7 +122,7 @@ const HeroCarousel = () => {
           position: relative;
           padding-top: 295px;
           padding-bottom: 200px;
-          background-color: var(--helpest-black);
+          {/* background-color: var(--helpest-black); */}
           overflow: hidden;
           z-index: 10;
           height: 100%;

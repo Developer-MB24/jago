@@ -119,7 +119,7 @@ const CharityStrip = () => {
         }
 
         .sliding-text__list li:nth-child(3) .icon span {
-          color: #10B981; /* var(--helpest-secondary) */
+          color: #138808; /* var(--helpest-secondary) */
         }
 
         .sliding-text__list li:nth-child(4) .icon span {
@@ -145,7 +145,7 @@ const CharityStrip = () => {
         }
 
         .sliding-text__list li:nth-child(3) > p {
-          color: #10B981;
+          color: #138808;
         }
 
         .sliding-text__list li:nth-child(4) > p {
