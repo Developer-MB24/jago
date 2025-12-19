@@ -272,7 +272,7 @@ const HelpSection = () => {
           {/* Section title */}
           <div className="mb-10 text-center">
             <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-              <span> Home Page {">"} We take care them</span>
+              <span> We take care them</span>
             </p>
 
             <h2 className="section-title__title  font-heading   ">

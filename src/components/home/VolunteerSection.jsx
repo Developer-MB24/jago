@@ -325,7 +325,7 @@ const VolunteerSection = () => {
           <div className="text-center mb-12">
             <div className="mb-2 inline-block">
               <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                <span> Home Page {">"} Expert Volunteer</span>
+                <span> Expert Volunteer</span>
               </p>
             </div>
 

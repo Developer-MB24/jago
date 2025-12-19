@@ -67,7 +67,6 @@ export default function SelectVolunteerService() {
 
   return (
     <div className="relative min-h-screen bg-[#F9FBFF] overflow-hidden">
-      {/* ===== Background Images ===== */}
       <img
         src="/images/register4.png"
         alt=""
@@ -99,7 +98,6 @@ export default function SelectVolunteerService() {
         className="absolute bottom-0 right-0 w-[520px]"
       />
 
-      {/* ===== Main Content ===== */}
       <main className="relative z-10 max-w-3xl mx-auto px-6 py-16">
         <h1 className="text-center text-3xl font-bold text-[#0F172A] mb-12">
           Where would you prefer to volunteer?

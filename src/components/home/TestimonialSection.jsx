@@ -242,7 +242,7 @@ const TestimonialSection = () => {
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box mb-3">
               <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-                <span> Home Page {">"} Our testimonials</span>
+                <span> Our testimonials</span>
               </p>
             </div>
             <h2 className="section-title__title font-heading">

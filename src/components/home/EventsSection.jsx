@@ -329,7 +329,7 @@ const EventsSection = () => {
           {/* Section title */}
           <div className="section-title text-center mb-10">
             <p className="label-osc mx-auto inline-block font-caveat text-[#FF9933] text-sm tracking-wide">
-              <span> Home Page {">"} Our Events</span>
+              <span> Our Events</span>
             </p>
 
             <h2 className="section-title__title text-[#138808]  font-heading   ">
