@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   User,
   MessageCircle,
@@ -9,8 +10,100 @@ import {
 } from "lucide-react";
 
 export default function BlogDetailsSection() {
+  const [name, setName] = useState("");
+  const [search, setSearch] = useState("");
+
+  const allowOnlyAlphabets = (value) => value.replace(/[^a-zA-Z\s]/g, "");
+
+  const blockNumbersOnKey = (e) => {
+    if (/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  const blockInvalidPaste = (e) => {
+    const pasted = e.clipboardData.getData("text");
+    if (/[^a-zA-Z\s]/.test(pasted)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <section className="blog-right-sidebar py-20 bg-white">
+      <style>{`
+  .thm-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 6px 25px;
+    padding-right: 6px;
+
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    color: black !important;
+    border: 1px solid #FF9933;
+    border-radius: 30px;
+
+    background: transparent;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.4s ease;
+  }
+
+  .thm-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #FF9933;
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.8s cubic-bezier(0, 0.96, 0.58, 1.1);
+    z-index: -1;
+  }
+
+  .thm-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 153, 51, 0.3);
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 0.8s cubic-bezier(0, 0.96, 0.58, 1.1);
+    z-index: -2;
+  }
+
+  .thm-btn:hover {
+    color: #ffffff !important;
+  }
+
+  .thm-btn:hover::before,
+  .thm-btn:hover::after {
+    clip-path: circle(150% at 50% 50%);
+  }
+
+  .thm-btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FF9933;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.4s ease;
+    z-index: 2;
+  }
+
+  .thm-btn:hover .thm-btn-icon {
+    background-color: #ffffff;
+    color: #FF9933;
+  }
+`}</style>
+
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid lg:grid-cols-[minmax(0,2.2fr)_minmax(0,1fr)] gap-10">
           {/* LEFT: Article */}
@@ -180,10 +273,6 @@ export default function BlogDetailsSection() {
                 <h3 className="text-[26px] md:text-[32px] font-bold text-[#111827]">
                   Add a comment
                 </h3>
-                <p className="mt-3 mb-7 text-slate-700 text-sm md:text-base">
-                  By using form u agree with the message storage, you can
-                  contact us directly now
-                </p>
 
                 <form className="space-y-5">
                   <div className="grid gap-4 md:grid-cols-3">
@@ -191,8 +280,17 @@ export default function BlogDetailsSection() {
                       type="text"
                       name="name"
                       placeholder="Your Name"
+                      value={name}
+                      onChange={(e) =>
+                        setName(allowOnlyAlphabets(e.target.value))
+                      }
+                      onKeyDown={blockNumbersOnKey}
+                      onPaste={blockInvalidPaste}
+                      inputMode="text"
+                      autoComplete="off"
                       className="w-full h-[64px] rounded-[18px] border border-transparent bg-white px-6 text-base text-slate-700 placeholder:text-slate-400 shadow-sm outline-none focus:border-[#FF9933] focus:ring-2 focus:ring-[#FF9933]/60"
                     />
+
                     <input
                       type="email"
                       name="email"
@@ -242,12 +340,10 @@ export default function BlogDetailsSection() {
                     </label>
 
                     {/* Submit button */}
-                    <button
-                      type="submit"
-                      className="inline-flex items-center gap-2 rounded-full border border-[#FF9933] bg-[#FF9933] px-8 py-3 text-sm font-semibold uppercase tracking-wide text-white  duration-200 hover:bg-transparent hover:text-[#FF9933] hover:bg-[#138808]"
-                    >
-                      <span>Send Messege</span>
-                      <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#FF9933]">
+                    <button type="submit" className="thm-btn">
+                      <span className="relative z-10">Send Messege</span>
+
+                      <span className="thm-btn-icon">
                         <ArrowRight className="h-4 w-4" />
                       </span>
                     </button>
@@ -268,8 +364,17 @@ export default function BlogDetailsSection() {
                 <input
                   type="search"
                   placeholder="Search.."
+                  value={search}
+                  onChange={(e) =>
+                    setSearch(allowOnlyAlphabets(e.target.value))
+                  }
+                  onKeyDown={blockNumbersOnKey}
+                  onPaste={blockInvalidPaste}
+                  inputMode="text"
+                  autoComplete="off"
                   className="w-full h-[56px] rounded-xl bg-white px-4 pr-12 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#FF9933]"
                 />
+
                 <button
                   type="submit"
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-[#FF9933]"

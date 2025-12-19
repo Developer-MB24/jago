@@ -148,7 +148,7 @@ const Footer = () => {
         .site-footer-two__top-inner {
           position: relative;
           display: block;
-          padding: 60px 0 45px;
+          padding: 120px 0 45px;
         }
 
         .footer-widget-two__about {

@@ -48,7 +48,7 @@ export default function BlogCard({
 
           <div className="absolute top-5 left-5 bg-white rounded-[20px] px-4 py-1 z-20 shadow">
             <p className="flex items-center gap-2 text-[16px] leading-[28px] text-[var(--helpest-gray)]">
-              <span className="text-[16px] text-[var(--helpest-primary)]">
+              <span className="text-[16px] text-[#FF9933]">
                 <CalendarDays size={16} />
               </span>
               {date}
@@ -61,7 +61,7 @@ export default function BlogCard({
         <ul className="flex items-center gap-8 mb-3 text-[16px]">
           <li>
             <p className="flex items-center gap-3 font-[var(--helpest-font-three)] text-[18px]">
-              <span className="text-[16px] text-[var(--helpest-primary)]">
+              <span className="text-[16px] text-[#FF9933]">
                 <User size={16} />
               </span>
               Admin
@@ -69,7 +69,7 @@ export default function BlogCard({
           </li>
           <li>
             <p className="flex items-center gap-3 font-[var(--helpest-font-three)] text-[18px]">
-              <span className="text-[16px] text-[var(--helpest-primary)]">
+              <span className="text-[16px] text-[#FF9933]">
                 <MessageSquare size={16} />
               </span>
               Comment
@@ -88,10 +88,10 @@ export default function BlogCard({
         <div className="inline-block">
           <Link
             to={link}
-            className="flex items-center gap-2 font-semibold text-[var(--helpest-black)] hover:text-[var(--helpest-primary)] transition-colors text-sm"
+            className="flex items-center gap-2 font-semibold text-[var(--helpest-black)] hover:text-[#FF9933] transition-colors text-sm"
           >
             Read More
-            <span className="text-[var(--helpest-primary)]">
+            <span className="text-[#FF9933]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

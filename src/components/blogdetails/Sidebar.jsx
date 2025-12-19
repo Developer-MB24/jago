@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { HiOutlineSearch, HiOutlineCalendar } from "react-icons/hi";
 
 const categories = [
@@ -37,31 +38,95 @@ const tags = [
 ];
 
 export default function Sidebar() {
+  const [search, setSearch] = useState("");
+
+  /* ===============================
+     🔒 BULLETPROOF INPUT HANDLING
+  =============================== */
+
+  // Final sanitizer (always runs)
+  const handleChange = (e) => {
+    const cleanValue = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+    setSearch(cleanValue);
+  };
+
+  // Block number keys + symbols
+  const handleKeyDown = (e) => {
+    if (/[0-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
+
+  // Block paste containing numbers
+  const handlePaste = (e) => {
+    const pastedText = e.clipboardData.getData("text");
+    if (/[^a-zA-Z\s]/.test(pastedText)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <aside className="w-full space-y-5">
-      {/* Search */}
+      {/* SEARCH */}
       <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
-        <div className="mb-7">
-          <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
-            Search Here
-          </h3>
+        <div className="bg-[#f5f6f8] rounded-2xl p-6">
+          <div className="mb-6">
+            <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
+              Search Here
+            </h3>
+          </div>
+
+          <form className="relative" onSubmit={(e) => e.preventDefault()}>
+            <input
+              type="search"
+              value={search}
+              onChange={handleSearchChange}
+              placeholder="Search.."
+              className="w-full h-[60px] rounded-[10px] border-none outline-none bg-white px-5 pr-12 text-[16px] text-slate-600"
+            />
+
+            <button
+              type="submit"
+              className="absolute top-1/2 right-[15px] -translate-y-1/2 w-10 h-10 flex items-center justify-center text-[20px] text-slate-500 hover:text-[#FF9933] transition"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="11" cy="11" r="6" />
+                <path d="M16 16l4 4" />
+              </svg>
+            </button>
+          </form>
         </div>
-        <form className="relative">
+
+        <form className="relative" onSubmit={(e) => e.preventDefault()}>
           <input
             type="search"
-            className="w-full h-[60px] px-5 pr-12 rounded-[10px] border-none outline-none bg-white text-[16px] text-gray-600"
+            value={search}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onPaste={handlePaste}
             placeholder="Search.."
+            inputMode="text"
+            autoComplete="off"
+            className="w-full h-[60px] px-5 pr-12 rounded-[10px] border-none outline-none bg-white text-[16px] text-gray-600"
           />
+
           <button
             type="submit"
-            className="absolute top-1/2 right-[15px] -translate-y-1/2 max-w-[40px] w-full flex items-center justify-center text-[22px] text-gray-500 hover:text-[#138808] transition"
+            className="absolute top-1/2 right-[15px] -translate-y-1/2 max-w-[40px] w-full flex items-center justify-center text-[22px] text-gray-500 hover:text-[#FF9933] transition"
           >
             <HiOutlineSearch />
           </button>
         </form>
       </div>
 
-      {/* Categories */}
+      {/* CATEGORIES */}
       <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
         <div className="mb-5">
           <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
@@ -73,7 +138,7 @@ export default function Sidebar() {
             <li key={cat.name}>
               <a
                 href="#"
-                className="flex items-center justify-between text-[15px] text-gray-600 bg-[linear-gradient(to_right,currentColor_0%,currentColor_100%)] bg-[length:0_1px] bg-no-repeat bg-[position:0_95%] transition-[background-size,color] duration-500 hover:text-[#138808] hover:bg-[length:100%_1px]"
+                className="flex items-center justify-between text-[15px] text-gray-600 bg-[linear-gradient(to_right,currentColor_0%,currentColor_100%)] bg-[length:0_1px] bg-no-repeat bg-[position:0_95%] transition-[background-size,color] duration-500 hover:text-[#FF9933] hover:bg-[length:100%_1px]"
               >
                 <span>{cat.name}</span>
                 <span>{cat.count}</span>
@@ -83,7 +148,7 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Recent Posts */}
+      {/* RECENT POSTS */}
       <div className="bg-[#F6FCFD] rounded-2xl px-7 py-7 pr-5 shadow-none">
         <div className="mb-[17px]">
           <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
@@ -105,7 +170,7 @@ export default function Sidebar() {
               </div>
               <div className="ml-[15px] flex-1">
                 <p className="mt-[6px] text-sm text-gray-500 flex items-center gap-2">
-                  <span className="text-[#138808] font-black mr-[10px]">
+                  <span className="text-[#FF9933] font-black mr-[10px]">
                     <HiOutlineCalendar className="w-4 h-4" />
                   </span>
                   {post.date}
@@ -113,7 +178,7 @@ export default function Sidebar() {
                 <h4 className="text-[18px] leading-[28px] font-bold">
                   <a
                     href="#"
-                    className="text-[#111827] hover:text-[#138808] transition-colors"
+                    className="text-[#111827] hover:text-[#FF9933] transition-colors"
                   >
                     {post.title}
                   </a>
@@ -124,7 +189,7 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Popular Tags */}
+      {/* TAGS */}
       <div className="bg-[#F6FCFD] rounded-2xl p-7 shadow-none">
         <div className="mb-[21px]">
           <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/15 pb-[11px]">
@@ -136,7 +201,7 @@ export default function Sidebar() {
             <a
               href="#"
               key={tag}
-              className="ml-[10px] mt-[10px] inline-block rounded-[10px] bg-white px-[14px] py-[9px] text-[16px] font-medium leading-[26px] text-gray-600 transition-all duration-500 hover:bg-[#138808] hover:text-white"
+              className="ml-[10px] mt-[10px] inline-block rounded-[10px] bg-white px-[14px] py-[9px] text-[16px] font-medium leading-[26px] text-gray-600 transition-all duration-500 hover:bg-[#FF9933] hover:text-white"
             >
               {tag}
             </a>

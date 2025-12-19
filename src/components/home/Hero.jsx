@@ -153,7 +153,7 @@ const HeroCarousel = () => {
           bottom: 0;
           right: 0;
           left: 0;
-          background-color: var(--helpest-black);
+          background-color: #03254C;
           opacity: 0.9;
           z-index: -1;
         }

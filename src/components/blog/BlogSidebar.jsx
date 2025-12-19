@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function BlogSidebar() {
+  const [search, setSearch] = useState("");
+
+  /* =========================
+     ALLOW ONLY ALPHABETS
+  ========================= */
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    const filteredValue = value.replace(/[^a-zA-Z\s]/g, "");
+    setSearch(filteredValue);
+  };
+
   const categories = [
     { label: "Donation Drive", count: 59, href: "/blog-details" },
     { label: "Community Outreach", count: 35, href: "/blog-details" },
@@ -44,23 +55,27 @@ export default function BlogSidebar() {
   return (
     <aside className="w-full">
       <div className="space-y-7">
+        {/* SEARCH */}
         <div className="bg-[#f5f6f8] rounded-2xl p-6">
           <div className="mb-6">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
               Search Here
             </h3>
           </div>
-          <form className="relative">
+
+          <form className="relative" onSubmit={(e) => e.preventDefault()}>
             <input
               type="search"
+              value={search}
+              onChange={handleSearchChange}
               placeholder="Search.."
               className="w-full h-[60px] rounded-[10px] border-none outline-none bg-white px-5 pr-12 text-[16px] text-slate-600"
             />
+
             <button
               type="submit"
               className="absolute top-1/2 right-[15px] -translate-y-1/2 w-10 h-10 flex items-center justify-center text-[20px] text-slate-500 hover:text-[#FF9933] transition"
             >
-              {/* search icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-5 h-5"
@@ -76,7 +91,7 @@ export default function BlogSidebar() {
           </form>
         </div>
 
-        {/* Categories */}
+        {/* CATEGORIES */}
         <div className="bg-[#f5f6f8] rounded-2xl p-6">
           <div className="mb-5">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
@@ -98,6 +113,7 @@ export default function BlogSidebar() {
           </ul>
         </div>
 
+        {/* RECENT POSTS */}
         <div className="bg-[#f5f6f8] rounded-2xl p-6 pr-5">
           <div className="mb-4">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
@@ -117,7 +133,6 @@ export default function BlogSidebar() {
                 <div className="ml-[15px] flex-1">
                   <p className="text-sm text-slate-500 mt-1 flex items-center gap-2">
                     <span className="font-bold text-[#FF9933]">
-                      {/* calendar icon */}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="w-4 h-4"
@@ -153,6 +168,7 @@ export default function BlogSidebar() {
           </ul>
         </div>
 
+        {/* TAGS */}
         <div className="bg-[#f5f6f8] rounded-2xl p-6">
           <div className="mb-5">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">

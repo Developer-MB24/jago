@@ -470,8 +470,8 @@ export default function Header() {
                   anchorRef={blogButtonRef}
                   onClose={() => setBlogOpen(false)}
                   items={[
-                    { label: "Blog", to: "/blog" },
-                    { label: "Blog Details", to: "/blogdetails" },
+                    { label: "Blogs", to: "/blog" },
+                    { label: "Blogs Details", to: "/blogdetails" },
                   ]}
                 />
               )}

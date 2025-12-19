@@ -6,12 +6,14 @@ import HeroBlogDetails from "../components/blogdetails/HeroBlogDetails";
 import CommentsSection from "../components/blogdetails/CommentsSection"; // <-- import the CommentsSection
 import CallToAction from "../components/blogdetails/CallToAction";
 import BlogDetailsSection from "../components/blogdetails/BlogDetailsSection";
+import CallToActionblogdetails from "../components/blogdetails/CallToActionblogdetails";
 
 export default function BlogDetails() {
   return (
     <>
       <HeroBlogDetails />
       <BlogDetailsSection />
+      <CallToActionblogdetails />
 
       {/* <section className="py-8 px-4 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4  relative z-10">
       
