@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { FiUpload } from "react-icons/fi";
 
 const indiaStates = [
@@ -74,6 +76,10 @@ const volunteerExperienceOptions = [
 ];
 
 const RegisterForEmployment = () => {
+  const navigate = useNavigate();
+  const FRONTEND_ONLY_OTP = true;
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const [currentStep, setCurrentStep] = useState(1);
 
   const [formData, setFormData] = useState({
@@ -319,22 +325,21 @@ const RegisterForEmployment = () => {
     }));
     alert(`Demo Mobile OTP for testing: ${otp}`);
   };
-
   const handleVerifyMobileOtp = () => {
-    const { mobile } = otpState;
-    if (!mobile.otpSent) {
-      alert("Please send Mobile OTP first.");
+    if (
+      !otpState.mobile.enteredOtp ||
+      otpState.mobile.enteredOtp.length !== 6
+    ) {
+      alert("Please enter any 6-digit OTP to continue.");
       return;
     }
-    if (mobile.enteredOtp && mobile.enteredOtp === mobile.generatedOtp) {
-      setOtpState((prev) => ({
-        ...prev,
-        mobile: { ...prev.mobile, otpVerified: true },
-      }));
-      alert("Mobile number verified successfully.");
-    } else {
-      alert("Incorrect Mobile OTP. Please try again.");
-    }
+
+    setOtpState((prev) => ({
+      ...prev,
+      mobile: { ...prev.mobile, otpVerified: true },
+    }));
+
+    alert("Mobile verified (frontend-only).");
   };
 
   const handleSendAadhaarOtp = () => {
@@ -356,21 +361,49 @@ const RegisterForEmployment = () => {
   };
 
   const handleVerifyAadhaarOtp = () => {
-    const { aadhaar } = otpState;
-    if (!aadhaar.otpSent) {
-      alert("Please send Aadhaar OTP first.");
+    if (
+      !otpState.aadhaar.enteredOtp ||
+      otpState.aadhaar.enteredOtp.length !== 6
+    ) {
+      alert("Please enter any 6-digit OTP to continue.");
       return;
     }
-    if (aadhaar.enteredOtp && aadhaar.enteredOtp === aadhaar.generatedOtp) {
+
+    setOtpState((prev) => ({
+      ...prev,
+      aadhaar: { ...prev.aadhaar, otpVerified: true },
+    }));
+
+    alert("Aadhaar verified (frontend-only).");
+  };
+
+  useEffect(() => {
+    if (!FRONTEND_ONLY_OTP) return;
+
+    if (
+      otpState.mobile.enteredOtp.length === 6 &&
+      !otpState.mobile.otpVerified
+    ) {
+      setOtpState((prev) => ({
+        ...prev,
+        mobile: { ...prev.mobile, otpVerified: true },
+      }));
+    }
+
+    if (
+      otpState.aadhaar.enteredOtp.length === 6 &&
+      !otpState.aadhaar.otpVerified
+    ) {
       setOtpState((prev) => ({
         ...prev,
         aadhaar: { ...prev.aadhaar, otpVerified: true },
       }));
-      alert("Aadhaar verified successfully.");
-    } else {
-      alert("Incorrect Aadhaar OTP. Please try again.");
     }
-  };
+  }, [
+    FRONTEND_ONLY_OTP,
+    otpState.mobile.enteredOtp,
+    otpState.aadhaar.enteredOtp,
+  ]);
 
   const bothVerified = isBothVerified();
   const canSubmit =
@@ -526,43 +559,27 @@ const RegisterForEmployment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (currentStep !== 3) {
-      return;
-    }
-
-    const { prefPincode1, prefPincode2, prefPincode3 } = formData;
-    const pins = [prefPincode1, prefPincode2, prefPincode3].filter(Boolean);
-    const duplicatePin =
-      pins.length === 3 && new Set(pins).size !== pins.length;
-
-    if (duplicatePin) {
-      alert(
-        "Each preferred location must have a different PIN code. Please enter unique PIN codes for all three preferences."
-      );
-      return;
-    }
+    if (currentStep !== 3) return;
 
     if (!isBothVerified()) {
-      alert(
-        "Please verify both Mobile Number and Aadhaar OTP before submitting the form."
-      );
+      alert("Please verify both Mobile Number and Aadhaar OTP.");
       return;
     }
 
     if (!formData.msgConsent) {
-      alert(
-        "Please agree to receive messages/communication to submit the form."
-      );
+      alert("Please agree to receive messages/communication.");
       return;
     }
 
     if (!formData.declarationConsent) {
-      alert("Please confirm the declaration before submitting the form.");
+      alert("Please confirm the declaration.");
       return;
     }
 
     console.log("Employment form submitted:", formData, files);
-    alert("Form submitted successfully (demo).");
+
+    // ✅ SHOW CONFIRMATION POPUP
+    setShowSuccessModal(true);
   };
 
   const steps = [
@@ -1706,11 +1723,9 @@ const RegisterForEmployment = () => {
                         <input
                           type="text"
                           name="phone"
-                          maxLength={10}
                           value={formData.phone}
-                          onChange={handleChange}
-                          className="flex-1 border border-slate-300 rounded-l-lg sm:rounded-none sm:border-l-0 px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                          placeholder="Enter 10-digit mobile"
+                          readOnly
+                          className="flex-1 border border-slate-300 rounded-l-lg sm:rounded-none sm:border-l-0 px-3 py-2 text-sm bg-slate-100 cursor-not-allowed"
                         />
 
                         <button
@@ -1770,11 +1785,9 @@ const RegisterForEmployment = () => {
                         <input
                           type="text"
                           name="aadhar"
-                          maxLength={12}
                           value={formData.aadhar}
-                          onChange={handleChange}
-                          className="flex-1 border border-slate-300 rounded-l-lg px-3 py-2 text-sm focus:outline-none focus:ring-0"
-                          placeholder="Enter 12-digit Aadhaar"
+                          readOnly
+                          className="flex-1 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-slate-100 cursor-not-allowed"
                         />
 
                         <button
@@ -1862,8 +1875,8 @@ const RegisterForEmployment = () => {
                     checked={formData.msgConsent}
                     onChange={handleChange}
                     className="rounded border-slate-300 text-emerald-600 focus:ring-[#138808]"
-                    disabled={!bothVerified}
                   />
+
                   <span className={bothVerified ? "" : "text-slate-400"}>
                     I agree to receive messages/communication regarding this
                     volunteering program.
@@ -1892,6 +1905,30 @@ const RegisterForEmployment = () => {
           )}
         </form>
       </div>
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-sm w-full text-center animate-fadeIn">
+            <h2 className="text-xl font-bold text-emerald-600 mb-2">
+              🎉 Registration Successful
+            </h2>
+
+            <p className="text-sm text-slate-700 mb-6">
+              Your Employment Program volunteer registration has been submitted
+              successfully.
+            </p>
+
+            <button
+              onClick={() => {
+                setShowSuccessModal(false);
+                navigate("/");
+              }}
+              className="inline-flex justify-center rounded-full bg-[#138808] px-6 py-2 text-sm font-semibold text-white hover:bg-[#0f6d06]"
+            >
+              OKAY
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
