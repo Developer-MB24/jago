@@ -32,7 +32,7 @@ export default function HeroBlogDetails() {
       />
 
       {/* Shape 1  */}
-      <div className="absolute bottom-0 right-[-30px] -z-[1]">
+      <div className="absolute bottom-0 right-[-30px] -z-[1] hidden sm:block">
         <img
           src="images/page-header-shape-1.png"
           alt="decorative shape"

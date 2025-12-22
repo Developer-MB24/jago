@@ -56,7 +56,7 @@ export default function BlogSidebar() {
     <aside className="w-full">
       <div className="space-y-7">
         {/* SEARCH */}
-        <div className="bg-[#f5f6f8] rounded-2xl p-6">
+        <div className="bg-[#f1f9fb] rounded-2xl p-6">
           <div className="mb-6">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
               Search Here
@@ -92,7 +92,7 @@ export default function BlogSidebar() {
         </div>
 
         {/* CATEGORIES */}
-        <div className="bg-[#f5f6f8] rounded-2xl p-6">
+        <div className="bg-[#f1f9fb] rounded-2xl p-6">
           <div className="mb-5">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
               Categories
@@ -114,7 +114,7 @@ export default function BlogSidebar() {
         </div>
 
         {/* RECENT POSTS */}
-        <div className="bg-[#f5f6f8] rounded-2xl p-6 pr-5">
+        <div className="bg-[#f1f9fb] rounded-2xl p-6 pr-5">
           <div className="mb-4">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
               Recent Post
@@ -169,7 +169,7 @@ export default function BlogSidebar() {
         </div>
 
         {/* TAGS */}
-        <div className="bg-[#f5f6f8] rounded-2xl p-6">
+        <div className="bg-[#f1f9fb] rounded-2xl p-6">
           <div className="mb-5">
             <h3 className="text-[22px] font-bold leading-[34px] border-b border-black/10 pb-[11px]">
               Popular Tags

@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import {
   FaFacebookF,
   FaTwitter,
@@ -7,6 +8,23 @@ import {
 } from "react-icons/fa";
 
 const VolunteerSection = () => {
+  useEffect(() => {
+    const elements = document.querySelectorAll("[data-aos]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aos-animate");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+  }, []);
+
   const volunteers = [
     {
       id: 1,
@@ -338,14 +356,8 @@ const VolunteerSection = () => {
             {volunteers.map((v, index) => (
               <li
                 key={v.id}
-                className="aos-init aos-animate"
-                style={{
-                  animation:
-                    index < 2
-                      ? `fadeRight 1s ease forwards`
-                      : `fadeLeft 1s ease forwards`,
-                  animationDelay: `${v.delay}ms`,
-                }}
+                data-aos={index < 2 ? "fade-right" : "fade-left"}
+                data-aos-delay={v.delay}
               >
                 <div className="team-two__single">
                   <div className="team-two__img-box">
@@ -367,6 +379,7 @@ const VolunteerSection = () => {
                       </div>
                     </div>
                   </div>
+
                   <div className="team-two__content">
                     <h3 className="team-two__name">
                       <a href="#">{v.name}</a>

@@ -1,6 +1,24 @@
 import React from "react";
+import { useEffect } from "react";
 
 const ContactSection = () => {
+  useEffect(() => {
+    const elements = document.querySelectorAll("[data-aos]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aos-animate");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Contact section form submitted");
@@ -9,6 +27,35 @@ const ContactSection = () => {
   return (
     <>
       <style>{`
+      /* ===== AOS FADE BASE ===== */
+[data-aos^=fade][data-aos^=fade] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+/* When element becomes visible */
+[data-aos^=fade][data-aos^=fade].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+
+/* ===== FADE DIRECTIONS ===== */
+[data-aos="fade-left"] {
+  transform: translate3d(100px, 0, 0);
+}
+
+[data-aos="fade-right"] {
+  transform: translate3d(-100px, 0, 0);
+}
+
+[data-aos="fade-up"] {
+  transform: translate3d(0, 100px, 0);
+}
+
+[data-aos="fade-down"] {
+  transform: translate3d(0, -100px, 0);
+}
+
         /* ====== Animations ====== */
         @keyframes slideInRightSmooth {
           0% {
@@ -282,6 +329,10 @@ const ContactSection = () => {
           align-items: flex-end;
           animation: slideInRightSmooth 1.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
         }
+        /* Disable old animation when using AOS */
+.contact-one__img-1[data-aos] {
+  animation: none !important;
+}
 
         .contact-one__img-1 img {
           width: 100%;
@@ -422,28 +473,66 @@ const ContactSection = () => {
 
         /* Phone */
         @media (max-width: 640px) {
-          .contact-one__wrap {
-            padding: 70px 0 40px;
-          }
 
-          .contact-one__call-box {
-            margin-top: -16px;
-            padding: 14px 16px;
-            border-radius: 16px;
-          }
+  /* ===============================
+     REMOVE MASK / CURVE COMPLETELY
+  =============================== */
+  .contact-one__wrap {
+    -webkit-mask: none !important;
+    mask: none !important;
+    border-radius: 0 !important;
+  }
 
-          .contact-one__call-list {
-            gap: 12px;
-          }
+  /* ===============================
+     FULL WIDTH – NO WHITE GAP
+  =============================== */
+  html, body {
+    overflow-x: hidden;
+  }
 
-          .contact-one__content p {
-            font-size: 12px;
-          }
+  .contact-one,
+  .contact-one__wrap {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    overflow: hidden;
+  }
 
-          .contact-one__content h4 {
-            font-size: 14px;
-          }
-        }
+  /* ===============================
+     BACKGROUND FIX
+  =============================== */
+  .contact-one__bg {
+    background-attachment: scroll !important;
+    background-position: center;
+    background-size: cover;
+  }
+
+  /* ===============================
+     REMOVE RIGHT IMAGE & STRIP
+  =============================== */
+  .contact-one__img-1,
+  .contact-one__bg-color {
+    display: none !important;
+  }
+
+  /* ===============================
+     CONTAINER FIX
+  =============================== */
+  .contact-one .container {
+    max-width: 100% !important;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* ===============================
+     BUTTON FULL WIDTH
+  =============================== */
+  .contact-one__btn-box .thm-btn {
+    width: 70%;
+    justify-content: space-between;
+  }
+}
+
       `}</style>
 
       <section className="contact-one">
@@ -596,8 +685,9 @@ const ContactSection = () => {
         </div>
 
         {/* RIGHT: image + contact strip */}
-        <div className="contact-one__img-1">
+        <div className="contact-one__img-1" data-aos="fade-left">
           <img src="/images/contact-one-img-1.png" alt="Contact" />
+
           <div className="contact-one__call-box">
             <ul className="contact-one__call-list list-unstyled">
               <li>
@@ -611,6 +701,7 @@ const ContactSection = () => {
                   </h4>
                 </div>
               </li>
+
               <li>
                 <div className="contact-one__call-icon">
                   <span>✉️</span>

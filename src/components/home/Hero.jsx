@@ -186,7 +186,7 @@ const HeroCarousel = () => {
 
         .main-slider-two__shape-2 {
           position: absolute;
-          top: 50px;
+          top: 150px;
           left: 80px;
           opacity: .80;
           z-index: -1;
@@ -570,6 +570,41 @@ const HeroCarousel = () => {
         }
 
         @media (max-width: 768px) {
+
+        .main-slider-two__shape-2 {
+          position: absolute;
+          top: 150px;
+          left: 80px;
+          opacity: .80;
+          z-index: -1;
+        }
+        .main-slider-two__carousel {
+    min-height: 680px;
+  }
+
+  .main-slider-two .item {
+    padding-top: 120px;
+    padding-bottom: 100px;
+  }
+
+  .main-slider-two__img-box,
+  .hero-carousel-nav,
+  .main-slider-two__shape-1 {
+    display: none !important;
+  }
+        {/* .main-slider-two{
+        height:700px !important;
+        }
+
+        .main-slider-two__carousel{
+         height:500px !important;
+        } */}
+        .hero-carousel-nav {
+          display: none !important;
+          }
+           .main-slider-two__shape-1 {
+             display: none !important;
+          }
           .main-slider-two .item {
             padding-top: 180px;
             padding-bottom: 160px;

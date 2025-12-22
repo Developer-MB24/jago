@@ -110,6 +110,13 @@ function SimplePortalDropdown({ anchorRef, onClose, items }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const menu = (
     <div
@@ -203,6 +210,7 @@ function SearchOverlay({ open, onClose, value, onChange, onSubmit }) {
 /* ========= Header ========= */
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesButtonRef = useRef(null);
@@ -216,6 +224,7 @@ export default function Header() {
 
   // outside click (only services + blog now)
   useOnClickOutside([servicesButtonRef, blogButtonRef], () => {
+    if (window.innerWidth < 1024) return; // 🚫 ignore on mobile
     setServicesOpen(false);
     setBlogOpen(false);
   });
@@ -226,6 +235,21 @@ export default function Header() {
     mql.addEventListener("change", onChange);
     return () => mql.removeEventListener("change", onChange);
   }, []);
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [mobileOpen]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -239,14 +263,25 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full relative overflow-hidden">
+    <header
+      style={
+        scrolled
+          ? {}
+          : { backgroundColor: "rgba(var(--helpest-white-rgb), 0.05)" }
+      }
+      className={`fixed top-0 left-0 z-50 w-full transition-all duration-300
+    ${
+      scrolled
+        ? "bg-[#0e2c27]/90 backdrop-blur-md shadow-lg"
+        : "backdrop-blur-[1px]"
+    }`}
+    >
       {/* Tricolor overlays */}
-      <div className="absolute inset-0 pointer-events-none -z-10">
+      {/* <div className="absolute inset-0 pointer-events-none -z-10">
         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-[#FF9933] to-transparent opacity-30 animate-slideDown" />
         <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-[#138808] to-transparent opacity-30 animate-slideUp" />
-      </div>
-      <div className="absolute inset-0 -z-20 bg-black/10 backdrop-blur-[2px]" />
-
+      </div> */}
+      {/* <div className="absolute inset-0 -z-20 bg-black/10 backdrop-blur-[2px]" /> */}
       <style>{`
         .header-donate-btn {
           position: relative;
@@ -338,27 +373,27 @@ export default function Header() {
         .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
         .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
       `}</style>
-
       <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
-        <div className="flex w-full items-center justify-between gap-1 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20">
+        {/* <div className="flex w-full items-center justify-between gap-1 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20"> */}
+        <div className="flex w-full items-center justify-between gap-1  px-3 py-2 ">
           {/* Logo (bigger) */}
-          <Link
-            to="/"
-            className="shrink-0 rounded-xl bg-white/10 p-2 ring-1 ring-white/30"
-          >
+          <Link to="/" className="shrink-0 rounded-xl ">
             <img
               src="/images/jaago-manav-logo.png"
               alt="Jaago Manav Logo"
-              className="h-14 w-auto md:h-16"
+              className="h-20 w-44 md:w-auto md:h-16"
               loading="eager"
             />
           </Link>
 
           {/* Hamburger */}
           <button
-            className="inline-flex items-center justify-center rounded-lg bg-white/10 p-2 ring-1 ring-white/30 focus:outline-none focus:ring-2 focus:ring-white/60 lg:hidden"
+            className="inline-flex items-center justify-center  text-[#FF9933] p-2  lg:hidden"
             aria-label="Toggle menu"
-            onClick={() => setMobileOpen((s) => !s)}
+            onClick={(e) => {
+              e.stopPropagation(); // 🔑 IMPORTANT
+              setMobileOpen((s) => !s);
+            }}
           >
             <svg
               viewBox="0 0 24 24"
@@ -549,18 +584,23 @@ export default function Header() {
           </div>
         </div>
       </nav>
-
       {/* ========= NEW MOBILE NAV DRAWER (like screenshot) ========= */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[1200] lg:hidden">
+        <div className="fixed inset-0 z-[9999] lg:hidden">
           {/* dark overlay */}
           <button
-            className="absolute inset-0 bg-black/40"
+            className="absolute inset-0 bg-black/70"
             onClick={() => setMobileOpen(false)}
             aria-label="Close menu"
           />
+
           {/* drawer */}
-          <div className="relative z-10 h-full w-72 max-w-[80%] bg-[#032720] text-white flex flex-col">
+          <div
+            className="fixed top-0 left-0 z-[10000] h-screen w-72 max-w-[80%]
+             bg-[#032720] text-white flex flex-col
+             shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* top bar with logo & close */}
             <div className="flex items-center justify-between px-4 pt-4 pb-3">
               <Link
@@ -658,7 +698,6 @@ export default function Header() {
           </div>
         </div>
       )}
-
       {/* Search overlay portal */}
       <SearchOverlay
         open={searchOpen}

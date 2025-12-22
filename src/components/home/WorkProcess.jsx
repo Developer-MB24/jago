@@ -1,4 +1,6 @@
 import React from "react";
+import { useEffect } from "react";
+
 import { FaUserAlt, FaHandHoldingUsd, FaHandsHelping } from "react-icons/fa";
 
 const steps = [
@@ -41,9 +43,54 @@ const steps = [
 ];
 
 const WorkProcess = () => {
+  useEffect(() => {
+    const items = document.querySelectorAll("[data-aos]");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aos-animate");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    items.forEach((item) => observer.observe(item));
+  }, []);
+
   return (
     <>
       <style>{`
+
+      /* ================= AOS FADE ANIMATIONS ================= */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 1s;
+  transition-timing-function: ease;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+
+/* Fade Up (Middle) */
+[data-aos="fade-up"] {
+  transform: translate3d(0, 100px, 0);
+}
+
+/* Fade Right (Left card) */
+[data-aos="fade-right"] {
+  transform: translate3d(-100px, 0, 0);
+}
+
+/* Fade Left (Right card) */
+[data-aos="fade-left"] {
+  transform: translate3d(100px, 0, 0);
+}
+
         .process-one {
           position: relative;
           display: block;
@@ -266,7 +313,17 @@ const WorkProcess = () => {
             {steps.map((step) => {
               const Icon = step.Icon;
               return (
-                <li key={step.id} className="w-full flex justify-center">
+                <li
+                  key={step.id}
+                  className="w-full flex justify-center"
+                  data-aos={
+                    step.id === 1
+                      ? "fade-right"
+                      : step.id === 2
+                      ? "fade-up"
+                      : "fade-left"
+                  }
+                >
                   <div className="process-one__single-inner">
                     <div className="process-one__single">
                       <div className="process-one__img">

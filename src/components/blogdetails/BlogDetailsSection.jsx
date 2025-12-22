@@ -152,7 +152,7 @@ export default function BlogDetailsSection() {
                 </p>
 
                 {/* Quote Box */}
-                <div className="relative mb-7 rounded-2xl bg-[#F4F6FB] px-6 md:px-10 py-8">
+                <div className="relative mb-7 rounded-2xl bg-[#f1f9fb] px-6 md:px-10 py-8">
                   <p className="text-slate-600 leading-relaxed">
                     Aliquam eros justo, posuere loborti viverra...
                   </p>
@@ -184,7 +184,7 @@ export default function BlogDetailsSection() {
                       <a
                         key={item}
                         href="#"
-                        className="inline-flex items-center rounded-xl bg-[#F4F6FB] px-4 py-2 text-sm font-medium text-slate-600 hover:bg-[#FF9933] hover:text-white transition"
+                        className="inline-flex items-center rounded-xl bg-[#f1f9fb] px-4 py-2 text-sm font-medium text-slate-600 hover:bg-[#FF9933] hover:text-white transition"
                       >
                         {item}
                       </a>
@@ -356,7 +356,7 @@ export default function BlogDetailsSection() {
           {/* RIGHT SIDEBAR */}
           <aside className="space-y-8">
             {/* Search */}
-            <div className="rounded-2xl bg-[#F4F6FB] p-6">
+            <div className="rounded-2xl bg-[#f1f9fb] p-6">
               <h3 className="pb-3 mb-5 border-b text-[22px] font-bold text-[#111827]">
                 Search Here
               </h3>
@@ -385,7 +385,7 @@ export default function BlogDetailsSection() {
             </div>
 
             {/* Categories */}
-            <div className="rounded-2xl bg-[#F4F6FB] p-6">
+            <div className="rounded-2xl bg-[#f1f9fb] p-6">
               <h3 className="pb-3 mb-4 border-b text-[22px] font-bold text-[#111827]">
                 Categories
               </h3>
@@ -412,7 +412,7 @@ export default function BlogDetailsSection() {
             </div>
 
             {/* Recent Post */}
-            <div className="rounded-2xl bg-[#F4F6FB] p-6 pr-4">
+            <div className="rounded-2xl bg-[#f1f9fb] p-6 pr-4">
               <h3 className="pb-3 mb-4 border-b text-[22px] font-bold text-[#111827]">
                 Recent Post
               </h3>
@@ -459,7 +459,7 @@ export default function BlogDetailsSection() {
             </div>
 
             {/* Tags */}
-            <div className="rounded-2xl bg-[#F4F6FB] p-6">
+            <div className="rounded-2xl bg-[#f1f9fb] p-6">
               <h3 className="pb-3 mb-4 border-b text-[22px] font-bold text-[#111827]">
                 Popular Tags
               </h3>

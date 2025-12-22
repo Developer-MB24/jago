@@ -33,7 +33,7 @@ export default function HeroBlogDetails() {
       />
 
       {/* Shape 1 (right) */}
-      <div className="absolute bottom-0 right-[-30px] -z-[1]">
+      <div className="absolute bottom-0 right-[-30px] -z-[1] hidden sm:block">
         <img
           src="images/page-header-shape-1.png"
           alt="decorative shape"
@@ -53,7 +53,7 @@ export default function HeroBlogDetails() {
       <div className="relative max-w-6xl mx-auto px-4">
         <div className="relative">
           <h2 className="text-[32px] md:text-[40px] lg:text-[50px] leading-[1.3] font-extrabold text-white mb-4">
-            Blog
+            Blogs
           </h2>
 
           <div className="inline-block relative">
@@ -69,7 +69,7 @@ export default function HeroBlogDetails() {
               <li className="flex items-center mx-1 text-white">
                 <FaAngleRight className="text-xs text-[#FF9933]" />
               </li>
-              <li className="capitalize">Blog</li>
+              <li className="capitalize">Blogs</li>
             </ul>
           </div>
         </div>

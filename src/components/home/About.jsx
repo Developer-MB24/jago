@@ -19,6 +19,22 @@ const AboutUs = () => {
 
     requestAnimationFrame(animate);
   }, []);
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-aos]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("aos-animate");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    els.forEach((el) => observer.observe(el));
+  }, []);
 
   const headingLine1 = "We Believe This Give";
   const headingLine2 = "For Poor People";
@@ -27,6 +43,23 @@ const AboutUs = () => {
   return (
     <>
       <style>{`
+
+      [data-aos^=fade][data-aos^=fade] {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 1.3s;
+  transition-timing-function: ease;
+}
+
+[data-aos^=fade][data-aos^=fade].aos-animate {
+  opacity: 1;
+  transform: translateZ(0);
+}
+
+[data-aos=fade-left] {
+  transform: translate3d(100px, 0, 0);
+}
+
         .about-two {
           position: relative;
           display: block;
@@ -457,7 +490,13 @@ const AboutUs = () => {
         .about-two__support h3 span {
           color: #138808;
         }
-
+        @media (max-width: 768px) {
+        .section-title__title {
+        font-size: 25px;
+        line-height: 30px;
+        padding-right:10px;
+        }
+        }
         @keyframes rotated {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
@@ -622,8 +661,8 @@ const AboutUs = () => {
             </div>
 
             {/* RIGHT */}
-            <div className="slideRight">
-              <div className="about-two__right slideRight">
+            <div data-aos="fade-left">
+              <div className="about-two__right" data-aos="fade-left">
                 <div className="about-two__img-box ">
                   {/* Rotating dashed circle */}
                   <div className="about-two__shape-1"></div>

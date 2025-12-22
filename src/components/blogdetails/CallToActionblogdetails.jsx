@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function CallToActionblogdetails({
+export default function CallToAction({
   title = (
     <>
       We Are{" "}
