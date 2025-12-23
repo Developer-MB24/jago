@@ -107,6 +107,7 @@ export default function WhoWeAreSection() {
     >
       {/* Local button styles (scoped with .who-we-are-btn) */}
       <style>{`
+      
         .who-we-are-btn {
           position: relative;
           display: inline-flex;
@@ -164,6 +165,49 @@ export default function WhoWeAreSection() {
           background: white;
           color: #FF9933;
         }
+
+     
+/* -------- Tablets (<= 1024px) -------- */
+@media (max-width: 1024px) {
+  .who-we-are-btn {
+    font-size: 15px;
+    padding: 9px 28px;
+    gap: 10px;
+  }
+
+  .who-we-are-btn .icon {
+    width: 34px;
+    height: 34px;
+    font-size: 13px;
+  }
+}
+
+/* -------- Phones (<= 640px) -------- */
+@media (max-width: 640px) {
+
+.section-title__title{
+font-size: 24px;
+line-height: 1.2;
+}
+  .who-we-are-btn {
+    font-size: 14px;
+    padding: 8px 22px;
+    border-radius: 26px;
+    gap: 8px;
+  }
+
+  .who-we-are-btn .icon {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  
+  .who-we-are-btn::before {
+    transition: none;
+  }
+}
+
       `}</style>
 
       <div className="max-w-6xl mx-auto">
@@ -236,7 +280,7 @@ export default function WhoWeAreSection() {
             <div className="mb-4">
               <h2 className="section-title__title font-heading">
                 Some Reasons to Choose{" "}
-                <span className="text-[#FF9933]">Econest Organization</span>
+                <span className="text-[#FF9933]">(Econest Organization)</span>
               </h2>
             </div>
 

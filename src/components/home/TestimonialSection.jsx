@@ -303,14 +303,14 @@ const TestimonialSection = () => {
             <div className="owl-nav absolute left-[-25px] right-[-25px] top-1/2 flex -translate-y-1/2 items-center justify-between">
               <button
                 type="button"
-                className="owl-prev h-[52px] w-[52px] rounded-full text-white text-[16px] flex items-center justify-center bg-[#FF9933] transition hover:bg-[#0F172A]"
+                className="owl-prev h-[52px] w-[52px] rounded-full text-white text-[16px] flex items-center justify-center bg-[#FF9933] transition hover:bg-[#138808]"
                 onClick={handlePrev}
               >
                 <FaArrowLeft />
               </button>
               <button
                 type="button"
-                className="owl-next h-[52px] w-[52px] rounded-full text-white text-[16px] flex items-center justify-center bg-[#FF9933] transition hover:bg-[#0F172A]"
+                className="owl-next h-[52px] w-[52px] rounded-full text-white text-[16px] flex items-center justify-center bg-[#FF9933] transition hover:bg-[#138808]"
                 onClick={handleNext}
               >
                 <FaArrowRight />

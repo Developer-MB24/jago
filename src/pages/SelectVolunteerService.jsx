@@ -83,19 +83,19 @@ export default function SelectVolunteerService() {
         className="absolute top-10 right-10 w-60 opacity-90"
       />
       <img
-        src="/images/register6.jpeg"
+        src="/images/register6.png"
         alt=""
-        className="absolute right-12 bottom-[25rem] w-60 opacity-90 "
+        className="absolute right-1 left-[57rem] bottom-[22rem] w-[27rem] opacity-90 "
       />
       <img
-        src="/images/register1.jpg"
+        src="/images/register1.png"
         alt=""
         className="absolute bottom-0 left-0 w-[520px]"
       />
       <img
-        src="/images/register2.jpg"
+        src="/images/register2.png"
         alt=""
-        className="absolute bottom-0 right-0 w-[520px]"
+        className="absolute top-[33rem] left-[40rem] w-[720px]"
       />
 
       <main className="relative z-10 max-w-3xl mx-auto px-6 py-16">

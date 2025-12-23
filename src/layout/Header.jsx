@@ -209,6 +209,9 @@ function SearchOverlay({ open, onClose, value, onChange, onSubmit }) {
 
 /* ========= Header ========= */
 export default function Header() {
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -624,44 +627,119 @@ export default function Header() {
 
             {/* nav links */}
             <nav className="flex-1 overflow-y-auto px-4 pb-4 text-[15px]">
-              {[
-                { label: "Home", to: "/", arrow: false },
-                { label: "About", to: "/about", arrow: false },
-                // You can adjust which ones show the orange arrow
-                { label: "Services", to: "/service/service", arrow: true },
-                {
-                  label: "Register as Volunteer",
-                  to: "/register",
-                  arrow: true,
-                },
-                { label: "Donations", to: "/donations", arrow: true },
-                { label: "Blog", to: "/blog", arrow: true },
-                { label: "Contact", to: "/contact", arrow: false },
-              ].map((item, idx) => (
-                <React.Fragment key={item.label}>
-                  {item.label === "Contact" && (
-                    <div className="my-2 h-px bg-white/15" />
-                  )}
-                  <NavLink
-                    to={item.to}
-                    onClick={() => setMobileOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center justify-between border-b border-white/10 py-2 ${
-                        isActive ? "font-semibold text-[#FFB36A]" : ""
-                      }`
-                    }
-                  >
-                    <span>{item.label}</span>
-                    {item.arrow && (
-                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-sm bg-[#FF9933]">
-                        <ArrowRight className="h-4 w-4" />
-                      </span>
-                    )}
-                  </NavLink>
-                </React.Fragment>
-              ))}
+              {/* Home */}
+              <NavLink
+                to="/"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>Home</span>
+              </NavLink>
 
-              {/* contact + email block */}
+              {/* About */}
+              <NavLink
+                to="/about"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>About</span>
+              </NavLink>
+
+              {/* ===== Services (expandable) ===== */}
+              <button
+                onClick={() => setMobileServicesOpen((v) => !v)}
+                className="flex w-full items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>Services</span>
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-sm bg-[#FF9933]">
+                  <ArrowRight
+                    className={`h-4 w-4 transition-transform ${
+                      mobileServicesOpen ? "rotate-90" : ""
+                    }`}
+                  />
+                </span>
+              </button>
+
+              {mobileServicesOpen && (
+                <div className="ml-3 space-y-2 py-2 text-sm text-white/90">
+                  {[
+                    ["Service", "/service/service"],
+                    ["Education", "/service/education"],
+                    ["Health", "/service/health"],
+                    ["Agriculture", "/service/agriculture"],
+                    ["Employment", "/service/employment"],
+                    ["Geographical Issues", "/service/geographical-issues"],
+                    [
+                      "Social & Political Awareness",
+                      "/service/social-&-political-awareness",
+                    ],
+                    ["Miscellaneous", "/service/miscellaneous"],
+                  ].map(([label, to]) => (
+                    <NavLink
+                      key={label}
+                      to={to}
+                      onClick={() => setMobileOpen(false)}
+                      className="block border-l border-white/20 pl-3 py-1"
+                    >
+                      {label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+
+              {/* ===== Blog (expandable) ===== */}
+              <button
+                onClick={() => setMobileBlogOpen((v) => !v)}
+                className="flex w-full items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>Blog</span>
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-sm bg-[#FF9933]">
+                  <ArrowRight
+                    className={`h-4 w-4 transition-transform ${
+                      mobileBlogOpen ? "rotate-90" : ""
+                    }`}
+                  />
+                </span>
+              </button>
+
+              {mobileBlogOpen && (
+                <div className="ml-3 space-y-2 py-2 text-sm text-white/90">
+                  <NavLink
+                    to="/blog"
+                    onClick={() => setMobileOpen(false)}
+                    className="block border-l border-white/20 pl-3 py-1"
+                  >
+                    Blogs
+                  </NavLink>
+                  <NavLink
+                    to="/blogdetails"
+                    onClick={() => setMobileOpen(false)}
+                    className="block border-l border-white/20 pl-3 py-1"
+                  >
+                    Blog Details
+                  </NavLink>
+                </div>
+              )}
+
+              {/* WhoWeAre */}
+              <NavLink
+                to="/whoarewe"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>WhoWeAre</span>
+              </NavLink>
+
+              {/* Contact */}
+              <NavLink
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-white/10 py-2"
+              >
+                <span>Contact</span>
+              </NavLink>
+
+              {/* ===== Contact + Email ===== */}
               <div className="mt-4 border-t border-white/15 pt-4 space-y-3">
                 <div className="flex items-center gap-3">
                   <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#FF9933] text-lg">
