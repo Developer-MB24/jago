@@ -267,11 +267,7 @@ export default function Header() {
 
   return (
     <header
-      style={
-        scrolled
-          ? {}
-          : { backgroundColor: "rgba(var(--helpest-white-rgb), 0.05)" }
-      }
+      style={scrolled ? {} : { backgroundColor: "#143a34" }}
       className={`fixed top-0 left-0 z-50 w-full transition-all duration-300
     ${
       scrolled

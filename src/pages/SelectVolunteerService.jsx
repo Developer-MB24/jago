@@ -66,7 +66,7 @@ export default function SelectVolunteerService() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen bg-[#F9FBFF] overflow-hidden">
+    <div className="relative min-h-screen bg-[#F9FBFF] overflow-hidden mt-28">
       <img
         src="/images/register4.png"
         alt=""
@@ -88,7 +88,7 @@ export default function SelectVolunteerService() {
         className="absolute right-1 left-[57rem] bottom-[22rem] w-[27rem] opacity-90 "
       />
       <img
-        src="/images/register1.png"
+        src="/images/register7.png"
         alt=""
         className="absolute bottom-0 left-0 w-[520px]"
       />
