@@ -11,7 +11,7 @@ export default function CallToAction({
   subtitle = (
     <>
       Denouncing pleasure and praising pain was born and will give you a
-      complete great explorer of the truth the master-builder.
+      complete <br /> great explorer of the truth the master-builder.
     </>
   ),
   buttonText = "Donate Now",
@@ -35,7 +35,7 @@ export default function CallToAction({
     : {};
 
   return (
-    <section className="relative isolate py-16 sm:py-20 z-50">
+    <section className="relative isolate  sm:pb-20 z-30">
       <style>{`
         @keyframes topBottomLocal {
           0%, 100% { transform: translate(-50%, 0); }
@@ -45,9 +45,7 @@ export default function CallToAction({
           animation: topBottomLocal 3s ease-in-out infinite;
         }
 
-        /* ============================
-           THEME BUTTON (UPDATED)
-        ============================ */
+       
         .thm-btn {
           position: relative;
           display: inline-flex;
@@ -126,7 +124,7 @@ export default function CallToAction({
           style={maskStyle}
         >
           {shapeImage && (
-            <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 opacity-10 cta-shape-bob">
+            <div className="pointer-events-none absolute w-[30rem] sm:w-[52rem]  bottom-0 left-1/2 -translate-x-1/2 opacity-10 cta-shape-bob">
               <img src={shapeImage} alt="" />
             </div>
           )}
@@ -135,7 +133,7 @@ export default function CallToAction({
             {title}
           </h3>
 
-          <p className="mt-[10px] mb-[20px] font-medium text-[#111827]">
+          <p className="mt-[10px] mb-10 font-medium text-[#111827]">
             {subtitle}
           </p>
 
@@ -163,7 +161,7 @@ export default function CallToAction({
           </div>
 
           <div className="absolute -bottom-[35px] left-1/2 -translate-x-1/2 z-20 max-w-[200px] w-full">
-            <div className="w-[140px] sm:w-[180px] mx-auto rounded-full overflow-hidden shadow ring-4 ring-[#eef7f6]">
+            <div className="w-[200px] sm:w-[180px] mx-auto rounded-full overflow-hidden shadow ring-4 ring-[#eef7f6]">
               <img
                 src={photo}
                 alt="Footer highlight"

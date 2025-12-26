@@ -115,7 +115,7 @@ const Footer = () => {
           position: relative;
           display: block;
           overflow: hidden;
-          background-color: #0e2c27; /* overlay color */
+          background-color: #0e2c27; 
           z-index: 1;
         }
 
@@ -369,6 +369,7 @@ const Footer = () => {
             style={{
               backgroundImage: "url('/images/site-footer-two-bg.jpg')",
             }}
+            src="/images/jaago-manav-logo-latest.png"
           ></div>
           <div className="site-footer-two__shape-1 float-bob-y">
             <img src="/images/indian-map.png" alt="India outline" />
@@ -380,11 +381,12 @@ const Footer = () => {
                 {/* Column 1: About + tagline + social icons */}
                 <div className="col-xl-4 col-lg-6 col-md-6">
                   <div className="footer-widget-two__about">
-                    <div className="footer-widget-two__about-logo w-28">
+                    <div className="footer-widget-two__about-logo px-4 w-52 h-20 bg-white rounded-xl">
                       <a href="/">
                         <img
-                          src="/images/jaago-manav-logo.png"
+                          src="/images/jaago-manav-logo-latest.png"
                           alt="Jaago Manav logo"
+                          className="h-20 rounded-xl"
                         />
                       </a>
                     </div>

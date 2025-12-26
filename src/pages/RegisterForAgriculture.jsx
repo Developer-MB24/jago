@@ -597,7 +597,7 @@ const RegisterForAgriculture = () => {
     >
       {/* <div className="absolute inset-0 bg-[#fef6e8]/60 pointer-events-none"></div> */}
 
-      <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 md:p-10">
+      <div className="relative z-10 w-full max-w-4xl bg-white/90 rounded-2xl shadow-xl p-6 mt-20 md:p-10">
         {/* Heading */}
         <h1
           className="text-3xl md:text-4xl font-extrabold text-center text-slate-900 mb-1 tracking-wide"

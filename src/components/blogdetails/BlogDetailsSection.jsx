@@ -143,18 +143,28 @@ export default function BlogDetailsSection() {
                 {/* Body */}
                 <p className="text-slate-600 leading-relaxed">
                   Web designing in a powerful way of just not an only
-                  professions...
+                  professions, however, in a passion for our Company. We have to
+                  a tendency to believe the idea that smart looking of any
+                  website is the first impression on visitors.Web designing in a
+                  powerful way of just not an only professions, however, in a
+                  passion for our Company. We have
                 </p>
 
                 <p className="mt-4 mb-8 text-slate-600 leading-relaxed">
                   Web designing in a powerful way of just not an only
-                  professions...
+                  professions, however, in a passion for our Company. We have to
+                  a tendency to believe the idea that smart looking of any
+                  website is the first impression on visitors.Web designing in a
+                  powerful way
                 </p>
 
                 {/* Quote Box */}
                 <div className="relative mb-7 rounded-2xl bg-[#f1f9fb] px-6 md:px-10 py-8">
                   <p className="text-slate-600 leading-relaxed">
-                    Aliquam eros justo, posuere loborti viverra...
+                    Aliquam eros justo, posuere loborti viverra laoreet matti
+                    ullamcorper posuere vive rra .Aliquam eros justo, posuere
+                    lobortis, viverra laoreet augue mattis fermentu m ul
+                    amcorper viverra laoreet.
                   </p>
 
                   <span className="mt-6 inline-block pl-14 text-base md:text-lg font-bold text-[#111827] relative">
@@ -168,7 +178,12 @@ export default function BlogDetailsSection() {
                 </div>
 
                 <p className="text-slate-600 leading-relaxed">
-                  Web designing in a powerful way...
+                  Web designing in a powerful way of just not an only
+                  professions, however, in a passion for our Company. We have to
+                  a tendency to believe the idea that smart looking of any
+                  website is the first impression on visitors.Web designing in a
+                  powerful way of just not an only professions, however, in a
+                  passion for our Company. We have
                 </p>
               </div>
 
@@ -184,7 +199,7 @@ export default function BlogDetailsSection() {
                       <a
                         key={item}
                         href="#"
-                        className="inline-flex items-center rounded-xl bg-[#f1f9fb] px-4 py-2 text-sm font-medium text-slate-600 hover:bg-[#FF9933] hover:text-white transition"
+                        className="inline-flex items-center rounded-xl bg-[#f1f9fb] px-4 py-2 text-base font-medium text-slate-600 hover:bg-[#FF9933] hover:text-white transition"
                       >
                         {item}
                       </a>
@@ -202,7 +217,7 @@ export default function BlogDetailsSection() {
                       <a
                         key={item}
                         href="#"
-                        className="text-sm font-medium text-slate-600 hover:text-[#FF9933] transition"
+                        className="text-base font-medium text-slate-600 hover:text-[#FF9933] transition"
                       >
                         {item}
                       </a>

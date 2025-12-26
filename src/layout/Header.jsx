@@ -291,13 +291,13 @@ export default function Header() {
           font-size: 16px;
           color: #ffffff !important;
           border: 1px solid #FF9933;
-          padding: 8px 24px;
+          padding: 8px 15px;
           border-radius: 999px;
           transition: 0.5s ease-in-out;
           text-transform: capitalize;
           overflow: hidden;
           letter-spacing: 0.25px;
-          gap: 12px;
+          gap: 2px;
           z-index: 2;
           cursor: pointer;
           background: transparent;
@@ -372,15 +372,15 @@ export default function Header() {
         .animate-slideDown { animation: slideDown 7s ease-in-out infinite alternate; }
         .animate-slideUp   { animation: slideUp   7s ease-in-out infinite alternate; }
       `}</style>
-      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
+      <nav className="mx-auto flex max-w-screen-2xl items-center justify-between z-[10000] gap-6 px-4 py-3 md:px-6 lg:px-8 text-white">
         {/* <div className="flex w-full items-center justify-between gap-1 rounded-2xl bg-black/25 px-3 py-2 ring-1 ring-white/20"> */}
         <div className="flex w-full items-center justify-between gap-1  px-3 py-2 ">
           {/* Logo (bigger) */}
-          <Link to="/" className="shrink-0 rounded-xl ">
+          <Link to="/" className="shrink-0 rounded-xl bg-yellow-300 ">
             <img
-              src="/images/jaago-manav-logo.png"
+              src="/images/jaago-manav-logo-latest.png"
               alt="Jaago Manav Logo"
-              className="h-20 w-44 md:w-auto md:h-16"
+              className="h-14 bg-red-500 rounded-xl"
               loading="eager"
             />
           </Link>

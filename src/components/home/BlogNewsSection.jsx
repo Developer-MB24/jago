@@ -193,9 +193,7 @@ const BlogNewsSection = () => {
           {/* title */}
           <div className="section-title text-center mb-10">
             <div className="section-title__tagline-box">
-              <p className="text-[#FF9933] text-sm font-bold">
-                Home Page &gt; News And Blogs
-              </p>
+              <p className="text-[#FF9933] text-sm font-bold">News And Blogs</p>
             </div>
             <h2 className="text-4xl font-extrabold">
               We Articles From Blog{" "}
