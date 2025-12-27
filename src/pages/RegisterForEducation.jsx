@@ -572,19 +572,16 @@ const RegisterForEducation = () => {
       return;
     }
 
-    // Declaration check
     if (!formData.declarationConsent) {
       alert("Please confirm the declaration before submitting the form.");
       return;
     }
 
-    // ✅ FINAL SUCCESS
     console.log("Form submitted successfully:", {
       formData,
       files,
     });
 
-    // 🔥 Show success popup instead of alert
     setShowSuccessModal(true);
   };
 
