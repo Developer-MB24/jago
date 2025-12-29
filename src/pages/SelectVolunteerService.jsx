@@ -79,7 +79,7 @@ export default function SelectVolunteerService() {
         />
         <img
           src="/images/health.png"
-          className="block w-48 max-w-none opacity-90"
+          className="block w-24 max-w-none opacity-90"
         />
         <img
           src="/images/register7.png"
@@ -99,7 +99,7 @@ export default function SelectVolunteerService() {
         />
         <img
           src="/images/volunteer-registration-bg.png"
-          className="block w-48 max-w-none opacity-90"
+          className="block w-24 max-w-none opacity-90"
         />
         <img
           src="/images/register1.png"
