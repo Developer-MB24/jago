@@ -66,44 +66,54 @@ export default function SelectVolunteerService() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative min-h-screen bg-[#F9FBFF] overflow-hidden mt-28">
-      <img
-        src="/images/register4.png"
-        alt=""
-        className="absolute top-10 left-10 w-60 opacity-90"
-      />
-      <img
-        src="/images/register5.png"
-        alt=""
-        className="absolute top-72 left-0 w-80 opacity-90"
-      />
-      <img
-        src="/images/register3.png"
-        alt=""
-        className="absolute top-10 right-10 w-44 opacity-90"
-      />
-      <img
-        src="/images/register6.png"
-        alt=""
-        className="absolute right-1 left-[57rem] bottom-[22rem] w-[27rem] opacity-90 "
-      />
-      <img
-        src="/images/register7.png"
-        alt=""
-        className="absolute bottom-0 left-0 w-[520px]"
-      />
-      <img
-        src="/images/register2.png"
-        alt=""
-        className="absolute top-[39rem] left-[43rem] w-[520px]"
-      />
+    <div className="relative min-h-screen bg-[#F9FBFF] overflow-hidden mt-20 sm:mt-24 lg:mt-28">
+      {/* LEFT COLUMN */}
+      <div className="hidden lg:flex absolute left-0 top-32 w-[250px] flex-col items-center gap-10">
+        <img
+          src="/images/register4.png"
+          className="block w-56 max-w-none opacity-90"
+        />
+        <img
+          src="/images/register5.png"
+          className="block w-64 max-w-none opacity-90"
+        />
+        <img
+          src="/images/health.png"
+          className="block w-48 max-w-none opacity-90"
+        />
+        <img
+          src="/images/register7.png"
+          className="block w-52 max-w-none opacity-90"
+        />
+      </div>
 
-      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16">
-        <h1 className="text-center text-3xl font-bold text-[#0F172A] mb-12">
+      {/* RIGHT COLUMN */}
+      <div className="hidden lg:flex absolute right-0 top-32 w-[250px] flex-col items-center  gap-10">
+        <img
+          src="/images/register3.png"
+          className="block w-44 max-w-none opacity-90"
+        />
+        <img
+          src="/images/register6.png"
+          className="block w-64 max-w-none opacity-90"
+        />
+        <img
+          src="/images/volunteer-registration-bg.png"
+          className="block w-48 max-w-none opacity-90"
+        />
+        <img
+          src="/images/register1.png"
+          className="block w-52 max-w-none  opacity-90"
+        />
+      </div>
+
+      {/* CENTER CONTENT */}
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-14">
+        <h1 className="text-center text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0F172A] mb-12">
           Where would you prefer to volunteer?
         </h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {services.map((service) => {
             const Icon = service.icon;
             const isMisc = service.key === "misc";
@@ -112,21 +122,12 @@ export default function SelectVolunteerService() {
               <button
                 key={service.key}
                 onClick={() => navigate(service.route)}
-                className={`group bg-white rounded-2xl border border-[#F1E3CC]
-                  px-8 py-6 min-h-[220px] text-left shadow-sm
-                  hover:shadow-lg hover:border-[#FF9933]
-                  transition-all duration-300
-                  ${isMisc ? "lg:col-start-2" : ""}`}
+                className={`group bg-white rounded-2xl border border-[#F1E3CC] px-6 py-6 min-h-[220px] text-left shadow-sm hover:shadow-lg hover:border-[#FF9933] transition-all duration-300 ${
+                  isMisc ? "lg:col-start-2" : ""
+                }`}
               >
-                {/* Icon */}
                 <div className="flex items-center gap-4 mb-4">
-                  <div
-                    className="flex items-center justify-center w-12 h-12
-                      rounded-full bg-[#FFF3E0]
-                      text-[#FF9933] text-xl
-                      group-hover:bg-[#FF9933]
-                      group-hover:text-white transition"
-                  >
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[#FFF3E0] text-[#FF9933] text-xl group-hover:bg-[#FF9933] group-hover:text-white transition">
                     <Icon />
                   </div>
 
@@ -135,7 +136,9 @@ export default function SelectVolunteerService() {
                   </h3>
                 </div>
 
-                <p className="text-sm text-[#475569] mb-6">{service.desc}</p>
+                <p className="text-[15px] text-[#475569] mb-5">
+                  {service.desc}
+                </p>
 
                 <span className="text-sm font-semibold text-[#FF9933]">
                   Select this service →
